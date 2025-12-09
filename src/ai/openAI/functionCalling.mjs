@@ -6,7 +6,6 @@ import { loadClientProfile } from './functionCalling/clients/loadClientProfile.m
 import { addClientProfile } from './functionCalling/clients/addClientProfile.mjs'
 import { addOrder } from './functionCalling/orders/addOrder.mjs'
 import { getArticles } from './functionCalling/articles/getArticles.mjs'
-import { getDailyArticles } from './functionCalling/dailyArticles/getDailyArticles.mjs'
 import { getShippingAvailability } from './functionCalling/orders/getShippingAvailability.mjs'
 import { getOrderByNumber } from './functionCalling/orders/getOrderByNumber.mjs'
 
@@ -16,7 +15,6 @@ import { functionName as loadClientProfileName } from './tools/clients/jsonLoadC
 import { functionName as addClientProfileName } from './tools/clients/jsonAddClientProfile.mjs'
 import { functionName as addOrderName } from './tools/orders/jsonAddOrder.mjs'
 import { functionName as getArticlesName } from './tools/articles/getArticles.mjs'
-import { functionName as getDailyArticlesName } from './tools/dailyArticles/getDailyArticles.mjs'
 import { functionName as getShippingAvailabilityName } from './tools/orders/jsonGetShippingAvailability.mjs'
 import { functionName as getOrderByNumberName } from './tools/orders/jsonGetOrderByNumber.mjs'
 
@@ -36,7 +34,6 @@ export async function functionCalling(aiFunction, user, userIdKey, responseOutpu
     [addClientProfileName]: addClientProfile,
     [addOrderName]: addOrder,
     [getArticlesName]: getArticles,
-    [getDailyArticlesName]: getDailyArticles,
     [getShippingAvailabilityName]: getShippingAvailability,
     [getOrderByNumberName]: getOrderByNumber,
   }

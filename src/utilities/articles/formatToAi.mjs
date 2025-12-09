@@ -20,6 +20,7 @@ export function formatToAi(articles) {
         codigo: article.codigo,
         nombre: article.descripcion,
         descripcion: article.descripcionAvanzada || '',
+        catalogo: 'stock normal',
         familia: article.familia || '',
         grupo: article.grupo || '',
         precio: article.precioVenta || 0,

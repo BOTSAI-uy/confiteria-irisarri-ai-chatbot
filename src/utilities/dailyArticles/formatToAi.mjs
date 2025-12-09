@@ -9,6 +9,7 @@ export function formatToAi(dailyArticles) {
         codigo: article.codigo,
         nombre: article.descripcion,
         descripcion: article.descripcionAvanzada || '',
+        catalogo: 'producción diaria',
         familia: article.familia || '',
         grupo: article.grupo || '',
         precio: article.precioVenta || 0,

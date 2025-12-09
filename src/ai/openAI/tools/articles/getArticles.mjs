@@ -1,9 +1,15 @@
 import { getArticlesFilters } from '#db/articles/getArticlesFilters.mjs'
+import { getDailyArticlesFilters } from '#db/dailyArticles/getDailyArticlesFilters.mjs'
 
 export const functionName = 'getArticles'
 
 export async function getJson() {
   const { family, group } = await getArticlesFilters()
+  const { familyD, groupD } = await getDailyArticlesFilters()
+
+  const combinedFamily = Array.from(new Set([...(family || []), ...(familyD || [])]))
+  const combinedGroup = Array.from(new Set([...(group || []), ...(groupD || [])]))
+
   const jsonData = {
     type: 'function',
     name: functionName,
@@ -13,12 +19,12 @@ export async function getJson() {
       properties: {
         family: {
           type: ['string', 'null'],
-          enum: family || [''],
+          enum: combinedFamily || [''],
           description: 'Filtrar artículos por familia',
         },
         group: {
           type: ['string', 'null'],
-          enum: group || [''],
+          enum: combinedGroup || [''],
           description: 'Filtrar artículos por grupo',
         },
         word: {
