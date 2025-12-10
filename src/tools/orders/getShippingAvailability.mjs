@@ -1,35 +1,19 @@
-const SCHEDULE = {
-  // domingo (cerrado)
-  0: {
-    time: [],
-  },
-  // lunes
-  1: {
-    time: ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00'],
-  },
-  // martes
-  2: {
-    time: ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00'],
-  },
-  // miércoles
-  3: {
-    time: ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00'],
-  },
-  // jueves
-  4: {
-    time: ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00'],
-  },
-  // viernes
-  5: {
-    time: ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00'],
-  },
-  // sábado
-  6: {
-    time: ['12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00'],
-  },
-}
+import catchError from '#utilities/catchError.mjs'
+import { getOrderConfig } from '#db/ordersConfig/getOrderConfig.mjs'
+import { ShippingAvailabilityDayFacturapp } from '#services/facturapp/shippingAvailabilityDay.mjs'
+
+const START_DAYS = 0 // días desde hoy para comenzar a mostrar disponibilidad
+const TOTAL_DAYS = 10 // total de días a mostrar
+
+const WEEK_DAYS = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
 
 export async function getShippingAvailability() {
+  // cargar configuración de orden
+  const orderConfig = await getOrderConfig()
+  if (!orderConfig || !orderConfig.deliverySchedule) {
+    console.error('No se pudo obtener la configuración de orden o el horario de entrega.')
+    return null
+  }
   const today = new Date()
 
   // usar hora local sin zona horaria
@@ -37,20 +21,49 @@ export async function getShippingAvailability() {
 
   // obtener los siguientes 7 días (omitiendo hoy) con formato YYYY-MM-DD HH:mm
   const availability = []
-  for (let i = 1; i < 8; i++) {
+  for (let i = 0; i < TOTAL_DAYS; i++) {
     const nextDay = new Date(today)
-    nextDay.setDate(today.getDate() + i)
-    
+    nextDay.setDate(today.getDate() + i + START_DAYS)
+
+    const dayKey = WEEK_DAYS[nextDay.getDay()]
+
     // Formatear fecha usando hora local en lugar de UTC
     const year = nextDay.getFullYear()
     const month = String(nextDay.getMonth() + 1).padStart(2, '0')
     const day = String(nextDay.getDate()).padStart(2, '0')
     const formattedDate = `${year}-${month}-${day}`
-    
-    const times = SCHEDULE[nextDay.getDay()].time
-    times.forEach((time) => {
-      availability.push(`${formattedDate} ${time}`)
-    })
+
+    // obtener disponibilidad desde Facturapp
+    const [error, facturappData] = await catchError(
+      ShippingAvailabilityDayFacturapp.getAvailabilityDay(formattedDate, true)
+    )
+    // manejar error
+    if (error) {
+      console.error(`Error al obtener disponibilidad de Facturapp para ${formattedDate}:`, error.message)
+      continue
+    }
+
+    // construir objeto de disponibilidad
+    const data = {
+      [formattedDate]: {
+        day: dayKey,
+        times: [],
+      },
+    }
+
+    const times = orderConfig.deliverySchedule[dayKey]
+    for (const time of times) {
+      const [timeNumber] = time.split(':').map(Number)
+
+      // buscar en los datos de Facturapp
+      const facturappEntry = facturappData.find((entry) => entry.hora === timeNumber && entry.admiteMas)
+      if (!facturappEntry) {
+        console.log(`Franja horaria no disponible para ${formattedDate} a las ${time}:`, timeNumber)
+        continue // omitir si no hay disponibilidad
+      }
+      data[formattedDate].times.push(time)
+    }
+    availability.push(data)
   }
   return availability
 }

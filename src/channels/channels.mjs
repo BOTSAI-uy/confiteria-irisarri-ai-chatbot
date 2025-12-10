@@ -7,8 +7,7 @@ import { showMessage } from '#logger/showMessage.mjs'
 export async function sendToChannels(messages) {
   showMessage(messages)
   if (!isProductionEnv()) {
-    console.warn('sendToChannels: No se ejecuta en desarrollo')
-    return null
+    return 
   }
   if (!Array.isArray(messages)) {
     return console.error('sendToChannels: messages no es un array', messages)
@@ -21,7 +20,7 @@ export async function sendToChannels(messages) {
   const services = await getServices()
   if (!services) {
     console.error('sendToChannels: No se encontraron servicios')
-    return null
+    return 
   }
 
   //SS CHATWOOT
