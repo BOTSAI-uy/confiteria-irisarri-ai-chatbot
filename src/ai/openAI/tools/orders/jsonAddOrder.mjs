@@ -45,8 +45,8 @@ export async function getJson() {
         },
         //FechaEntrega
         deliveryDate: {
-          type: 'object',
-          description: 'Fecha de entrega del pedido',
+          type: ['object', 'null'],
+          description: 'Fecha de entrega, (si es null, se entregará en la fecha más próxima disponible)',
           properties: {
             date: {
               type: 'string',

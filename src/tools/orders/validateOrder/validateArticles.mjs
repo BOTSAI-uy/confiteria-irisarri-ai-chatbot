@@ -3,9 +3,7 @@ import { getDailyArticleByCode } from '#db/dailyArticles/getDailyArticleByCode.m
 import { validateDailyArticle } from './validateDailyArticle.mjs'
 import { validateBaseArticle } from './validateBaseArticle.mjs'
 
-export async function validateArticles(articles, deliveryDate) {
-  const errors = []
-
+export async function validateArticles(articles, deliveryDate, result) {
   for (const item of articles) {
     const itemErrors = []
     // validar que el código del artículo esté presente
@@ -20,37 +18,29 @@ export async function validateArticles(articles, deliveryDate) {
     }
 
     // si hay errores en este artículo, continuar con el siguiente
-    if (jumpValidateArticles(errors, itemErrors)) continue
+    if (jumpValidateArticles(result.errors, itemErrors)) continue
 
     // validar que el artículo exista en la base de datos
     const baseArticle = await getArticleByCode(item.article)
     if (!baseArticle) {
       console.error(`validateArticles: Artículo con código ${item.article} no encontrado.`)
-      errors.push(`Artículo con código ${item.article} no encontrado.`)
+      result.errors.push(`Artículo con código ${item.article} no encontrado.`)
       continue
     }
 
     // si hay errores en este artículo, continuar con el siguiente
-    if (jumpValidateArticles(errors, itemErrors)) continue
+    if (jumpValidateArticles(result.errors, itemErrors)) continue
 
     // Validar si es un articulo de production diario
     const dailyArticle = await getDailyArticleByCode(item.article)
     if (dailyArticle) {
-      const dailyArticleErrors = await validateDailyArticle(item, dailyArticle, deliveryDate)
-      if (dailyArticleErrors.length > 0) {
-        errors.push(...dailyArticleErrors)
-      }
+      await validateDailyArticle(item, dailyArticle, deliveryDate, result)
     }
     // validar cuando no es un artículo de producción diario
     else {
-      const baseArticleErrors = await validateBaseArticle(item, baseArticle)
-      if (baseArticleErrors.length > 0) {
-        errors.push(...baseArticleErrors)
-      }
+      await validateBaseArticle(item, baseArticle, result)
     }
   }
-
-  return errors
 }
 
 function jumpValidateArticles(errors, itemErrors) {

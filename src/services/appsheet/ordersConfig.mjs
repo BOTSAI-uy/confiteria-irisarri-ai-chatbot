@@ -18,6 +18,9 @@ export const SCHEMA = appsheetClient.createSchema(NAME_TABLE, {
     type: 'string',
     primary: true,
   },
+  deliveryAnticipationTime: {
+    type: 'number',
+  },
   deliverySchedule: {
     type: 'object',
     properties: {

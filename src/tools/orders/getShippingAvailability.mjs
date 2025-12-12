@@ -2,29 +2,34 @@ import catchError from '#utilities/catchError.mjs'
 import { getOrderConfig } from '#db/ordersConfig/getOrderConfig.mjs'
 import { ShippingAvailabilityDayFacturapp } from '#services/facturapp/shippingAvailabilityDay.mjs'
 
-const START_DAYS = 0 // días desde hoy para comenzar a mostrar disponibilidad
-const TOTAL_DAYS = 10 // total de días a mostrar
+const TOTAL_DAYS = 14 // total de días a mostrar
 
 const WEEK_DAYS = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
 
-export async function getShippingAvailability() {
+export async function getShippingAvailability(anticipationHours = 0) {
   // cargar configuración de orden
   const orderConfig = await getOrderConfig()
   if (!orderConfig || !orderConfig.deliverySchedule) {
     console.error('No se pudo obtener la configuración de orden o el horario de entrega.')
     return null
   }
-  const today = new Date()
+
+  // fecha actual con anticipación
+  const startDate = new Date()
+  const anticipationTime = orderConfig.deliveryAnticipationTime || 0 //minutos de anticipación
+  // agregar tiempo de anticipación a la fecha actual
+  startDate.setMinutes(startDate.getMinutes() + anticipationTime)
 
   // usar hora local sin zona horaria
-  console.log('Fecha de hoy:', today.toLocaleString())
-
+  console.log('Fecha de inicio:', startDate.toLocaleString())
   // obtener los siguientes 7 días (omitiendo hoy) con formato YYYY-MM-DD HH:mm
   const availability = []
+  let noHours = anticipationHours
   for (let i = 0; i < TOTAL_DAYS; i++) {
-    const nextDay = new Date(today)
-    nextDay.setDate(today.getDate() + i + START_DAYS)
+    const nextDay = new Date(startDate)
+    nextDay.setDate(startDate.getDate() + i)
 
+    // obtener día de la semana
     const dayKey = WEEK_DAYS[nextDay.getDay()]
 
     // Formatear fecha usando hora local en lugar de UTC
@@ -45,23 +50,40 @@ export async function getShippingAvailability() {
 
     // construir objeto de disponibilidad
     const data = {
-      [formattedDate]: {
-        day: dayKey,
-        times: [],
-      },
+      date: formattedDate,
+      day: dayKey,
+      times: [],
     }
 
     const times = orderConfig.deliverySchedule[dayKey]
     for (const time of times) {
-      const [timeNumber] = time.split(':').map(Number)
+      const [hour, minute = 0] = time.split(':').map(Number)
 
-      // buscar en los datos de Facturapp
-      const facturappEntry = facturappData.find((entry) => entry.hora === timeNumber && entry.admiteMas)
+      // construir fecha/hora de la franja en horario local
+      const slot = new Date(nextDay)
+      slot.setHours(hour, minute, 0, 0)
+
+      // omitir franjas anteriores a la fecha/hora actual (considerando tiempo de anticipación)
+      if (slot < startDate) {
+        console.debug(`Omitiendo franja pasada para ${formattedDate} a las ${time}`)
+        continue
+      }
+
+      // consumir solo slots disponibles
+      if (noHours > 0) {
+        noHours = noHours - 1
+        console.debug(`Omitiendo franja por horas de anticipación para ${formattedDate} a las ${time}`)
+        continue
+      }
+
+      // buscar en los datos de Facturapp (comprobando por hora)
+      const facturappEntry = facturappData.find((entry) => entry.hora === hour && entry.admiteMas)
       if (!facturappEntry) {
-        console.log(`Franja horaria no disponible para ${formattedDate} a las ${time}:`, timeNumber)
+        console.log(`Franja horaria no disponible para ${formattedDate} a las ${time}:`, hour)
         continue // omitir si no hay disponibilidad
       }
-      data[formattedDate].times.push(time)
+
+      data.times.push(time)
     }
     availability.push(data)
   }

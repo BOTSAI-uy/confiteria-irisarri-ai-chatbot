@@ -5,10 +5,10 @@
   "main": "src/index.js",
   "type": "module",
   "scripts": {
-    "start": "node src/index.js",
-    "dev": "node --watch-path=src --env-file=.env src/index.js",
+    "prod": "node --env-file=.env src/index.js",
     "playground": "node --env-file=.env playground/playground.mjs",
-    "prod": "node --env-file=.env src/index.js"
+    "dev": "node --watch-path=src --env-file=.env src/index.js",
+    "start": "node src/index.js"
   },
   "imports": {
     "#provider/*": "./src/provider/*",
@@ -42,7 +42,7 @@
     "extends": "./eslintrc.json"
   },
   "dependencies": {
-    "appsheet-api": "^0.3.6",
+    "appsheet-api": "0.3.8",
     "axios": "1.13.2",
     "baileys": "7.0.0-rc.9",
     "ejs": "3.1.10",

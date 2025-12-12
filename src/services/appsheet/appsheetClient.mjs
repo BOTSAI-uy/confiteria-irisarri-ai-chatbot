@@ -17,6 +17,7 @@ export const appsheetClient = new AppsheetClient(
     client: {
       locale: 'en-GB',
       timezone: ENV.TZ,
+      userSettings: { FROM_API: true },
     },
   }
 )

@@ -12,6 +12,7 @@ import { sendToChannels } from '#channels/channels.mjs'
 import { sendResponse } from '#ai/agentProcess/sendResponse.mjs'
 import { providerSendMessageInteractive } from '#provider/provider.mjs'
 import { deletePhoneExtension } from '#utilities/facturapp/formatPhone.mjs'
+import { getCurrentShippingAvailability } from '#tools/orders/getCurrentShippingAvailability.mjs'
 
 const ORDER_ACTIONS = {
   CONFIRM: 'Confirmar Pedido',
@@ -34,11 +35,36 @@ function validateReplyAction(response) {
 
 export async function addOrder(args, user, userIdKey, { callId, responseOutput }) {
   const platform = userIdKey.split('-*-')[1]
+
+  // validar que existan artículos en el pedido
+  if (!args.articles || args.articles.length === 0) {
+    return { success: false, message: 'El pedido debe contener al menos un artículo.' }
+  }
+
+  let deliveryDate = ''
+
+  // obtener disponibilidad de envío actual para los artículos
+  if (!args.deliveryDate || !args.deliveryDate.date || !args.deliveryDate.time) {
+    const articleCodes = args.articles.map((item) => item.article)
+    deliveryDate = await getCurrentShippingAvailability(articleCodes)
+    if (!deliveryDate) {
+      return {
+        success: false,
+        message:
+          'No se pudo obtener la disponibilidad de envío actual para los artículos. Por favor intenta de nuevo más tarde.',
+      }
+    }
+
+    console.info('Fecha y hora de entrega obtenida de disponibilidad actual:', deliveryDate)
+  } else {
+    deliveryDate = `${args.deliveryDate.date} ${args.deliveryDate.time}`
+  }
+
   // cargar datos del pedido desde los argumentos
   const order = {
     name: args.name,
     phone: deletePhoneExtension(user[platform]?.id || ''),
-    deliveryDate: `${args.deliveryDate?.date} ${args.deliveryDate?.time}`,
+    deliveryDate,
     deliveryMode: args.deliveryMode,
     address: args.address || '',
     note: args.note || '',
@@ -67,11 +93,11 @@ export async function addOrder(args, user, userIdKey, { callId, responseOutput }
 
   // validar datos del pedido
   const validation = await validateOrder(builtOrder)
-  if (validation.error) {
+  if (validation.errors && validation.errors.length > 0) {
     return {
       success: false,
       message: 'Error de validación en el pedido',
-      details: validation.details,
+      details: validation.errors,
     }
   }
 
