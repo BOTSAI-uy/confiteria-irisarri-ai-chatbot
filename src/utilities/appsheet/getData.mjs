@@ -27,12 +27,6 @@ export async function getData(table, properties = {}, rows = []) {
     // Realizar la solicitud POST a la API de AppSheet
     const response = await axios.post(url, body, { headers })
 
-    // Validar la respuesta
-    if (response.status !== 200) {
-      console.error(`appsheet - getData: Error en la petición, código de estado ${response.status}`)
-      throw new Error(`appsheet - getData: Error en la petición, código de estado ${response.status}`)
-    }
-
     // Formatear los datos recibidos
     const data = formatData(response.data)
 
@@ -45,7 +39,17 @@ export async function getData(table, properties = {}, rows = []) {
       await new Promise((resolve) => setTimeout(resolve, 1500))
       return getData(table, properties, rows)
     }
-    console.error('Error al realizar la petición:', error.response?.data || error.message)
+
+    // si el status code es 500 y el detail contiene TooManyRequests
+    if (error.response?.status === 500 && error.response?.data?.detail?.includes('TooManyRequests')) {
+      console.warn(
+        `appsheet - getData: Límite de peticiones alcanzado con estatus 500, esperando 5 segundos antes de reintentar... ${Date.now()}`,
+      )
+      await new Promise((resolve) => setTimeout(resolve, 5000))
+      return getData(table, properties, rows)
+    }
+
+    console.error('Error al realizar la petición get de appsheet:', error.response?.data || error.message)
     throw error
   }
 }
