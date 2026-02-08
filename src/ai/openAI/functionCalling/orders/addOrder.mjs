@@ -122,7 +122,7 @@ export async function addOrder(args, user, userIdKey, { callId, responseOutput }
     platform,
     'bot',
     'outgoing',
-    'bot'
+    'bot',
   )
 
   sendToChannels(summaryMessage)
@@ -164,7 +164,11 @@ export async function addOrder(args, user, userIdKey, { callId, responseOutput }
     }
     // si la acción no es reconocida
     else {
-      result = { success: false, message: 'Acción no reconocida. Por favor intenta de nuevo.', userResponse: response }
+      result = {
+        success: false,
+        message: 'Error al montar orden. el cliente no confirmó la orden',
+        userResponse: response,
+      }
     }
 
     console.info('🧩 Respuesta de función <addOrder>:\n', JSON.stringify(result, null, 2))
@@ -174,7 +178,7 @@ export async function addOrder(args, user, userIdKey, { callId, responseOutput }
     await addMessageToHistoryOpenAi(
       userIdKey,
       [{ type: 'function_call_output', call_id: callId, output: resString }],
-      user
+      user,
     )
 
     // Cargar configuración del agente

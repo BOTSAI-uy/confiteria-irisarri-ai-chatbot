@@ -20,11 +20,8 @@ FROM node:22-alpine
 # Establecer directorio de trabajo
 WORKDIR /app
 
-# Instalar dependencias del sistema
-RUN apk add --no-cache ffmpeg 
-
-# Instalar PM2
-RUN npm install -g pm2
+# Instalar dependencias del sistema y PM2
+RUN apk add --no-cache ffmpeg && npm install -g pm2
 
 # Copiar archivos de la etapa de build
 COPY --from=build /app /app

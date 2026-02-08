@@ -1,4 +1,5 @@
 //TT MÓDULOS
+import { readMd } from '#utilities/readMd.mjs'
 import { getFullDateFormatGB, getFullDateFormatUS, getTimeFormat } from '#utilities/dateFunctions/dateNow.mjs'
 import { deletePhoneExtension } from '#utilities/facturapp/formatPhone.mjs'
 
@@ -6,17 +7,30 @@ import { deletePhoneExtension } from '#utilities/facturapp/formatPhone.mjs'
 import { buildRequestTags } from './buildPrompt/toolSendRequest.mjs'
 import { buildPromotions } from './buildPrompt/promotions.mjs'
 
+let BASIC_PROMPT = null
+
 //TT CONSTRUIR PROMPTS
 export async function buildPrompt(brain, user) {
   try {
     //SS ESTRUCTURA
     //cargar base
+    if (!BASIC_PROMPT) {
+      console.info('Cargando contenido del prompt base desde archivo...')
+      BASIC_PROMPT = await readMd('./res/docs/basicPrompt.md')
+      if (BASIC_PROMPT) {
+        console.info('Contenido del prompt base cargado exitosamente.')
+      } else {
+        console.warn('No se pudo cargar el contenido del prompt base. Verifica que el archivo exista y sea accesible.')
+      }
+    }
+    let txt = ''
+
     const head = brain.headPrompt
     const body = brain.prompt
     const footer = brain.footerPrompt
-    let txt = ''
 
     //construir base
+    if (BASIC_PROMPT) txt += BASIC_PROMPT + '\n\n- - -\n\n'
     if (head) txt += head + '\n'
     if (body) txt += '\n- - -\n\n' + body + '\n\n- - -\n'
     if (footer) txt += '\n' + footer
