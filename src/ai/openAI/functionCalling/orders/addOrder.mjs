@@ -166,8 +166,7 @@ export async function addOrder(args, user, userIdKey, { callId, responseOutput }
     else {
       result = {
         success: false,
-        message: 'Error al montar orden. el cliente no confirmó la orden',
-        userResponse: response,
+        message: 'Error al montar orden. el cliente no confirmó, canceló o solicitó modificar el pedido.',
       }
     }
 
