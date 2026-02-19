@@ -39,19 +39,20 @@ class DataFormatter {
       codigo: item.code,
       descripcion: item.description,
       descripcionAvanzada: item.advancedDescription,
+      alias: item.alias,
       active: item.active,
       ramo: item.branch,
       familia: item.family,
       grupo: item.group,
-      precioVenta: parseFloat(item.salePrice), //fix: se debe actualizar desde la lista de articulos o no
+      precioVenta: Number.parseFloat(item.salePrice), //fix: se debe actualizar desde la lista de articulos o no
       unidadMedida: item.unit, //fix: se debe actualizar desde la lista de articulos o no
       fotoPortada: item.urlImage,
       fechaUpdate: item.updateDate,
       // adiciones
       restricciones: item.restriction,
-      cantidadMinima: parseFloat(item.minimumQuantity) || 0,
-      multipleDe: parseFloat(item.multipleOf) || 1,
-      horasDeAnticipacion: parseInt(item.hoursInAdvance) || 0,
+      cantidadMinima: Number.parseFloat(item.minimumQuantity) || 0,
+      multipleDe: Number.parseFloat(item.multipleOf) || 1,
+      horasDeAnticipacion: Number.parseInt(item.hoursInAdvance) || 0,
       libreDeAzucar: item.sugarFree,
       aptoParaCeliacos: item.suitableForCeliacs,
       esVegano: item.vegan,
