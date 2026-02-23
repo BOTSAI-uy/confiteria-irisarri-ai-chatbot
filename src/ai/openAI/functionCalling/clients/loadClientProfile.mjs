@@ -1,5 +1,6 @@
 import { getClientByDni } from '#db/clients/getClientByDni.mjs'
 import { getClientByPhone } from '#db/clients/getClientByPhone.mjs'
+import { ClientProfilesAppsheet } from '#services/appsheet/clientProfiles.mjs'
 
 import { cleanDataClient } from '#utilities/clients/cleanDataClient.mjs'
 import { Clients } from '#ai/agentProcess/clientAction.mjs'
@@ -41,8 +42,19 @@ export async function loadClientProfile(args, user, userIdKey) {
     console.log('Cliente de empresa detectado:', client)
   }
 
+  // cargar perfil de cliente desde Appsheet
+  let clientProfile = null
+  if (client.codigoCliente) {
+    console.log('Cargando perfil de cliente desde Appsheet para codigoCliente:', client.codigoCliente)
+    clientProfile = await ClientProfilesAppsheet.getProfileById(String(client.codigoCliente))
+  }
+
   // agregar cliente a la sesión
   const cleanData = cleanDataClient(client)
+  if (clientProfile) {
+    console.log('Perfil de cliente encontrado en Appsheet:', clientProfile)
+    cleanData.profile = clientProfile
+  }
   console.info('🧩 Respuesta de función <loadClientProfile>:\n', JSON.stringify(cleanData, null, 2))
   return { status: 'success', client: cleanData }
 }
