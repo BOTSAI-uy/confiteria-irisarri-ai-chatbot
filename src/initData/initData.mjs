@@ -7,7 +7,6 @@ import { getAllAssistants } from '#db/assistants/getAllAssistants.mjs'
 
 // carga inicial de datos
 import { AppConfigAppsheet } from '#services/appsheet/appConfig.mjs'
-import { getAllSendRequestTags } from '#db/tools/sendRequestTags/getAllSendRequestTags.mjs'
 
 export async function initData() {
   // inicializar configuración del servicio solo en producción
@@ -33,9 +32,6 @@ export async function initData() {
   // asistentes
   const assistants = await getAllAssistants()
   console.info(`initData - Asistentes cargados en caché: ${assistants ? assistants.length : 0}`)
-  // etiquetas de solicitud
-  const sendRequestTags = await getAllSendRequestTags()
-  console.info(`initData - Etiquetas de solicitud cargadas en caché: ${sendRequestTags ? sendRequestTags.length : 0}`)
 
   //iniciar cronjobs
   startCronJobs()

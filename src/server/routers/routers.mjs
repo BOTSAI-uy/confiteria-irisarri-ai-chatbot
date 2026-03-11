@@ -1,6 +1,4 @@
 //SS PROVEEDORES
-// meta whatsapp
-import loadWhatsappTemplatesMeta from './provider/whatsapp-meta/loadTemplates.mjs'
 // baileys whatsapp
 import connectToBaileys from './provider/baileys/connectToBaileys.mjs'
 import deleteSessionBaileys from './provider/baileys/deleteSession.mjs'
@@ -17,8 +15,6 @@ import api from './api/routes.mjs'
 
 export default [
   //SS PROVEEDORES
-  //meta whatsapp
-  loadWhatsappTemplatesMeta,
   //baileys whatsapp
   connectToBaileys,
   deleteSessionBaileys,

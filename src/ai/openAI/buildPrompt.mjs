@@ -4,7 +4,6 @@ import { getFullDateFormatGB, getFullDateFormatUS, getTimeFormat } from '#utilit
 import { deletePhoneExtension } from '#utilities/facturapp/formatPhone.mjs'
 
 //TT CONSTRUIR PROMPTS
-import { buildRequestTags } from './buildPrompt/toolSendRequest.mjs'
 import { buildPromotions } from './buildPrompt/promotions.mjs'
 
 let BASIC_PROMPT = null
@@ -58,11 +57,6 @@ export async function buildPrompt(brain, user) {
     }
 
     //SS TOOLS
-    //sendRequest
-    if (brain.toolSendRequest && txt.includes('{request_tags}')) {
-      const requestTags = await buildRequestTags(brain.toolSendRequest)
-      txt = txt.replaceAll('{request_tags}', requestTags)
-    }
 
     return txt
   } catch (error) {

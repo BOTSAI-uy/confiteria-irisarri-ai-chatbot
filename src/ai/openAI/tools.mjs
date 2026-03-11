@@ -1,7 +1,6 @@
 import { getBrainById } from '#db/brains/getBrainById.mjs'
 
 //tools
-import { getJson as jsonSendRequest } from './tools/jsonSendRequest.mjs'
 import { getJson as jsonLoadClientProfile } from './tools/clients/jsonLoadClientProfile.mjs'
 import { getJson as jsonAddClientProfile } from './tools/clients/jsonAddClientProfile.mjs'
 import { getJson as jsonAddOrder } from './tools/orders/jsonAddOrder.mjs'
@@ -48,14 +47,6 @@ export async function getToolsOpenAi(brainId) {
   const getOrderByNumberJson = await jsonGetOrderByNumber()
   if (getOrderByNumberJson) {
     tools.push(getOrderByNumberJson)
-  }
-
-  //sendRequest
-  if (brain.toolSendRequest) {
-    const sendRequestJson = await jsonSendRequest(brain.toolSendRequest)
-    if (sendRequestJson) {
-      tools.push(sendRequestJson)
-    }
   }
 
   //console.log('getToolsOpenAi: ', tools)
