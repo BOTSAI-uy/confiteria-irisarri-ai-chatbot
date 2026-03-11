@@ -1,6 +1,6 @@
-async function catchError(Promise) {
+async function catchError(promise) {
   try {
-    const data = await Promise
+    const data = await promise
     return [null, data]
   } catch (error) {
     return [error, null]
