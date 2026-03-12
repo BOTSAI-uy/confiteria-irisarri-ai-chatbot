@@ -1,5 +1,10 @@
 import { getSendRequestTagById } from '#db/sendRequestTags/getSendRequestTagById.mjs'
 import { addSendRequestData } from '#db/sendRequestData/addSendRequestData.mjs'
+import { getConfig } from '#db/sendRequest/getConfig.mjs'
+import { getAssistantById } from '#db/assistants/getAssistantById.mjs'
+import { getTemplateById } from '#provider/whatsapp-meta/templates/getTemplateById.mjs'
+import { buildTemplate } from '#provider/whatsapp-meta/utilities/buildTemplate.mjs'
+import { sendTemplate } from '#provider/whatsapp-meta/templates/sendTemplate.mjs'
 
 export async function sendRequest(args, user) {
   const { tagId, details } = args
@@ -28,6 +33,85 @@ export async function sendRequest(args, user) {
     return { error: 'Error al crear la solicitud' }
   }
 
+  // enviar notificación
+  sendNotification(data, tag, user)
+
   console.info('🧩 Respuesta de función <sendRequest>:\n', JSON.stringify(data, null, 2))
   return { status: 'success', data }
+}
+
+//ss enviar notificación a asistentes de la etiqueta
+async function sendNotification(request, tag, user) {
+  // validar asistentes
+  if (tag.assistants.length === 0) {
+    console.warn('sendRequest: La etiqueta de solicitud no tiene asistentes asignados')
+    return
+  }
+
+  // cargar configuración
+  const config = await getConfig()
+  if (!config) {
+    console.error('sendRequest: Error al cargar la configuración de envío de solicitudes')
+    return
+  }
+
+  // validar plantilla
+  if (!config.template) {
+    console.warn('sendRequest: No se ha configurado una plantilla para las notificaciones de solicitudes')
+    return
+  }
+
+  // cargar plantilla
+  const template = await getTemplateById(config.template)
+  if (!template) {
+    console.error('sendRequest: No se ha encontrado la plantilla con id', config.template)
+    return
+  }
+  // cargar asistentes
+  const assistants = []
+  for (const assistantId of tag.assistants) {
+    const assistant = await getAssistantById(assistantId)
+    if (assistant) {
+      assistants.push(assistant)
+    }
+  }
+
+  // validar asistentes encontrados
+  if (assistants.length === 0) {
+    console.warn('sendRequest: Ninguno de los asistentes asignados a la etiqueta de solicitud fue encontrado')
+    return
+  }
+
+  // crear valores de plantilla
+  const templateValues = [
+    {
+      key: 'nombre',
+      type: 'string',
+      value: user.name || 'desconocido',
+    },
+    {
+      key: 'telefono',
+      type: 'string',
+      value: user.whatsapp?.id || 'desconocido',
+    },
+    {
+      key: 'asunto',
+      type: 'string',
+      value: tag.name || 'sin asunto',
+    },
+    {
+      key: 'solicitud',
+      type: 'string',
+      value: request.details || 'sin detalles',
+    },
+  ]
+
+  // construir plantilla con valores
+  const builtTemplate = buildTemplate(template, templateValues)
+
+  // enviar plantilla a cada asistente
+  for (const assistant of assistants) {
+    console.info(`Enviando notificación de solicitud al asistente ${assistant.name} (${assistant.whatsappId})`)
+    await sendTemplate(assistant.whatsappId, builtTemplate)
+  }
 }
