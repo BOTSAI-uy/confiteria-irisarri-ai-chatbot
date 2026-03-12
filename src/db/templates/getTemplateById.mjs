@@ -11,7 +11,7 @@ export async function getTemplateById(id) {
     console.warn({ error: error.message, stack: error.stack }, `Error al obtener la plantilla por ID: ${id}`)
     return null
   }
-  console.trace(`Plantilla obtenida de la base de datos: ${id}`)
+  console.info(`Plantilla obtenida de la base de datos: ${id}`)
 
   return template
 }

@@ -13,9 +13,9 @@ export async function addLog(userId, { provider, model, type, unit, input, outpu
     model,
     type,
     unit,
-    input: parseInt(input, 10) || 0,
-    output: parseInt(output, 10) || 0,
-    cachedInput: parseInt(cachedInput, 10) || 0,
+    input: Number.parseInt(input, 10) || 0,
+    output: Number.parseInt(output, 10) || 0,
+    cachedInput: Number.parseInt(cachedInput, 10) || 0,
   }
   logs.push(log)
   //console.log('Log added:', log)

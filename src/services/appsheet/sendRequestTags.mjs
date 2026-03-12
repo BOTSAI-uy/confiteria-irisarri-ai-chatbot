@@ -8,6 +8,16 @@ export class SendRequestTagsAppsheet {
     const res = await SCHEMA.find()
     return res
   }
+
+  //ss obtener por id
+  async getSendRequestTagById(id) {
+    const res = await SCHEMA.findById(id)
+    if (!res) {
+      console.error('getSendRequestTagById: No se ha encontrado la etiqueta con id', id)
+      return null
+    }
+    return res
+  }
 }
 
 export const SCHEMA = appsheetClient.createSchema(NAME_TABLE, {

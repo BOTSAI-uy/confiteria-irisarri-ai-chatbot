@@ -1,6 +1,7 @@
 import { getBrainById } from '#db/brains/getBrainById.mjs'
 
 //tools
+import { getJson as jsonSendRequest } from './tools/sendRequest.mjs'
 import { getJson as jsonLoadClientProfile } from './tools/clients/jsonLoadClientProfile.mjs'
 import { getJson as jsonAddClientProfile } from './tools/clients/jsonAddClientProfile.mjs'
 import { getJson as jsonAddOrder } from './tools/orders/jsonAddOrder.mjs'
@@ -14,6 +15,12 @@ export async function getToolsOpenAi(brainId) {
   if (!brain) {
     console.error('getToolsOpenAi: No se ha encontrado el cerebro')
     return tools
+  }
+
+  //sendRequest
+  const sendRequestJson = await jsonSendRequest()
+  if (sendRequestJson && brain.toolSendRequest) {
+    tools.push(sendRequestJson)
   }
 
   //clients

@@ -11,7 +11,7 @@ export async function getConfig() {
     console.warn({ error: error.message, stack: error.stack }, `Error al obtener la configuración de solicitudes`)
     return null
   }
-  console.trace(`Configuración de solicitudes obtenida de la base de datos`)
+  console.info(`Configuración de solicitudes obtenida de la base de datos`)
 
   return template
 }
