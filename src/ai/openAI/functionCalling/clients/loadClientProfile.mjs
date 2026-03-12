@@ -55,6 +55,6 @@ export async function loadClientProfile(args, user, userIdKey) {
     console.log('Perfil de cliente encontrado en Appsheet:', clientProfile)
     cleanData.profile = clientProfile
   }
-  console.info('🧩 Respuesta de función <loadClientProfile>:\n', JSON.stringify(cleanData, null, 2))
+  console.info('🧩 Respuesta de función <loadClientProfile>:\n', JSON.stringify(client, null, 2))
   return { status: 'success', client: cleanData }
 }

@@ -4,7 +4,7 @@ const NAME_TABLE = 'TEMPLATES_META'
 
 export class TemplatesAppsheet {
   //ss cargar por id
-  async getTemplateWhatsappMetaById(id) {
+  async getTemplateById(id) {
     const res = await SCHEMA.findById(id)
     if (!res) {
       console.error(`appsheet - templatesWhatsappMeta: No se encontró el templateWhatsappMeta con id ${id}.`)
@@ -14,7 +14,7 @@ export class TemplatesAppsheet {
   }
 
   //ss agregar múltiples plantillas
-  async addTemplatesWhatsappMeta(templates) {
+  async addTemplates(templates) {
     const res = await SCHEMA.createMany(templates)
     return res
   }

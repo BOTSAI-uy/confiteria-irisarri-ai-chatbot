@@ -5,6 +5,7 @@ import { deletePhoneExtension } from '#utilities/facturapp/formatPhone.mjs'
 
 //TT CONSTRUIR PROMPTS
 import { buildPromotions } from './buildPrompt/promotions.mjs'
+import { buildSendRequestTags } from './buildPrompt/sendRequestTags.mjs'
 
 let BASIC_PROMPT = null
 
@@ -56,7 +57,11 @@ export async function buildPrompt(brain, user) {
       txt = txt.replaceAll('{promotions}', promotions)
     }
 
-    //SS TOOLS
+    //SS SOLICITUDES
+    if (txt.includes('{request_tags}') && brain.toolSendRequest) {
+      const sendRequestTags = await buildSendRequestTags()
+      txt = txt.replaceAll('{request_tags}', sendRequestTags)
+    }
 
     return txt
   } catch (error) {

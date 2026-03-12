@@ -1,6 +1,7 @@
 import { FUNCTION_STATUS } from '#enums/agent.mjs'
 
 //SS FUNCIONES
+import { sendRequest } from './functionCalling/sendRequest.mjs'
 import { loadClientProfile } from './functionCalling/clients/loadClientProfile.mjs'
 import { addClientProfile } from './functionCalling/clients/addClientProfile.mjs'
 import { addOrder } from './functionCalling/orders/addOrder.mjs'
@@ -9,6 +10,7 @@ import { getShippingAvailability } from './functionCalling/orders/getShippingAva
 import { getOrderByNumber } from './functionCalling/orders/getOrderByNumber.mjs'
 
 //SS NOMBRES
+import { functionName as sendRequestName } from './tools/sendRequest.mjs'
 import { functionName as loadClientProfileName } from './tools/clients/jsonLoadClientProfile.mjs'
 import { functionName as addClientProfileName } from './tools/clients/jsonAddClientProfile.mjs'
 import { functionName as addOrderName } from './tools/orders/jsonAddOrder.mjs'
@@ -27,6 +29,8 @@ export async function functionCalling(aiFunction, user, userIdKey, responseOutpu
   )
 
   const handlers = {
+    [sendRequestName]: sendRequest,
+
     [loadClientProfileName]: loadClientProfile,
     [addClientProfileName]: addClientProfile,
     [addOrderName]: addOrder,
