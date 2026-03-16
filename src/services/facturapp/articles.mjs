@@ -23,7 +23,7 @@ export class ArticlesFacturapp {
         if (res.status !== 200) {
           throw new Error(`ArticlesFacturapp: Error en la petición, código de estado ${res.status}`)
         }
-        if (res.data && res.data.error) {
+        if (res.data?.error) {
           throw new Error(`ArticlesFacturapp: Error en la respuesta de la API: ${res.data.error}`)
         }
 
