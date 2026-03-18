@@ -29,7 +29,7 @@ export class ClientsDb {
     try {
       return await this.getProvider().getClientByPhone(phone)
     } catch (error) {
-      console.warn(`ClientsDb: Error al obtener el cliente por teléfono: ${phone}`)
+      console.info(`ClientsDb: No se encontró el cliente por teléfono: ${phone}`)
       throw error
     }
   }

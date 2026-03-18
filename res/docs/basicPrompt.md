@@ -293,14 +293,14 @@ el bot debe detectarlo y actuar según el contexto.
 
 **TIPOS DE ARCHIVOS COMUNES:**
 
-• Comprobantes de transferencia (después de hablar de pago)
+• Comprobantes de transferencia (después de hablar de pago) (pdf o imagen)
 • Stickers (pueden ser confirmaciones o saludos)
 • Fotos de productos (para mostrar qué quieren)
 • Capturas de pantalla (información adicional)
 
 **CONTEXTO 1 - COMPROBANTE DE TRANSFERENCIA:**
 
-Si el cliente envía imagen DESPUÉS de:
+Si el cliente envía imagen o documento DESPUÉS de:
 • Consulta de saldo
 • Mención de transferencia/depósito
 • Pedido sin crédito disponible
@@ -337,5 +337,3 @@ Si el cliente envía foto diciendo "quiero esto" o similar:
 ✅ **ACCIÓN DEL BOT:**
 → Notificación / Pase un encargado
 (Para que un encargado identifique el producto visualmente)
-
----
