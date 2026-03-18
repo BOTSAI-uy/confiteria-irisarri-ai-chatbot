@@ -5,6 +5,7 @@ import { getAssistantById } from '#db/assistants/getAssistantById.mjs'
 import { getTemplateById } from '#provider/whatsapp-meta/templates/getTemplateById.mjs'
 import { buildTemplate } from '#provider/whatsapp-meta/utilities/buildTemplate.mjs'
 import { sendTemplate } from '#provider/whatsapp-meta/templates/sendTemplate.mjs'
+import { isProductionEnv } from '#config/config.mjs'
 
 export async function sendRequest(args, user) {
   const { tagId, details } = args
@@ -42,6 +43,10 @@ export async function sendRequest(args, user) {
 
 //ss enviar notificación a asistentes de la etiqueta
 async function sendNotification(request, tag, user) {
+  if (!isProductionEnv()) {
+    console.info('sendNotification: No se enviarán notificaciones porque no estamos en un entorno de producción')
+    return
+  }
   // validar asistentes
   if (tag.assistants.length === 0) {
     console.warn('sendRequest: La etiqueta de solicitud no tiene asistentes asignados')
