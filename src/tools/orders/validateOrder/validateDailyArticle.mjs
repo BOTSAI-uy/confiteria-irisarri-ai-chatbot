@@ -1,5 +1,5 @@
 export async function validateDailyArticle(item, dailyArticle, deliveryDate, result) {
-  console.log('Validating daily article:', { item, dailyArticle, deliveryDate })
+  //console.log('Validating daily article:', { item, dailyArticle, deliveryDate })
   // validar que este disponible
   if (!dailyArticle.active) {
     console.error(`validateDailyArticle: El artículo con código ${item.article} no está disponible para la venta hoy.`)

@@ -21,14 +21,33 @@ export async function createOrderSummary(order) {
       console.error(`Artículo con código ${item.article} no encontrado para el resumen.`)
       continue
     }
-    const itemTotal = article.precioVenta * item.quantity
-    totalPrice += itemTotal
-    summary += `- ${capitalizeFirst(article.descripcion)}  (x${item.quantity} ${
-      article.unidadMedida
-    }) = **$${itemTotal}**\n`
+
+    // calcular total del artículo
+    let itemTotal = 0
+
+    // si el artículo tiene descuento, aplicar descuento al precio de venta
+    if (article.discount) {
+      const discountFactor = 1 - article.discount
+      itemTotal = article.precioVenta * discountFactor * item.quantity
+      summary += `- ${capitalizeFirst(article.descripcion)}  (x${item.quantity} ${
+        article.unidadMedida
+      }) = **$${itemTotal.toFixed(2)}** (descuento ${article.discount * 100}%)\n`
+    }
+    // si el artículo no tiene descuento, usar precio de venta normal
+    else {
+      itemTotal = article.precioVenta * item.quantity
+      summary += `- ${capitalizeFirst(article.descripcion)}  (x${item.quantity} ${
+        article.unidadMedida
+      }) = **$${itemTotal.toFixed(2)}**\n`
+    }
+
+    // agregar nota del artículo si existe
     if (item.note) {
       summary += `${formatNote(item.note)}\n`
     }
+
+    // agregar total del artículo al total general
+    totalPrice += itemTotal
 
     // verificar si el artículo es por kg
     if (String(article.unidadMedida).toLowerCase().includes('kg')) {
@@ -36,7 +55,7 @@ export async function createOrderSummary(order) {
     }
   }
 
-  summary += `\n**Total: $${totalPrice}**`
+  summary += `\n**Total: $${totalPrice.toFixed(2)}**`
 
   // nota sobre artículos por kg
   if (isKgBased) {

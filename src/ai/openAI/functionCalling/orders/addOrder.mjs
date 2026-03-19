@@ -1,6 +1,8 @@
 import { validateOrder } from '#tools/orders/validateOrder.mjs'
+import { applyDiscounts } from '#tools/orders/applyDiscounts.mjs'
 import { buildOrder } from '#utilities/openai/buildOrder.mjs'
 import { Clients } from '#ai/agentProcess/clientAction.mjs'
+import { getAllDiscounts } from '#db/discounts/getAllDiscounts.mjs'
 import { addMessageToHistoryOpenAi } from '#ai/openAI/messageHistory.mjs'
 import { addOrder as addOrderTool } from '#tools/orders/addOrder.mjs'
 import { FunctionProcess } from '#ai/agentProcess/functionProcess.mjs'
@@ -44,7 +46,7 @@ export async function addOrder(args, user, userIdKey, { callId, responseOutput }
   let deliveryDate = ''
 
   // obtener disponibilidad de envío actual para los artículos
-  if (!args.deliveryDate || !args.deliveryDate.date || !args.deliveryDate.time) {
+  if (!args.deliveryDate?.date || !args.deliveryDate?.time) {
     const articleCodes = args.articles.map((item) => item.article)
     deliveryDate = await getCurrentShippingAvailability(articleCodes)
     if (!deliveryDate) {
@@ -89,7 +91,7 @@ export async function addOrder(args, user, userIdKey, { callId, responseOutput }
   }
 
   // construir pedido para la base de datos
-  const builtOrder = buildOrder(client.codigoCliente, order)
+  let builtOrder = buildOrder(client.codigoCliente, order)
 
   // validar datos del pedido
   const validation = await validateOrder(builtOrder)
@@ -100,6 +102,13 @@ export async function addOrder(args, user, userIdKey, { callId, responseOutput }
       details: validation.errors,
     }
   }
+
+  // obtener descuentos disponibles
+  const discounts = await getAllDiscounts()
+  const activeDiscounts = discounts.filter((d) => d.status)
+
+  // aplicar descuentos al pedido
+  builtOrder = await applyDiscounts(builtOrder, activeDiscounts)
 
   // crear resumen de pedido para confirmación
   const header = 'Resumen de tu pedido'
@@ -141,16 +150,16 @@ export async function addOrder(args, user, userIdKey, { callId, responseOutput }
       // agregar pedido usando la herramienta
       const newOrder = await addOrderTool(builtOrder)
 
+      // si el pedido se creó correctamente
+      if (newOrder?.success) {
+        result = { status: true, message: 'Pedido creado correctamente.', order: newOrder.data }
+      }
       // si hubo un error al crear el pedido
-      if (!newOrder || !newOrder.success) {
+      else {
         result = {
           success: false,
-          message: newOrder.message || 'Error al crear el pedido',
+          message: newOrder?.message || 'Error al crear el pedido',
         }
-      }
-      // si el pedido se creó correctamente
-      else {
-        result = { status: true, message: 'Pedido creado correctamente.', order: newOrder.data }
       }
     }
 
