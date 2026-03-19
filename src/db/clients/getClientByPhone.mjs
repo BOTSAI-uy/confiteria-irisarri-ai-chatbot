@@ -14,7 +14,7 @@ export async function getClientByPhone(phone) {
     CacheData.set(client.codigoCliente, client)
 
     return client
-  } catch (error) {
+  } catch {
     //console.warn(`getClientByPhone: Error al obtener el cliente por teléfono: ${phone}`)
     return null
   }
