@@ -26,13 +26,15 @@ export async function createOrderSummary(order) {
     let itemTotal = 0
 
     // si el artículo tiene descuento, aplicar descuento al precio de venta
-    if (article.discount) {
-      const discountFactor = 1 - article.discount
+    if (item.discount) {
+      const discountFactor = 1 - item.discount
       itemTotal = article.precioVenta * item.quantity * discountFactor
+      const originalPrice = article.precioVenta * item.quantity
       summary += `- ${capitalizeFirst(article.descripcion)}  (x${item.quantity} ${
         article.unidadMedida
-      }) = **$${itemTotal.toFixed(2)}** (descuento ${article.discount * 100}%)\n`
+      }) = ~$${originalPrice.toFixed(2)}~ **$${itemTotal.toFixed(2)}** (descuento ${item.discount * 100}%)\n`
     }
+
     // si el artículo no tiene descuento, usar precio de venta normal
     else {
       itemTotal = article.precioVenta * item.quantity
