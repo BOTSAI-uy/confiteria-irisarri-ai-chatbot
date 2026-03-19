@@ -1,5 +1,5 @@
 const FORMAT = {
-  589: { slice: 3, length: 11, newExtension: '0' }, // Uruguay
+  598: { slice: 3, length: 11, newExtension: '0' }, // Uruguay
   57: { slice: 2, length: 12 }, // Colombia
   521: { slice: 3, length: 13 }, // México
 }
