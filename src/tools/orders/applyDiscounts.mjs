@@ -16,6 +16,7 @@ export async function applyDiscounts(order, discounts) {
     const articleInfo = articlesData.find((a) => a.codigo === article.article)
     if (!articleInfo) {
       console.warn(`Artículo no encontrado para código ${article.article}, omitiendo descuentos.`)
+      continue
     }
 
     // buscar descuentos aplicables al artículo
@@ -24,7 +25,7 @@ export async function applyDiscounts(order, discounts) {
       console.info(
         `Aplicando descuento del ${discount.discount * 100}% al artículo ${articleInfo.descripcion} el dia ${currentDay} (código ${article.article})`,
       )
-      // aplicar descuento al artículo
+      // agregar descuento al artículo para generar el resumen del pedido con el descuento aplicado
       article.discount = discount.discount
 
       // agregar nota al artículo sobre el descuento aplicado
