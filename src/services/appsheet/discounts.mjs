@@ -22,7 +22,7 @@ export const SCHEMA = appsheetClient.createSchema(NAME_TABLE, {
     type: 'boolean',
   },
   groupId: {
-    type: 'string',
+    type: 'number',
   },
   days: {
     type: 'array',
