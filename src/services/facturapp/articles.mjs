@@ -36,9 +36,9 @@ export class ArticlesFacturapp {
         }
 
         // Algunas APIs devuelven el header en distintos formatos/nombres
-        const remaining = parseInt(res.headers['x-remaining'], 10) || 0
+        const remaining = Number.parseInt(res.headers['x-remaining'], 10) || 0
         // Si no quedan artículos por traer, salir del bucle
-        if (!(remaining > 0)) {
+        if (remaining <= 0) {
           break
         }
       }

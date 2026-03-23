@@ -36,16 +36,12 @@ export async function getJson() {
           type: ['string', 'null'],
           description: 'Código postal del cliente',
         },
-        invoiceName: {
-          type: ['string', 'null'],
-          description: 'Nombre para la factura del cliente, (si es diferente al nombre real)',
-        },
         contact: {
           type: ['string', 'null'],
           description: 'Persona de contacto del cliente, en caso de que sea una empresa',
         },
       },
-      required: ['dni', 'name', 'lastName', 'address', 'email', 'phone', 'postalCode', 'invoiceName', 'contact'],
+      required: ['dni', 'name', 'lastName', 'address', 'email', 'phone', 'postalCode', 'contact'],
       additionalProperties: false,
     },
     strict: true,

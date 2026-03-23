@@ -99,7 +99,7 @@ export function isProductionEnv() {
 
 //TT FACTURAPP ACTIVO
 export function isFacturappActive(key) {
-  if (ENV.FACTURAPP_ACTIVE && ENV.FACTURAPP_ACTIVE.includes(key)) {
+  if (ENV.FACTURAPP_ACTIVE.includes(key)) {
     return true
   }
   return false

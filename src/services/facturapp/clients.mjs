@@ -127,7 +127,7 @@ class DataFormatter {
       telefono: item.phone || '',
       codigoPostal: item.postalCode || '',
       observaciones: item.observations || '',
-      facturaNombre: item.invoiceName || '',
+      facturaNombre: `${item.name || ''} ${item.lastName || ''}`.trim(),
       contacto: item.contact || '',
     }))
 

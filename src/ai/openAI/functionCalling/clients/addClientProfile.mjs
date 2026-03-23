@@ -16,6 +16,8 @@ export async function addClientProfile(args, user, userIdKey) {
     console.warn('El cliente ya existe con el DNI:', dni)
     return { response: 'error: client already exists with dni' }
   }
+
+  // Verificar si el cliente ya existe por teléfono
   client = await getClientByPhone(phone)
   if (client) {
     console.warn('El cliente ya existe con el teléfono:', phone)
