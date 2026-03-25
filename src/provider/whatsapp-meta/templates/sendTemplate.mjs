@@ -7,6 +7,7 @@ export async function sendTemplate(phone, template) {
   const url = `https://graph.facebook.com/${ENV.WHATSAPP_META_VERSION}/${ENV.WHATSAPP_META_PHONEID}/messages`
   const body = {
     messaging_product: 'whatsapp',
+    recipient_type: 'individual',
     to: phone,
     type: 'template',
     template,
@@ -42,6 +43,13 @@ export async function sendTemplate(phone, template) {
     ],
     status: 'sent',
   }
+
+  console.info(
+    'sendTemplate: Plantilla enviada exitosamente, respuesta de la API:\n',
+    JSON.stringify(response.data, null, 2),
+  )
+
+  console.info('sendTemplate: body:\n', JSON.stringify(body, null, 2))
 
   return content
 }

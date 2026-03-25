@@ -1,46 +1,57 @@
-import { getData } from '#utilities/appsheet/getData.mjs'
+import { appsheetClient } from './appsheetClient.mjs'
 
 const NAME_TABLE = 'ASSISTANTS'
 
 export class AssistantsAppsheet {
   // ss obtener todos los asistentes
   static async getAllAssistants() {
-    const res = await getData(NAME_TABLE)
-    const result = DataFormatter.buildData(res)
-    return Array.isArray(result) ? result : [result]
+    const res = await SCHEMA.find()
+    return res
   }
 
   //ss obtener asistente por id
   static async getAssistantById(id) {
-    const res = await getData(NAME_TABLE, {
-      Selector: `Filter(${NAME_TABLE}, [id] = "${id}")`,
-    })
-    return DataFormatter.buildData(res[0])
-  }
-}
-
-class DataFormatter {
-  //ss construir datos de configuración
-  static buildData(data) {
-    const allData = Array.isArray(data) ? data : [data]
-
-    // mapear datos al formato requerido
-    const result = allData.map((item) => ({
-      id: item.ID,
-      name: item.NAME,
-      email: item.EMAIL || '',
-      whatsappId: item.WHATSAPP_ID || '',
-      phone: item.PHONE || '',
-      detectAssistantCondition: item.DETECT_ASSISTANT_CONDITION || 'never',
-      detectAssistantMessage: item.DETECT_ASSISTANT_MESSAGE,
-      detectAssistantIdle: parseInt(item.DETECT_ASSISTANT_IDLE, 10) || 5, // minutos
-    }))
-
-    // validar si es un solo objeto o un array
-    if (result.length === 1) {
-      return result[0]
+    const res = await SCHEMA.findById(id)
+    if (!res) {
+      console.error(`appsheet - assistants: No se encontró el assistant con id ${id}.`)
+      return null
     }
-    // devolver array de objetos
-    return result
+    return res
   }
 }
+
+export const SCHEMA = appsheetClient.createSchema(NAME_TABLE, {
+  id: {
+    key: 'ID',
+    type: 'string',
+    primary: true,
+  },
+  name: {
+    key: 'NAME',
+    type: 'string',
+  },
+  email: {
+    key: 'EMAIL',
+    type: 'string',
+  },
+  whatsappId: {
+    key: 'WHATSAPP_ID',
+    type: 'string',
+  },
+  phone: {
+    key: 'PHONE',
+    type: 'string',
+  },
+  detectAssistantCondition: {
+    key: 'DETECT_ASSISTANT_CONDITION',
+    type: 'string',
+  },
+  detectAssistantMessage: {
+    key: 'DETECT_ASSISTANT_MESSAGE',
+    type: 'string',
+  },
+  detectAssistantIdle: {
+    key: 'DETECT_ASSISTANT_IDLE',
+    type: 'number',
+  },
+})

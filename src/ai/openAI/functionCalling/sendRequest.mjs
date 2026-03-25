@@ -72,6 +72,7 @@ async function sendNotification(request, tag, user) {
     console.error('sendRequest: No se ha encontrado la plantilla con id', config.template)
     return
   }
+
   // cargar asistentes
   const assistants = []
   for (const assistantId of tag.assistants) {
@@ -116,6 +117,12 @@ async function sendNotification(request, tag, user) {
 
   // enviar plantilla a cada asistente
   for (const assistant of assistants) {
+    if (!assistant.whatsappId) {
+      console.warn(
+        `sendRequest: El asistente ${assistant.name} no tiene un ID de WhatsApp configurado, se omitirá la notificación`,
+      )
+      continue
+    }
     console.info(`Enviando notificación de solicitud al asistente ${assistant.name} (${assistant.whatsappId})`)
     await sendTemplate(assistant.whatsappId, builtTemplate)
   }
