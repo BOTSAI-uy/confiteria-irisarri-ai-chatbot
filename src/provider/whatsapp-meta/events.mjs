@@ -14,9 +14,12 @@ export function events(data) {
             }
             if (change.value.messages) {
               eventMessages(change.value.messages)
-            } else {
-              console.log('No hay mensajes')
-              console.log('change.value:\n', JSON.stringify(change.value, null, 2))
+            } else if (change.value.statuses && Array.isArray(change.value.statuses)) {
+              for (const status of change.value.statuses) {
+                if (status.status === 'failed') {
+                  console.error('Status failed:\n', JSON.stringify(status, null, 2))
+                }
+              }
             }
           } else {
             console.log('No hay cambios')
