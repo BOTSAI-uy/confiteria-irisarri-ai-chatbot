@@ -152,7 +152,7 @@ class DataFormatter {
       IdModoEntrega: HANDLE_DELIVERY_MODES[item.deliveryMode], //  **1 (Retira en local)** o **2 (Envío a domicilio)**
       IdBarrio: 0,
       IdZona: 0,
-      IdAccion: HANDLE_DELIVERY_MODES[item.deliveryMode], // **1 (Pedido para llevar)** o **2 (Pedido a domicilio)**
+      IdAccion: HANDLE_PAYMENT_METHODS[item.paymentMethod], // **1 (Pedido para llevar)** o **2 (Pedido a domicilio)**
       Observaciones: item.note || '',
       ReferenciaExterna: 'BOT-123',
       ContactoNombre: item.name || '',
