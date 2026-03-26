@@ -61,8 +61,9 @@ export class ClientsFacturapp {
     const url = `${ENV.FACTURAPP_URL}/altaCliente`
     const data = getAuth()
     const clientFormat = DataFormatter.revertData(clientData)
+    const body = { ...data, ...clientFormat }
     try {
-      const res = await axios.post(url, { ...data, ...clientFormat })
+      const res = await axios.post(url, body)
       if (res.status !== 200) {
         throw new Error(`ClientsFacturapp: Error en la petición, código de estado ${res.status} `)
       }
@@ -71,7 +72,8 @@ export class ClientsFacturapp {
       // buscar el cliente recién creado con su cedula para obtener todos sus datos
       return await this.getClientByDni(clientData.dni)
     } catch (error) {
-      //console.error(`ClientsFacturapp: Error `, error.response?.data || error.message)
+      console.error(`ClientsFacturapp: Error `, error.response?.data || error.message)
+      console.error(`ClientsFacturapp: Error al agregar cliente con datos ${JSON.stringify(body, null, 2)}`)
       throw new Error(`ClientsFacturapp: Cliente no pudo ser creado`)
     }
   }
