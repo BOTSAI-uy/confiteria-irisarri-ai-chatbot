@@ -24,7 +24,9 @@ export async function validateArticles(articles, deliveryDate, result) {
     const baseArticle = await getArticleByCode(item.article)
     if (!baseArticle) {
       console.error(`validateArticles: Artículo con código ${item.article} no encontrado.`)
-      result.errors.push(`Artículo con código ${item.article} no encontrado.`)
+      result.errors.push(
+        `Artículo con código ${item.article} no encontrado. por favor revise revisar el código del artículo dentro de los artículos disponibles. (use getArticles() para obtener la lista de artículos disponibles)`,
+      )
       continue
     }
 
