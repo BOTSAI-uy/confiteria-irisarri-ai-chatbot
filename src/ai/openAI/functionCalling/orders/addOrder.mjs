@@ -15,6 +15,7 @@ import { sendResponse } from '#ai/agentProcess/sendResponse.mjs'
 import { providerSendMessageInteractive } from '#provider/provider.mjs'
 import { deletePhoneExtension } from '#utilities/facturapp/formatPhone.mjs'
 import { getCurrentShippingAvailability } from '#tools/orders/getCurrentShippingAvailability.mjs'
+import { DELIVERY_MODES } from '#enums/tools/orders.mjs'
 
 const ORDER_ACTIONS = {
   CONFIRM: 'Confirmar Pedido',
@@ -43,12 +44,13 @@ export async function addOrder(args, user, userIdKey, { callId, responseOutput }
     return { success: false, message: 'El pedido debe contener al menos un artículo.' }
   }
 
+  const isDelivery = args.deliveryMode === DELIVERY_MODES.HOME_DELIVERY
   let deliveryDate = ''
 
   // obtener disponibilidad de envío actual para los artículos
   if (!args.deliveryDate?.date || !args.deliveryDate?.time) {
     const articleCodes = args.articles.map((item) => item.article)
-    deliveryDate = await getCurrentShippingAvailability(articleCodes)
+    deliveryDate = await getCurrentShippingAvailability(articleCodes, isDelivery)
     if (!deliveryDate) {
       return {
         success: false,

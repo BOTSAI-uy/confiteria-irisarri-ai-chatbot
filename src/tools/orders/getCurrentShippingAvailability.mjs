@@ -1,7 +1,7 @@
 import { getDailyArticleByCode } from '#db/dailyArticles/getDailyArticleByCode.mjs'
 import { getShippingAvailability } from '#tools/orders/getShippingAvailability.mjs'
 
-export async function getCurrentShippingAvailability(articleCodes = []) {
+export async function getCurrentShippingAvailability(articleCodes = [], isDelivery = true) {
   let anticipationHours = 0
   for (const code of articleCodes) {
     const dailyArticle = await getDailyArticleByCode(code)
@@ -12,7 +12,7 @@ export async function getCurrentShippingAvailability(articleCodes = []) {
     }
   }
 
-  const shippingAvailability = await getShippingAvailability(anticipationHours)
+  const shippingAvailability = await getShippingAvailability(isDelivery, anticipationHours)
 
   if (!shippingAvailability) {
     console.error('getCurrentShippingAvailability: No se pudo obtener la disponibilidad de envío.')

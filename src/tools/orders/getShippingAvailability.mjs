@@ -6,17 +6,20 @@ const TOTAL_DAYS = 14 // total de días a mostrar
 
 const WEEK_DAYS = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
 
-export async function getShippingAvailability(anticipationHours = 0) {
+export async function getShippingAvailability(isDelivery = true, anticipationHours = 0) {
   // cargar configuración de orden
   const orderConfig = await getOrderConfig()
-  if (!orderConfig || !orderConfig.deliverySchedule) {
+  if (!orderConfig || (!orderConfig.deliverySchedule && !orderConfig.pickUpSchedule)) {
     console.error('No se pudo obtener la configuración de orden o el horario de entrega.')
     return null
   }
 
+  const schedule = isDelivery ? orderConfig.deliverySchedule : orderConfig.pickUpSchedule
+
   // fecha actual con anticipación
   const startDate = new Date()
-  const anticipationTime = orderConfig.deliveryAnticipationTime || 0 //minutos de anticipación
+  const anticipationTime = isDelivery ? orderConfig.deliveryAnticipationTime || 0 : 0 //minutos de anticipación
+
   // agregar tiempo de anticipación a la fecha actual
   startDate.setMinutes(startDate.getMinutes() + anticipationTime)
 
@@ -40,7 +43,7 @@ export async function getShippingAvailability(anticipationHours = 0) {
 
     // obtener disponibilidad desde Facturapp
     const [error, facturappData] = await catchError(
-      ShippingAvailabilityDayFacturapp.getAvailabilityDay(formattedDate, true)
+      ShippingAvailabilityDayFacturapp.getAvailabilityDay(formattedDate, true),
     )
     // manejar error
     if (error) {
@@ -55,7 +58,7 @@ export async function getShippingAvailability(anticipationHours = 0) {
       times: [],
     }
 
-    const times = orderConfig.deliverySchedule[dayKey]
+    const times = schedule[dayKey] || []
     for (const time of times) {
       const [hour, minute = 0] = time.split(':').map(Number)
 
