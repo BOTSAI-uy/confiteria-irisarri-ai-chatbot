@@ -23,7 +23,9 @@ export class OrdersFacturapp {
     //console.log('Datos del pedido formateados para Facturapp:\n', JSON.stringify(orderFormat, null, 2))
 
     try {
-      const res = await axios.post(url, { ...data, ...orderFormat })
+      const body = { ...data, ...orderFormat }
+      console.info('Enviando pedido a Facturapp con los siguientes datos:\n', JSON.stringify(body, null, 2))
+      const res = await axios.post(url, body)
       if (res.status !== 200) {
         console.error('Respuesta de Facturapp al agregar pedido:\n', JSON.stringify(res.data, null, 2))
         throw new Error(`OrdersFacturapp: Error en la petición, código de estado ${res.status}`)
