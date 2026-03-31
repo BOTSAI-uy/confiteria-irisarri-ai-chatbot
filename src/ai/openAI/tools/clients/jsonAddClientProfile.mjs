@@ -24,24 +24,12 @@ export async function getJson() {
           type: 'string',
           description: 'Dirección del cliente',
         },
-        email: {
-          type: 'string',
-          description: 'Correo electrónico del cliente',
-        },
-        phone: {
-          type: 'string',
-          description: 'Número de teléfono del cliente',
-        },
-        postalCode: {
-          type: ['string', 'null'],
-          description: 'Código postal del cliente',
-        },
         contact: {
           type: ['string', 'null'],
           description: 'Persona de contacto del cliente, en caso de que sea una empresa',
         },
       },
-      required: ['dni', 'name', 'lastName', 'address', 'email', 'phone', 'postalCode', 'contact'],
+      required: ['dni', 'name', 'lastName', 'address', 'contact'],
       additionalProperties: false,
     },
     strict: true,

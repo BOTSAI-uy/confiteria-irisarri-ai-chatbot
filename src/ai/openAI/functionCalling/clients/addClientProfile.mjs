@@ -2,11 +2,13 @@ import { addNewClient } from '#db/clients/addNewClient.mjs'
 import { getClientByDni } from '#db/clients/getClientByDni.mjs'
 import { getClientByPhone } from '#db/clients/getClientByPhone.mjs'
 import { cleanDataClient } from '#utilities/clients/cleanDataClient.mjs'
+import { deletePhoneExtension } from '#utilities/facturapp/formatPhone.mjs'
 
 export async function addClientProfile(args, user, userIdKey) {
-  const { dni, name, lastName, address, email, phone } = args
+  const platform = userIdKey.split('-*-')[1]
+  const { dni, name, lastName, address } = args
 
-  if (!dni || !name || !lastName || !address || !email || !phone) {
+  if (!dni || !name || !lastName || !address) {
     console.error('addClientProfile: faltan datos obligatorios')
     return { response: 'error: missing required data' }
   }
@@ -17,6 +19,9 @@ export async function addClientProfile(args, user, userIdKey) {
     return { response: 'error: client already exists with dni' }
   }
 
+  // Limpiar el número de teléfono del usuario
+  const phone = deletePhoneExtension(user[platform]?.id || '')
+
   // Verificar si el cliente ya existe por teléfono
   client = await getClientByPhone(phone)
   if (client) {
@@ -24,8 +29,16 @@ export async function addClientProfile(args, user, userIdKey) {
     return { response: 'error: client already exists with phone' }
   }
 
+  const dataToAdd = {
+    dni,
+    name,
+    lastName,
+    address,
+    phone,
+  }
+
   // Añadir nuevo cliente
-  const result = await addNewClient(args)
+  const result = await addNewClient(dataToAdd)
   if (!result) {
     console.error('addClientProfile: error al añadir el cliente')
     return { response: 'error: failed to add client' }
