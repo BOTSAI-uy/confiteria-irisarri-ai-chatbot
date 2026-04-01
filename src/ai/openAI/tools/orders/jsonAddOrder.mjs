@@ -34,7 +34,7 @@ export async function getJson() {
     type: 'function',
     name: functionName,
     description:
-      'Crea un nuevo pedido con los detalles proporcionados (esta función solicitará al usuario confirmación de forma interactiva para proceder).',
+      'Crea un nuevo pedido con los detalles proporcionados (esta función solicitará al cliente confirmación de forma interactiva para proceder).',
     parameters: {
       type: 'object',
       properties: {
