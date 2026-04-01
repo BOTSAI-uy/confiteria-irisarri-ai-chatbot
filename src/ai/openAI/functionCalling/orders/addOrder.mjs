@@ -228,11 +228,17 @@ export async function addOrder(args, user, userIdKey, { callId, responseOutput }
 
     // si la acción es cancelar pedido
     else if (action === ORDER_ACTIONS.CANCEL) {
-      result = { success: false, message: 'El pedido ha sido cancelado por el usuario.' }
+      result = {
+        success: false,
+        message: 'El pedido ha sido cancelado por el cliente. preguntando si le puedo ayudar en algo más.',
+      }
     }
     // si la acción es modificar pedido
     else if (action === ORDER_ACTIONS.MODIFY) {
-      result = { success: false, message: 'El usuario ha solicitado modificar el pedido.' }
+      result = {
+        success: false,
+        message: 'El cliente ha solicitado modificar el pedido. preguntando que cambios desea realizar.',
+      }
     }
     // si la acción no es reconocida
     else {
