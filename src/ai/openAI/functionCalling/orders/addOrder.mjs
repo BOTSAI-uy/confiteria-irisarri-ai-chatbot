@@ -158,10 +158,9 @@ export async function addOrder(args, user, userIdKey, { callId, responseOutput }
       // enviar mensaje de recordatorio al cliente
       const message = {
         type: 'text',
-        message:
-          'Hola, solo te recordamos que tienes un pedido pendiente de confirmación. Por favor confirma si deseas proceder con el pedido o si necesitas modificarlo.',
+        text: 'Hola, solo te recordamos que tienes un pedido pendiente de confirmación. Por favor confirma si deseas proceder con el pedido o si necesitas modificarlo.',
       }
-      const reminderMessage = await providerSendMessage(message, user[platform].id, platform, 'bot', 'outgoing', 'bot')
+      const reminderMessage = await providerSendMessage(user[platform].id, message, platform, 'bot', 'outgoing', 'bot')
       sendToChannels(reminderMessage)
 
       // enviar de nuevo el resumen del pedido para facilitar la confirmación
