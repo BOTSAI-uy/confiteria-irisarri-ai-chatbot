@@ -12,7 +12,7 @@ import { getAgent } from '#db/agent/getAgent.mjs'
 import { sentToAi } from '#ai/agentProcess/sentToAi.mjs'
 import { sendToChannels } from '#channels/channels.mjs'
 import { sendResponse } from '#ai/agentProcess/sendResponse.mjs'
-import { providerSendMessageInteractive } from '#provider/provider.mjs'
+import { providerSendMessageInteractive, providerSendMessage } from '#provider/provider.mjs'
 import { deletePhoneExtension } from '#utilities/facturapp/formatPhone.mjs'
 import { getCurrentShippingAvailability } from '#tools/orders/getCurrentShippingAvailability.mjs'
 import { DELIVERY_MODES } from '#enums/tools/orders.mjs'
@@ -22,6 +22,14 @@ const ORDER_ACTIONS = {
   CANCEL: 'Cancelar Pedido',
   MODIFY: 'Modificar Pedido',
 }
+
+const ORDER_TIMER = {
+  WAITING_CONFIRMATION: 'waiting_confirmation',
+  WAITING_MODIFICATION: 'waiting_modification',
+  EXPIRED: 'expired',
+}
+
+const TIMER = 5 * 60 * 1000 // 5 minutos en milisegundos
 
 function validateReplyAction(response) {
   const cleanAction = response.trim().toLowerCase()
@@ -119,30 +127,84 @@ export async function addOrder(args, user, userIdKey, { callId, responseOutput }
 
   console.info('🧩 Solicitud de confirmación de pedido enviada:\n', body)
 
+  // enviar mensaje interactivo de confirmación al cliente
+  const summaryMessageData = {
+    type: 'buttons',
+    message: { header, body, footer },
+    buttonList: [
+      { id: 'confirm_order', title: ORDER_ACTIONS.CONFIRM },
+      { id: 'cancel_order', title: ORDER_ACTIONS.CANCEL },
+      { id: 'modify_order', title: ORDER_ACTIONS.MODIFY },
+    ],
+  }
   const summaryMessage = await providerSendMessageInteractive(
     user[platform].id,
-    {
-      type: 'buttons',
-      message: { header, body, footer },
-      buttonList: [
-        { id: 'confirm_order', title: ORDER_ACTIONS.CONFIRM },
-        { id: 'cancel_order', title: ORDER_ACTIONS.CANCEL },
-        { id: 'modify_order', title: ORDER_ACTIONS.MODIFY },
-      ],
-    },
+    summaryMessageData,
     platform,
     'bot',
     'outgoing',
     'bot',
   )
 
+  // enviar mensaje de confirmación al canal
   sendToChannels(summaryMessage)
+
+  let timerStatus = ORDER_TIMER.WAITING_CONFIRMATION
+  const timer = setInterval(async () => {
+    // si han pasado 5 minutos sin confirmación, enviar recordatorio al cliente
+    if (timerStatus === ORDER_TIMER.WAITING_CONFIRMATION) {
+      console.info('⏰ Han pasado 5 minutos sin confirmación de pedido, Enviado recordatorio al cliente.')
+
+      // enviar mensaje de recordatorio al cliente
+      const message = {
+        type: 'text',
+        message:
+          'Hola, solo te recordamos que tienes un pedido pendiente de confirmación. Por favor confirma si deseas proceder con el pedido o si necesitas modificarlo.',
+      }
+      const reminderMessage = await providerSendMessage(message, user[platform].id, platform, 'bot', 'outgoing', 'bot')
+      sendToChannels(reminderMessage)
+
+      // enviar de nuevo el resumen del pedido para facilitar la confirmación
+      const summaryMessageReminder = await providerSendMessageInteractive(
+        user[platform].id,
+        summaryMessageData,
+        platform,
+        'bot',
+        'outgoing',
+        'bot',
+      )
+      sendToChannels(summaryMessageReminder)
+
+      // actualizar estado del timer
+      timerStatus = ORDER_TIMER.WAITING_MODIFICATION
+    }
+
+    // si han pasado 10 minutos sin confirmación, notificar a encargado
+    else if (timerStatus === ORDER_TIMER.WAITING_MODIFICATION) {
+      console.info('🔔 Han pasado 10 minutos sin confirmación de pedido, Notificando a encargado.')
+
+      console.warn(
+        'Por desarrollar: notificación a encargado de que el cliente no confirmó el pedido después de 10 minutos, para que pueda hacer seguimiento personalizado.',
+      )
+
+      // asignar estado de pedido a expirado
+      timerStatus = ORDER_TIMER.EXPIRED
+
+      // eliminar timer para evitar que siga enviando recordatorios
+      clearInterval(timer)
+    } else {
+      console.info('⏰ Timer de confirmación de pedido detenido.')
+      clearInterval(timer)
+    }
+  }, TIMER)
 
   //ss agregar función a la sesión
   FunctionProcess.addFunction(userIdKey, async (response) => {
     //agregar respuesta a historial
     await addMessageToHistoryOpenAi(userIdKey, [...responseOutput], user)
     console.info('🧩 Confirmación de pedido recibida:', response)
+    console.info('🧩 Deteniendo timer de confirmación de pedido.')
+    clearInterval(timer)
 
     let result
 
