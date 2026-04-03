@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { getCredentials } from '../getCredentials.mjs'
 import { convertMarkdownToWhatsapp } from '#utilities/formatText/whatsapp.mjs'
+import { limitLength } from '#utilities/formatText/limitLength.mjs'
 
 /**
  * Envía un mensaje de texto a través de la API de WhatsApp Business.
@@ -34,16 +35,16 @@ export async function sendButtons(phone, { header, body, footer }, buttonList) {
         action: {
           buttons: buttonList.map((button) => ({
             type: 'reply',
-            reply: { id: button.id, title: button.title },
+            reply: { id: button.id, title: limitLength(button.title, 20) },
           })),
         },
       },
     }
 
     // agregar las secciones y filas a la estructura de datos
-    if (header) data.interactive.header = { type: 'text', text: header }
-    if (body) data.interactive.body = { text: convertMarkdownToWhatsapp(body) }
-    if (footer) data.interactive.footer = { text: footer }
+    if (header) data.interactive.header = { type: 'text', text: limitLength(header, 60) }
+    if (body) data.interactive.body = { text: convertMarkdownToWhatsapp(limitLength(body, 1024)) }
+    if (footer) data.interactive.footer = { text: limitLength(footer, 60) }
 
     // Enviar la solicitud a la API utilizando Axios
     const response = await axios.post(url, data, {
