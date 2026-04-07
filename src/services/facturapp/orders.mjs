@@ -20,18 +20,11 @@ export class OrdersFacturapp {
     const url = `${ENV.FACTURAPP_URL}/altaPedido`
     const data = getAuth()
     const orderFormat = DataFormatter.revertData(order)
-    //console.log('Datos del pedido formateados para Facturapp:\n', JSON.stringify(orderFormat, null, 2))
 
     try {
       const body = { ...data, ...orderFormat }
       console.info('Enviando pedido a Facturapp con los siguientes datos:\n', JSON.stringify(body, null, 2))
       const res = await axios.post(url, body)
-      if (res.status !== 200) {
-        console.error('Respuesta de Facturapp al agregar pedido:\n', JSON.stringify(res.data, null, 2))
-        throw new Error(`OrdersFacturapp: Error en la petición, código de estado ${res.status}`)
-      }
-      //console.log('Respuesta de Facturapp al agregar pedido:\n', JSON.stringify(res.data, null, 2))
-
       try {
         return await this.getOrderByNumber(res.data.numeroPedido)
       } catch (error) {
@@ -164,7 +157,7 @@ class DataFormatter {
       Items: item.articles.map((article) => ({
         Codigo: article.article,
         Cantidad: article.quantity,
-        PorcDtoLinea: 0, // porcentaje de descuento en la línea
+        PorcDtoLinea: article.discount ? article.discount * 100 : 0, // porcentaje de descuento en la línea
         Observaciones: article.note || '',
       })),
     }))
