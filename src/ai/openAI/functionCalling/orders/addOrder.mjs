@@ -163,17 +163,6 @@ export async function addOrder(args, user, userIdKey, { callId, responseOutput }
       const reminderMessage = await providerSendMessage(user[platform].id, message, platform, 'bot', 'outgoing', 'bot')
       sendToChannels(reminderMessage)
 
-      // enviar de nuevo el resumen del pedido para facilitar la confirmación
-      const summaryMessageReminder = await providerSendMessageInteractive(
-        user[platform].id,
-        summaryMessageData,
-        platform,
-        'bot',
-        'outgoing',
-        'bot',
-      )
-      sendToChannels(summaryMessageReminder)
-
       // actualizar estado del timer
       timerStatus = ORDER_TIMER.WAITING_MODIFICATION
     }

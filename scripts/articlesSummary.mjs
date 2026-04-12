@@ -15,6 +15,7 @@ const schema = {
   enAppsheet: 'boolean',
   enFacturapp: 'boolean',
   enAppsheetDaily: 'boolean',
+  stock: 'number',
 }
 */
 
@@ -52,6 +53,7 @@ export async function articlesSummary() {
       enAppsheet: !!article,
       enFacturapp: !!facturappArticle,
       enAppsheetDaily: !!dailyArticle,
+      stockFacturapp: facturappArticle?.stockActual,
     }
   })
 
