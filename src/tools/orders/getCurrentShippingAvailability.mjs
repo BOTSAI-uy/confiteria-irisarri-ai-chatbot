@@ -6,8 +6,8 @@ export async function getCurrentShippingAvailability(articleCodes = [], isDelive
   for (const code of articleCodes) {
     const dailyArticle = await getDailyArticleByCode(code)
     if (dailyArticle) {
-      if (dailyArticle.anticipationHours > anticipationHours) {
-        anticipationHours = dailyArticle.anticipationHours
+      if (dailyArticle.horasDeAnticipacion > anticipationHours) {
+        anticipationHours = dailyArticle.horasDeAnticipacion
       }
     }
   }
