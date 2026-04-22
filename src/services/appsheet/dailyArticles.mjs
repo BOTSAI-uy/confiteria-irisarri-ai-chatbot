@@ -50,9 +50,9 @@ class DataFormatter {
       fechaUpdate: item.updateDate,
       // adiciones
       restricciones: item.restriction,
-      cantidadMinima: Number.parseFloat(item.minimumQuantity) || 0,
-      multipleDe: Number.parseFloat(item.multipleOf) || 1,
-      horasDeAnticipacion: Number.parseInt(item.hoursInAdvance) || 0,
+      cantidadMinima: Number.parseFloat(item.minimumQuantity, 10) || 0,
+      multipleDe: Number.parseFloat(item.multipleOf, 10) || 1,
+      horasDeAnticipacion: Number.parseInt(item.hoursInAdvance, 10) || 0,
       libreDeAzucar: item.sugarFree,
       aptoParaCeliacos: item.suitableForCeliacs,
       esVegano: item.vegan,

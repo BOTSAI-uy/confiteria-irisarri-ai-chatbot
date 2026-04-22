@@ -1,6 +1,7 @@
 import { getShippingAvailability } from '../getShippingAvailability.mjs'
+import { DELIVERY_MODES } from '#enums/tools/orders.mjs'
 
-export async function validateDeliveryDate(deliveryDate, result) {
+export async function validateDeliveryDate(deliveryDate, deliveryMode, result) {
   // Validar que la fecha de entrega es una cadena no vacía
   if (!deliveryDate || typeof deliveryDate !== 'string') {
     console.error('Fecha de entrega inválida o no proporcionada:', deliveryDate)
@@ -24,20 +25,21 @@ export async function validateDeliveryDate(deliveryDate, result) {
     return
   }
 
+  const isDelivery = deliveryMode === DELIVERY_MODES.HOME_DELIVERY
+
   // Validar que la fecha de entrega está dentro de las opciones disponibles
-  const availableDates = await getShippingAvailability(result.anticipationHours)
+  const availableDates = await getShippingAvailability(isDelivery, result.anticipationHours)
 
   // buscar si la fecha de entrega está en las opciones disponibles
-  let isAvailable = false
-  const [datePart, timePart] = deliveryDate.split(' ')
-  for (const dayAvailability of availableDates) {
-    if (dayAvailability.date === datePart) {
-      if (dayAvailability.times.includes(`${timePart}:00`)) {
-        isAvailable = true
-        break
-      }
-    }
-  }
+  const parts = deliveryDate?.split(/\s+/) || []
+  const datePart = parts[0]
+  const timePart = parts[1]
+
+  // 2. Normalizamos el formato de comparación (HH:mm:00)
+  const formattedTime = timePart?.split(':').slice(0, 2).join(':') + ':00'
+
+  // 3. Usamos .some() para una búsqueda más declarativa y eficiente
+  const isAvailable = availableDates.some((day) => day.date === datePart && day.times.includes(formattedTime))
 
   if (!isAvailable) {
     console.error('Fecha de entrega no disponible:', deliveryDate)

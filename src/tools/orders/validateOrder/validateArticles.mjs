@@ -38,6 +38,7 @@ export async function validateArticles(articles, deliveryDate, result) {
     if (dailyArticle) {
       await validateDailyArticle(item, dailyArticle, deliveryDate, result)
     }
+    
     // validar cuando no es un artículo de producción diario
     else {
       await validateBaseArticle(item, baseArticle, result)

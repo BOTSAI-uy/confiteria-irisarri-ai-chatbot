@@ -23,8 +23,6 @@ export async function getShippingAvailability(isDelivery = true, anticipationHou
   // agregar tiempo de anticipación a la fecha actual
   startDate.setMinutes(startDate.getMinutes() + anticipationTime)
 
-  // usar hora local sin zona horaria
-  console.log('Fecha de inicio:', startDate.toLocaleString())
   // obtener los siguientes 7 días (omitiendo hoy) con formato YYYY-MM-DD HH:mm
   const availability = []
   let noHours = anticipationHours
@@ -72,7 +70,7 @@ export async function getShippingAvailability(isDelivery = true, anticipationHou
         continue
       }
 
-      // consumir solo slots disponibles
+      // consumir solo slots disponibles (descontando horas de anticipación hábiles)
       if (noHours > 0) {
         noHours = noHours - 1
         console.debug(`Omitiendo franja por horas de anticipación para ${formattedDate} a las ${time}`)

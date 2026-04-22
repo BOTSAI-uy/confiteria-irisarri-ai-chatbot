@@ -16,6 +16,7 @@ export async function validateOrder({ paymentMethod, address, deliveryMode, deli
     console.error('Modo de entrega inválido:', deliveryMode)
     result.errors.push(`El modo de entrega '${deliveryMode}' no es válido.`)
   }
+
   // Validar método de pago
   if (!Object.values(PAYMENT_METHODS).includes(paymentMethod)) {
     console.error('Método de pago inválido:', paymentMethod)
@@ -38,7 +39,7 @@ export async function validateOrder({ paymentMethod, address, deliveryMode, deli
   await validateArticles(articles, deliveryDate, result)
 
   // Validar formato de fecha de entrega
-  await validateDeliveryDate(deliveryDate, result)
+  await validateDeliveryDate(deliveryDate, deliveryMode, result)
 
   // Si todo es correcto
   return result
