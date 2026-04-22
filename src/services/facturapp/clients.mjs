@@ -104,6 +104,7 @@ class DataFormatter {
       facturaNombre: item.facturaNombre,
       contacto: item.contacto,
       fechaUpdate: item.fechaUpdate ? buildFormatDateTime(item.fechaUpdate) : null, // dar formato si es necesario
+      permiteCredito: item.permiteCredito,
     }))
 
     // validar si es un solo objeto o un array

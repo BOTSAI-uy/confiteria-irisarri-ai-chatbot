@@ -10,6 +10,7 @@ export function cleanDataClient(client) {
     codigoPostal: client.codigoPostal,
     facturaNombre: client.facturaNombre,
     contacto: client.contacto,
+    permiteCredito: client.permiteCredito,
   }
   return data
 }

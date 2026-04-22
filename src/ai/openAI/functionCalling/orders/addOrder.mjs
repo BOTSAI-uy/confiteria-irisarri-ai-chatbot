@@ -15,7 +15,7 @@ import { sendResponse } from '#ai/agentProcess/sendResponse.mjs'
 import { providerSendMessageInteractive, providerSendMessage } from '#provider/provider.mjs'
 import { deletePhoneExtension } from '#utilities/facturapp/formatPhone.mjs'
 import { getCurrentShippingAvailability } from '#tools/orders/getCurrentShippingAvailability.mjs'
-import { DELIVERY_MODES } from '#enums/tools/orders.mjs'
+import { DELIVERY_MODES, PAYMENT_METHODS } from '#enums/tools/orders.mjs'
 
 const ORDER_ACTIONS = {
   CONFIRM: 'Confirmar Pedido',
@@ -97,6 +97,14 @@ export async function addOrder(args, user, userIdKey, { callId, responseOutput }
       success: false,
       message:
         'Perfil de cliente no cargado, por favor solicita al cliente que se identifique mediante cédula, telefono o RUT. o que se registre como cliente nuevo.',
+    }
+  }
+
+  // validar crédito del cliente si el método de pago es crédito
+  if (args.paymentMethod === PAYMENT_METHODS.CREDIT && !client.permiteCredito) {
+    return {
+      success: false,
+      message: 'El cliente no tiene crédito disponible, por favor selecciona otro método de pago.',
     }
   }
 
