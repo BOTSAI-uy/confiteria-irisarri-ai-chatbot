@@ -20,6 +20,10 @@ export function formatToAi(dailyArticles) {
         aptoParaCeliacos: article.aptoParaCeliacos || false,
         esVegano: article.esVegano || false,
       }
+      // horas de anticipación
+      if (article.horasDeAnticipacion) {
+        obj.horasDeAnticipacion = `${article.horasDeAnticipacion} horas hábiles`
+      }
       // restricciones adicionales
       if (article.restricciones) {
         obj.cantidadMinima = article.cantidadMinima
