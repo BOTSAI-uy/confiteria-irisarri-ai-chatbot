@@ -1,10 +1,9 @@
-import fs from 'fs'
+import fs from 'node:fs'
 import { OpenAI } from 'openai'
 
 //TT MÓDULOS
 import { getCredentialsOpenAI } from './credentials.mjs'
 import { convertToMp3 } from '#utilities/convertToMp3.mjs'
-import { addLog } from '#logger/loggerToken.mjs'
 
 export async function sendToWhisper(audioPath) {
   try {
@@ -15,15 +14,14 @@ export async function sendToWhisper(audioPath) {
     }
     const agentConfig = await getCredentialsOpenAI()
     const openai = new OpenAI({
-      apiKey: agentConfig.ai.token
+      apiKey: agentConfig.ai.token,
     })
     const transcription = await openai.audio.transcriptions.create({
       file: fs.createReadStream(validAudio),
       model: 'whisper-1',
-      response_format: 'verbose_json'
+      response_format: 'verbose_json',
     })
     console.log('Transcription:', transcription.text)
-    addLogOpenAi('whisper-1', transcription)
     return { type: 'text', text: transcription.text }
   } catch (error) {
     console.error('Error al enviar el audio a OpenAI:', error)
@@ -50,21 +48,5 @@ async function isValidAudioFile(filename) {
       console.error('isValidAudioFile: El archivo no es un audio válido')
       return null
     }
-  }
-}
-
-//SS AGREGAR LOGS
-function addLogOpenAi(model, transcription) {
-  try {
-    const userId = ''
-    const provider = 'openai'
-    const type = 'audio'
-    const unit = 'seconds'
-    const input = 0
-    const output = parseInt(transcription.duration) || 0
-    const cachedInput = 0
-    addLog(userId, { provider, model, type, unit, input, output, cachedInput })
-  } catch (error) {
-    console.error('Error al agregar el log a OpenAI:', error)
   }
 }

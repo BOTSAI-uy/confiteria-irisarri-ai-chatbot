@@ -1,6 +1,5 @@
 import { isProductionEnv, ENV } from '#config/config.mjs'
 import { initConfig } from '#db/service/initConfig.mjs'
-import { startCronJobs } from '#initData/cronJobs.mjs'
 import { getAllArticles } from '#db/articles/getAllArticles.mjs'
 import { getAllDailyArticles } from '#db/dailyArticles/getAllDailyArticles.mjs'
 import { getAllAssistants } from '#db/assistants/getAllAssistants.mjs'
@@ -32,9 +31,6 @@ export async function initData() {
   // asistentes
   const assistants = await getAllAssistants()
   console.info(`initData - Asistentes cargados en caché: ${assistants ? assistants.length : 0}`)
-
-  //iniciar cronjobs
-  startCronJobs()
 
   //ss inicializar configuración de AppSheet si es el frontend seleccionado
   if (ENV.APP_FRONTEND === 'appsheet') {

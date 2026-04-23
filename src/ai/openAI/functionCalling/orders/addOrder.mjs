@@ -181,10 +181,6 @@ export async function addOrder(args, user, userIdKey, { callId, responseOutput }
     else if (timerStatus === ORDER_TIMER.WAITING_MODIFICATION) {
       console.info('🔔 Han pasado 10 minutos sin confirmación de pedido')
 
-      console.warn(
-        'Por desarrollar: notificación a encargado de que el cliente no confirmó el pedido después de 10 minutos, para que pueda hacer seguimiento personalizado.',
-      )
-
       // asignar estado de pedido a expirado
       timerStatus = ORDER_TIMER.EXPIRED
 

@@ -43,7 +43,7 @@ export async function validateDeliveryDate(deliveryDate, deliveryMode, result) {
 
   if (!isAvailable) {
     console.error('Fecha de entrega no disponible:', deliveryDate)
-    result.errors.push('La fecha de entrega seleccionada no está disponible.')
+    result.errors.push(`La fecha de entrega ${deliveryDate} no está disponible.`)
   }
 }
 
