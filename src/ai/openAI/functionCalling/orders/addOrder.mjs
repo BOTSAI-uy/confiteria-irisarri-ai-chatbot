@@ -16,6 +16,7 @@ import { providerSendMessageInteractive, providerSendMessage } from '#provider/p
 import { deletePhoneExtension } from '#utilities/facturapp/formatPhone.mjs'
 import { getCurrentShippingAvailability } from '#tools/orders/getCurrentShippingAvailability.mjs'
 import { DELIVERY_MODES, PAYMENT_METHODS } from '#enums/tools/orders.mjs'
+import { notifyPendingOrder } from './utils/sendAlertPendingOrder.mjs'
 
 const ORDER_ACTIONS = {
   CONFIRM: 'Confirmar Pedido',
@@ -157,6 +158,7 @@ export async function addOrder(args, user, userIdKey, { callId, responseOutput }
   // enviar mensaje de confirmación al canal
   sendToChannels(summaryMessage)
 
+  //ss iniciar timer para seguimiento de confirmación de pedido
   let timerStatus = ORDER_TIMER.WAITING_CONFIRMATION
   const timer = setInterval(async () => {
     // si han pasado 5 minutos sin confirmación, enviar recordatorio al cliente
@@ -177,7 +179,7 @@ export async function addOrder(args, user, userIdKey, { callId, responseOutput }
 
     // si han pasado 10 minutos sin confirmación, notificar a encargado
     else if (timerStatus === ORDER_TIMER.WAITING_MODIFICATION) {
-      console.info('🔔 Han pasado 10 minutos sin confirmación de pedido, Notificando a encargado.')
+      console.info('🔔 Han pasado 10 minutos sin confirmación de pedido')
 
       console.warn(
         'Por desarrollar: notificación a encargado de que el cliente no confirmó el pedido después de 10 minutos, para que pueda hacer seguimiento personalizado.',
@@ -188,6 +190,9 @@ export async function addOrder(args, user, userIdKey, { callId, responseOutput }
 
       // eliminar timer para evitar que siga enviando recordatorios
       clearInterval(timer)
+
+      // notificar pedido pendiente de confirmación al encargado (por desarrollar)
+      await notifyPendingOrder(client, user[platform].id)
     } else {
       console.info('⏰ Timer de confirmación de pedido detenido.')
       clearInterval(timer)

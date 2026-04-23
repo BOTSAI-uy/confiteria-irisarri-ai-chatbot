@@ -44,7 +44,7 @@
     "extends": "./eslintrc.json"
   },
   "dependencies": {
-    "appsheet-api": "0.3.9",
+    "appsheet-api": "0.4.4",
     "axios": "1.13.2",
     "baileys": "7.0.0-rc.9",
     "ejs": "3.1.10",
