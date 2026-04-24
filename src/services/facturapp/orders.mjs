@@ -141,6 +141,7 @@ class DataFormatter {
     const result = allData.map((item) => ({
       CodigoCliente: item.client,
       Terminal: 1,
+      IdVendedor: 106, // referencia a vendedor BOT
       FechaEntrega: item.deliveryDate,
       CodMovimiento: 6, // **6 (PEDIDOS)** o **16 (PEDIDOS WEB)**.
       IdFormaPago: HANDLE_PAYMENT_METHODS[item.paymentMethod], //  **1 (Contado)** o **2 (Crédito)**.
