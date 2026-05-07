@@ -213,6 +213,24 @@ export async function addOrder(args, user, userIdKey, { callId, responseOutput }
 
       // si el pedido se creó correctamente
       if (newOrder?.success) {
+        console.info('✅ Pedido creado correctamente:', newOrder.data)
+
+        // enviar mensaje con numero de pedido al cliente
+        const orderNumber = newOrder.data.numeroPedido
+        const message = {
+          type: 'text',
+          text: `Tu pedido ha sido confirmado con el número de orden ${orderNumber}`,
+        }
+        const confirmationMessage = await providerSendMessage(
+          user[platform].id,
+          message,
+          platform,
+          'bot',
+          'outgoing',
+          'bot',
+        )
+        sendToChannels(confirmationMessage)
+
         result = { status: true, message: 'Pedido creado correctamente.', order: newOrder.data }
       }
       // si hubo un error al crear el pedido
