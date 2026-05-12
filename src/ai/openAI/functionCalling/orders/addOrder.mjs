@@ -17,6 +17,7 @@ import { deletePhoneExtension } from '#utilities/facturapp/formatPhone.mjs'
 import { getCurrentShippingAvailability } from '#tools/orders/getCurrentShippingAvailability.mjs'
 import { DELIVERY_MODES, PAYMENT_METHODS } from '#enums/tools/orders.mjs'
 import { notifyPendingOrder } from './utils/sendAlertPendingOrder.mjs'
+import { OrdersCache } from './utils/ordersCache.mjs'
 
 const ORDER_ACTIONS = {
   CONFIRM: 'Confirmar Pedido',
@@ -208,36 +209,52 @@ export async function addOrder(args, user, userIdKey, { callId, responseOutput }
     const action = validateReplyAction(response)
     // si la acción es cancelar pedido
     if (action === ORDER_ACTIONS.CONFIRM) {
-      // agregar pedido usando la herramienta
-      const newOrder = await addOrderTool(builtOrder)
+      // generar id de caché para el pedido basado en el usuario y los artículos del pedido
+      const cacheOrderId = `${userIdKey}:${args.articles.map((a) => a.article).join(',')}`
 
-      // si el pedido se creó correctamente
-      if (newOrder?.success) {
-        console.info('✅ Pedido creado correctamente:', newOrder.data)
-
-        // enviar mensaje con numero de pedido al cliente
-        const orderNumber = newOrder.data.numeroPedido
-        const message = {
-          type: 'text',
-          text: `Tu pedido ha sido confirmado con el número de orden ${orderNumber}`,
-        }
-        const confirmationMessage = await providerSendMessage(
-          user[platform].id,
-          message,
-          platform,
-          'bot',
-          'outgoing',
-          'bot',
-        )
-        sendToChannels(confirmationMessage)
-
-        result = { status: true, message: 'Pedido creado correctamente.', order: newOrder.data }
+      // validar si el pedido ya existe en la caché para evitar crear pedidos duplicados si el cliente confirma varias veces
+      const cachedOrder = OrdersCache.get(cacheOrderId)
+      if (cachedOrder) {
+        console.info('✅ Pedido obtenido de caché, se omite creación:', cachedOrder)
+        result = { status: true, message: 'Pedido creado correctamente.' }
       }
-      // si hubo un error al crear el pedido
+
+      // si el pedido no existe en la caché, agregarlo usando la herramienta
       else {
-        result = {
-          success: false,
-          message: newOrder?.message || 'Error al crear el pedido',
+        // agregar pedido usando la herramienta
+        const newOrder = await addOrderTool(builtOrder)
+
+        // si el pedido se creó correctamente
+        if (newOrder?.success) {
+          console.info('✅ Pedido creado correctamente:', newOrder.data)
+
+          // agregar pedido a la caché
+          OrdersCache.add(cacheOrderId, newOrder.data)
+
+          // enviar mensaje con numero de pedido al cliente
+          const orderNumber = newOrder.data.numeroPedido
+          const message = {
+            type: 'text',
+            text: `Tu pedido ha sido confirmado con el número de orden ${orderNumber}`,
+          }
+          const confirmationMessage = await providerSendMessage(
+            user[platform].id,
+            message,
+            platform,
+            'bot',
+            'outgoing',
+            'bot',
+          )
+          sendToChannels(confirmationMessage)
+
+          result = { status: true, message: 'Pedido creado correctamente.', order: newOrder.data }
+        }
+        // si hubo un error al crear el pedido
+        else {
+          result = {
+            success: false,
+            message: newOrder?.message || 'Error al crear el pedido',
+          }
         }
       }
     }

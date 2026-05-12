@@ -90,7 +90,7 @@ export async function agentResponse(userId, message, origin, platform, originalM
                 block.message.media.caption,
                 agentConfig.ai.provider,
                 'user',
-                user
+                user,
               )
             }
             break
@@ -151,7 +151,7 @@ export async function agentResponse(userId, message, origin, platform, originalM
 async function isClientCompany(userId, chunks, agentConfig, user, userIdKey, platform) {
   // Validar si es un cliente de compañía
   const client = Clients.getClient(userId)
-  if (client && client.empresa) {
+  if (client?.empresa) {
     console.log('Cliente de compañía detectado:', client)
     const message = { type: 'text', text: 'Hola, en un momento un representante se pondrá en contacto contigo.' }
     let originalMessages = []
