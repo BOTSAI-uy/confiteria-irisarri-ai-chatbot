@@ -49,6 +49,17 @@ function validateReplyAction(response) {
 export async function addOrder(args, user, userIdKey, { callId, responseOutput }) {
   const platform = userIdKey.split('-*-')[1]
 
+  // cargar cliente desde la sesión
+  const client = Clients.getClient(user[platform]?.id)
+  if (!client) {
+    console.warn('No se ha encontrado el cliente en la sesión')
+    return {
+      success: false,
+      message:
+        'Perfil de cliente no cargado, por favor solicita al cliente que se identifique mediante cédula, telefono o RUT.',
+    }
+  }
+
   // validar que existan artículos en el pedido
   if (!args.articles || args.articles.length === 0) {
     return { success: false, message: 'El pedido debe contener al menos un artículo.' }
@@ -89,17 +100,6 @@ export async function addOrder(args, user, userIdKey, { callId, responseOutput }
   // validar nombre del cliente
   if (!order.name || order.name.trim() === '') {
     return { success: false, message: 'El nombre del cliente es requerido.' }
-  }
-
-  // cargar cliente desde la sesión
-  const client = Clients.getClient(user[platform]?.id)
-  if (!client) {
-    console.warn('No se ha encontrado el cliente en la sesión')
-    return {
-      success: false,
-      message:
-        'Perfil de cliente no cargado, por favor solicita al cliente que se identifique mediante cédula, telefono o RUT. o que se registre como cliente nuevo.',
-    }
   }
 
   // validar crédito del cliente si el método de pago es crédito
