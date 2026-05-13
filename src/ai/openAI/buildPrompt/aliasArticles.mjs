@@ -8,7 +8,7 @@ export async function buildAliasArticles() {
   }
 
   // filtrar los primeros 30 que tengan alias y esten activos
-  const articles = dailyArticles.filter((a) => a.alias && a.active).slice(0, 30)
+  const articles = dailyArticles.filter((a) => a.alias && a.active).slice(0, 50)
 
   let text = '## Articulos frecuentemente pedidos por los clientes:\n\n'
 
