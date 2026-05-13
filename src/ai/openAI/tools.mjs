@@ -3,7 +3,6 @@ import { getBrainById } from '#db/brains/getBrainById.mjs'
 //tools
 import { getJson as jsonSendRequest } from './tools/sendRequest.mjs'
 import { getJson as jsonLoadClientProfile } from './tools/clients/jsonLoadClientProfile.mjs'
-import { getJson as jsonAddClientProfile } from './tools/clients/jsonAddClientProfile.mjs'
 import { getJson as jsonAddOrder } from './tools/orders/jsonAddOrder.mjs'
 import { getJson as getArticles } from './tools/articles/getArticles.mjs'
 import { getJson as jsonGetShippingAvailability } from './tools/orders/jsonGetShippingAvailability.mjs'
@@ -28,10 +27,6 @@ export async function getToolsOpenAi(brainId) {
   if (clientProfileJson) {
     tools.push(clientProfileJson)
   }
-  const addClientProfileJson = await jsonAddClientProfile()
-  if (addClientProfileJson) {
-    tools.push(addClientProfileJson)
-  }
 
   //orders
   const addOrderJson = await jsonAddOrder()
@@ -50,6 +45,7 @@ export async function getToolsOpenAi(brainId) {
   if (shippingAvailabilityJson) {
     tools.push(shippingAvailabilityJson)
   }
+
   //getOrderByNumber
   const getOrderByNumberJson = await jsonGetOrderByNumber()
   if (getOrderByNumberJson) {
