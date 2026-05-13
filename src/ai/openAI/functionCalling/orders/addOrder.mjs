@@ -235,7 +235,7 @@ export async function addOrder(args, user, userIdKey, { callId, responseOutput }
           const orderNumber = newOrder.data.numeroPedido
           const message = {
             type: 'text',
-            text: `Tu pedido ha sido confirmado con el número de orden ${orderNumber}`,
+            text: `Tu pedido ha sido confirmado con el número de orden ${orderNumber}\n-Fecha: ${newOrder.data.fecha}\n-Hora: ${newOrder.data.Hora}`,
           }
           const confirmationMessage = await providerSendMessage(
             user[platform].id,

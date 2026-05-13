@@ -114,7 +114,7 @@ class DataFormatter {
     for (const item of allOrders) {
       const _order = {
         numeroPedido: item.NroPedido,
-        Fecha: item.Fecha, //TODO: agregar mapeo de estados
+        fecha: item.Fecha, //TODO: agregar mapeo de estados
         hora: item.Hora,
         estado: item.Estado,
         cliente: item.Cliente,
