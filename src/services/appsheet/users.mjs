@@ -8,14 +8,14 @@ const NAME_TABLE = 'USERS'
 const PLATFORMS = {
   whatsapp: 'WHATSAPP_ID',
   messenger: 'MESSENGER_ID',
-  instagram: 'INSTAGRAM_ID',
+  instagram: 'INSTAGRAM_ID'
 }
 
 export class UsersAppsheet {
   //ss cargar usuario por id
   static async getUserById(id) {
     const res = await getData(NAME_TABLE, {
-      Selector: `Filter(${NAME_TABLE}, [ID] = "${id}")`,
+      Selector: `Filter(${NAME_TABLE}, [ID] = "${id}")`
     })
     return DataFormatter.buildData(res[0])
   }
@@ -29,7 +29,7 @@ export class UsersAppsheet {
     }
     // obtener datos de configuración
     const res = await getData(NAME_TABLE, {
-      Selector: `Filter(${NAME_TABLE}, [${PLATFORMS[platform]}] = "${id}")`,
+      Selector: `Filter(${NAME_TABLE}, [${PLATFORMS[platform]}] = "${id}")`
     })
 
     // construir datos de configuración
@@ -39,7 +39,7 @@ export class UsersAppsheet {
   //ss obtener usuarios por etiqueta
   static async getUsersByTag(tagId) {
     const res = await getData(NAME_TABLE, {
-      Selector: `Filter(${NAME_TABLE}, [TAG] = "${tagId}")`,
+      Selector: `Filter(${NAME_TABLE}, [TAG] = "${tagId}")`
     })
     return DataFormatter.buildData(res)
   }
@@ -47,7 +47,7 @@ export class UsersAppsheet {
   //ss obtener fecha de ultimo contacto
   static async getLastContactById(userId) {
     const res = await getData(NAME_TABLE, {
-      Selector: `Filter(${NAME_TABLE}, [ID] = "${userId}")`,
+      Selector: `Filter(${NAME_TABLE}, [ID] = "${userId}")`
     })
     return buildFormatDateTime(res[0]?.LAST_CONTACT)
   }
@@ -91,7 +91,7 @@ class DataFormatter {
       messenger: { id: item.MESSENGER_ID },
       instagram: { id: item.INSTAGRAM_ID },
       brain: item.BRAIN,
-      blacklist: item.BLACKLIST,
+      blacklist: item.BLACKLIST
     }))
 
     // validar si es un solo objeto o un array
@@ -117,7 +117,7 @@ class DataFormatter {
       MESSENGER_ID: item.messenger?.id,
       INSTAGRAM_ID: item.instagram?.id,
       BRAIN: item.brain,
-      BLACKLIST: item.blacklist,
+      BLACKLIST: item.blacklist
     }))
 
     // validar si es un solo objeto o un array

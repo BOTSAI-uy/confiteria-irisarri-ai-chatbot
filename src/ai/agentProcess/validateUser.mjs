@@ -31,10 +31,10 @@ async function addNewUser(userId, platform) {
     id: `user-${crypto.randomUUID()}`,
     name: userName || 'Usuario sin nombre',
     [platform]: {
-      id: userId,
+      id: userId
     },
     brain: agentConfig.defaultBrain,
-    blacklist: agentConfig.defaultBlacklist,
+    blacklist: agentConfig.defaultBlacklist
   }
 
   // crear nuevo usuario

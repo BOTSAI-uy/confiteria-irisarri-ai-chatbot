@@ -19,9 +19,12 @@ export function resetUserSession(userIdKey, agentConfig) {
     clearTimeout(timers[userIdKey])
   }
   //crear timer
-  timers[userIdKey] = setTimeout(() => {
-    return stopUserSession(userIdKey, agentConfig.ai.provider)
-  }, agentConfig.historyInMemory || 20 * 60 * 1000)
+  timers[userIdKey] = setTimeout(
+    () => {
+      return stopUserSession(userIdKey, agentConfig.ai.provider)
+    },
+    agentConfig.historyInMemory || 20 * 60 * 1000
+  )
 }
 
 // TT TERMINAR SESION

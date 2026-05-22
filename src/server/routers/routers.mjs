@@ -27,5 +27,5 @@ export default [
   deleteHistory,
   sendMessage,
   //SS API
-  ...api,
+  ...api
 ]

@@ -8,19 +8,19 @@ export async function getTemplateById(templateId) {
   const [error, response] = await catchError(
     axios.get(url, {
       params: {
-        access_token: ENV.WHATSAPP_META_TOKEN,
+        access_token: ENV.WHATSAPP_META_TOKEN
       },
       headers: {
-        'Content-Type': 'application/json',
-      },
-    }),
+        'Content-Type': 'application/json'
+      }
+    })
   )
 
   // manejar errores
   if (error) {
     console.error(
       { error: error.response?.data || error.message, stack: error.stack },
-      `getTemplateById: Error al obtener la plantilla con id ${templateId} desde WhatsApp Meta`,
+      `getTemplateById: Error al obtener la plantilla con id ${templateId} desde WhatsApp Meta`
     )
     return null
   }

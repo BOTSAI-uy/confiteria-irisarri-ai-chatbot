@@ -26,7 +26,7 @@ const ENUM_TIME = [
   '20:00',
   '21:00',
   '22:00',
-  '23:00',
+  '23:00'
 ]
 
 export async function getJson() {
@@ -41,7 +41,7 @@ export async function getJson() {
         // nombre del cliente
         name: {
           type: 'string',
-          description: 'Nombre completo del cliente que realiza el pedido',
+          description: 'Nombre completo del cliente que realiza el pedido'
         },
         //FechaEntrega
         deliveryDate: {
@@ -50,38 +50,38 @@ export async function getJson() {
           properties: {
             date: {
               type: 'string',
-              description: 'Fecha de entrega en formato AAAA-MM-DD',
+              description: 'Fecha de entrega en formato AAAA-MM-DD'
             },
             time: {
               type: 'string',
               enum: ENUM_TIME,
-              description: 'Hora de entrega en formato HH:MM',
-            },
+              description: 'Hora de entrega en formato HH:MM'
+            }
           },
           required: ['date', 'time'],
-          additionalProperties: false,
+          additionalProperties: false
         },
         paymentMethod: {
           type: 'string',
           enum: Object.values(PAYMENT_METHODS),
-          description: 'Método de pago del pedido, ya sea contado o crédito',
+          description: 'Método de pago del pedido, ya sea contado o crédito'
         },
         // modo de entrega (domicilio o recogida)
         deliveryMode: {
           type: 'string',
           enum: Object.values(DELIVERY_MODES),
-          description: 'Modo de entrega del pedido, ya sea a domicilio o para recogida en tienda',
+          description: 'Modo de entrega del pedido, ya sea a domicilio o para recogida en tienda'
         },
 
         // dirección de entrega
         address: {
           type: ['string', 'null'],
-          description: 'Dirección de entrega del pedido en caso de ser a domicilio',
+          description: 'Dirección de entrega del pedido en caso de ser a domicilio'
         },
         // nota general del pedido
         note: {
           type: ['string', 'null'],
-          description: 'Nota u observaciones generales del pedido',
+          description: 'Nota u observaciones generales del pedido'
         },
         // listado de artículos del pedido
         articles: {
@@ -93,28 +93,28 @@ export async function getJson() {
               // código del articulo
               code: {
                 type: 'string',
-                description: 'Código del articulo solicitado',
+                description: 'Código del articulo solicitado'
               },
               // cantidad solicitada
               quantity: {
                 type: 'number',
-                description: 'Cantidad solicitada del articulo',
+                description: 'Cantidad solicitada del articulo'
               },
               // nota específica del articulo
               note: {
                 type: ['string', 'null'],
-                description: 'Nota específica para este articulo',
-              },
+                description: 'Nota específica para este articulo'
+              }
             },
             required: ['code', 'quantity', 'note'],
-            additionalProperties: false,
-          },
-        },
+            additionalProperties: false
+          }
+        }
       },
       required: ['name', 'deliveryDate', 'paymentMethod', 'deliveryMode', 'address', 'note', 'articles'],
-      additionalProperties: false,
+      additionalProperties: false
     },
-    strict: true,
+    strict: true
   }
   return jsonData
 }

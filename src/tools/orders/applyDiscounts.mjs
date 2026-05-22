@@ -23,7 +23,7 @@ export async function applyDiscounts(order, discounts) {
     const discount = discounts.find((d) => d.groupId === articleInfo.idGrupo && d.days.includes(currentDay))
     if (discount) {
       console.info(
-        `Aplicando descuento del ${discount.discount * 100}% al artículo ${articleInfo.descripcion} el dia ${currentDay} (código ${article.article})`,
+        `Aplicando descuento del ${discount.discount * 100}% al artículo ${articleInfo.descripcion} el dia ${currentDay} (código ${article.article})`
       )
       // agregar descuento al artículo para generar el resumen del pedido con el descuento aplicado
       article.discount = discount.discount

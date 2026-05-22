@@ -1,5 +1,6 @@
 .vscode
 .env
+.husky
 session
 node_modules
 *.log

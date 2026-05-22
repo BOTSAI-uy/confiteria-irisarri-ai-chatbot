@@ -16,19 +16,19 @@ export class EventAlertAppsheet {
 export const SCHEMA = appsheetClient.createSchema(NAME_TABLE, {
   id: {
     type: 'string',
-    primary: true,
+    primary: true
   },
   template: {
-    type: 'string',
+    type: 'string'
   },
   pendingOrderStatus: {
-    type: 'boolean',
+    type: 'boolean'
   },
   pendingOrderTemplate: {
-    type: 'string',
+    type: 'string'
   },
   pendingOrderAssistants: {
     type: 'array',
-    itemType: 'string',
-  },
+    itemType: 'string'
+  }
 })

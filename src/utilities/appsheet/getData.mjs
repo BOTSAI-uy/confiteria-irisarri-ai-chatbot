@@ -8,7 +8,7 @@ export async function getData(table, properties = {}, rows = []) {
 
   // Configurar los encabezados
   const headers = {
-    'Content-Type': 'application/json',
+    'Content-Type': 'application/json'
   }
 
   // Construir el cuerpo de la solicitud
@@ -18,9 +18,9 @@ export async function getData(table, properties = {}, rows = []) {
       Locale: 'en-GB',
       Timezone: ENV.TZ,
       UserSettings: { FROM_API: true },
-      ...properties,
+      ...properties
     },
-    Rows: !Array.isArray(rows) ? [rows] : rows,
+    Rows: !Array.isArray(rows) ? [rows] : rows
   }
 
   try {
@@ -43,7 +43,7 @@ export async function getData(table, properties = {}, rows = []) {
     // si el status code es 500 y el detail contiene TooManyRequests
     if (error.response?.status === 500 && error.response?.data?.detail?.includes('TooManyRequests')) {
       console.warn(
-        `appsheet - getData: Límite de peticiones alcanzado con estatus 500, esperando 5 segundos antes de reintentar... ${Date.now()}`,
+        `appsheet - getData: Límite de peticiones alcanzado con estatus 500, esperando 5 segundos antes de reintentar... ${Date.now()}`
       )
       await new Promise((resolve) => setTimeout(resolve, 5000))
       return getData(table, properties, rows)

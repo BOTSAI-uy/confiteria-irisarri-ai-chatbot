@@ -8,9 +8,7 @@ export async function videoMessage(message, userId, host, messageOriginType, lis
   const videoMessage = message.message.videoMessage
   if (videoMessage) {
     const extension = String(videoMessage.mimetype).split('/')[1]
-    const videoContent = [
-      { message, type: 'video', extension: `.${extension}`, caption: videoMessage.caption }
-    ]
+    const videoContent = [{ message, type: 'video', extension: `.${extension}`, caption: videoMessage.caption }]
     const attachments = await attachmentsMessage(videoContent)
     if (attachments) {
       for (const attachment of attachments) {

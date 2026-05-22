@@ -51,8 +51,8 @@ export async function sendResponse(
             type: 'media',
             media: {
               fileType: url.fileType,
-              fileUrl: url.fileUrl,
-            },
+              fileUrl: url.fileUrl
+            }
           }))
           totalMessages.push(...mediaMessages)
         }

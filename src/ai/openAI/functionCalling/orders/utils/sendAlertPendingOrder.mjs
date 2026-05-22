@@ -12,7 +12,7 @@ export async function notifyPendingOrder(client, phone) {
 
     if (!config) {
       console.warn(
-        'No se encontró la configuración para EventAlertAppsheet, no se enviará la notificación de pedido pendiente.',
+        'No se encontró la configuración para EventAlertAppsheet, no se enviará la notificación de pedido pendiente.'
       )
       return
     }
@@ -32,7 +32,7 @@ export async function notifyPendingOrder(client, phone) {
     // validar que tenga asistentes configurados
     if (!config.pendingOrderAssistants || config.pendingOrderAssistants.length === 0) {
       console.warn(
-        'No se encontraron asistentes configurados para la notificación de pedido pendiente en EventAlertAppsheet. No se enviará la notificación.',
+        'No se encontraron asistentes configurados para la notificación de pedido pendiente en EventAlertAppsheet. No se enviará la notificación.'
       )
       return
     }
@@ -41,7 +41,7 @@ export async function notifyPendingOrder(client, phone) {
     const template = await getTemplateById(config.pendingOrderTemplate)
     if (!template) {
       console.warn(
-        `No se encontró la plantilla configurada para la notificación de pedido pendiente en EventAlertAppsheet con el id ${config.pendingOrderTemplate}. No se enviará la notificación.`,
+        `No se encontró la plantilla configurada para la notificación de pedido pendiente en EventAlertAppsheet con el id ${config.pendingOrderTemplate}. No se enviará la notificación.`
       )
       return
     }
@@ -58,7 +58,7 @@ export async function notifyPendingOrder(client, phone) {
     // validar asistentes encontrados
     if (assistants.length === 0) {
       console.warn(
-        'No se encontraron asistentes válidos para la notificación de pedido pendiente en EventAlertAppsheet. No se enviará la notificación.',
+        'No se encontraron asistentes válidos para la notificación de pedido pendiente en EventAlertAppsheet. No se enviará la notificación.'
       )
       return
     }
@@ -68,24 +68,24 @@ export async function notifyPendingOrder(client, phone) {
       {
         key: 'nombre',
         type: 'string',
-        value: `${client.nombre} ${client.apellidos}`,
+        value: `${client.nombre} ${client.apellidos}`
       },
       {
         key: 'telefono',
         type: 'string',
-        value: phone || 'desconocido',
+        value: phone || 'desconocido'
       },
       {
         key: 'asunto',
         type: 'string',
-        value: 'Pedido pendiente de confirmación',
+        value: 'Pedido pendiente de confirmación'
       },
       {
         key: 'solicitud',
         type: 'string',
         value:
-          'El cliente no confirmó su pedido después de 10 minutos desde la solicitud. Por favor hacer seguimiento personalizado para confirmar si desea proceder con el pedido, modificarlo o cancelarlo.',
-      },
+          'El cliente no confirmó su pedido después de 10 minutos desde la solicitud. Por favor hacer seguimiento personalizado para confirmar si desea proceder con el pedido, modificarlo o cancelarlo.'
+      }
     ]
 
     // construir plantilla con valores
@@ -95,13 +95,13 @@ export async function notifyPendingOrder(client, phone) {
     for (const assistant of assistants) {
       if (!assistant.whatsappId) {
         console.warn(
-          `sendRequest: El asistente ${assistant.name} no tiene un ID de WhatsApp configurado, se omitirá la notificación`,
+          `sendRequest: El asistente ${assistant.name} no tiene un ID de WhatsApp configurado, se omitirá la notificación`
         )
         continue
       }
       if (!isProductionEnv()) {
         console.info(
-          `Entorno de desarrollo: No se enviará la notificación al asistente ${assistant.name} (${assistant.whatsappId})`,
+          `Entorno de desarrollo: No se enviará la notificación al asistente ${assistant.name} (${assistant.whatsappId})`
         )
         continue
       }

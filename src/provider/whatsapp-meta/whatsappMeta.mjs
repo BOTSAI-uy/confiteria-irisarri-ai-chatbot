@@ -8,6 +8,6 @@ export async function deployServiceWhatsappMeta() {
   provider.whatsapp.provider = 'meta'
   updateStatus('whatsapp', {
     accountId: ENV.WHATSAPP_META_ACCOUNTID,
-    status: 'online',
+    status: 'online'
   })
 }

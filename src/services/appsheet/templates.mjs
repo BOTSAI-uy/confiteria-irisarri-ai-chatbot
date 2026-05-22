@@ -23,36 +23,36 @@ export class TemplatesAppsheet {
 export const SCHEMA = appsheetClient.createSchema(NAME_TABLE, {
   id: {
     type: 'string',
-    primary: true,
+    primary: true
   },
   name: {
-    type: 'string',
+    type: 'string'
   },
   status: {
-    type: 'string',
+    type: 'string'
   },
   header: {
-    type: 'string',
+    type: 'string'
   },
   body: {
-    type: 'string',
+    type: 'string'
   },
   footer: {
-    type: 'string',
+    type: 'string'
   },
   buttons: {
-    type: 'string',
+    type: 'string'
   },
   language: {
-    type: 'string',
+    type: 'string'
   },
   category: {
-    type: 'string',
+    type: 'string'
   },
   subCategory: {
-    type: 'string',
+    type: 'string'
   },
   format: {
-    type: 'string',
-  },
+    type: 'string'
+  }
 })

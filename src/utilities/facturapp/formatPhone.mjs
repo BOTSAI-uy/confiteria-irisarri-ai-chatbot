@@ -1,5 +1,5 @@
 const FORMAT = {
-  598: { slice: 3, length: 11, newExtension: '0' }, // Uruguay
+  598: { slice: 3, length: 11, newExtension: '0' } // Uruguay
 }
 
 export function deletePhoneExtension(phone) {

@@ -16,7 +16,7 @@ export async function sendToOpenAI(userIdKey, user, aiModel, aiMaxTokens, aiTemp
       return null
     }
     const openai = new OpenAI({
-      apiKey: agentConfig.ai.token,
+      apiKey: agentConfig.ai.token
     })
 
     //cargar historial
@@ -33,7 +33,7 @@ export async function sendToOpenAI(userIdKey, user, aiModel, aiMaxTokens, aiTemp
       history,
       aiMaxTokens,
       aiTemperature,
-      tools,
+      tools
     })
     console.timeEnd('> Tiempo de respuesta OpenAI')
 

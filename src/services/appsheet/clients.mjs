@@ -9,7 +9,7 @@ export class ClientsAppsheet {
   //ss obtener cliente por código
   static async getClientByCode(clientCode) {
     const res = await getData(NAME_TABLE, {
-      Selector: `Filter(${NAME_TABLE}, [code] = "${clientCode}")`,
+      Selector: `Filter(${NAME_TABLE}, [code] = "${clientCode}")`
     })
     return DataFormatter.buildData(res[0])
   }
@@ -17,7 +17,7 @@ export class ClientsAppsheet {
   //ss obtener cliente por teléfono
   static async getClientByPhone(phone) {
     const res = await getData(NAME_TABLE, {
-      Selector: `Filter(${NAME_TABLE}, [phone] = "${phone}")`,
+      Selector: `Filter(${NAME_TABLE}, [phone] = "${phone}")`
     })
     return DataFormatter.buildData(res[0])
   }
@@ -25,7 +25,7 @@ export class ClientsAppsheet {
   //ss obtener cliente por dni
   static async getClientByDni(dni) {
     const res = await getData(NAME_TABLE, {
-      Selector: `Filter(${NAME_TABLE}, [dni] = "${dni}")`,
+      Selector: `Filter(${NAME_TABLE}, [dni] = "${dni}")`
     })
     return DataFormatter.buildData(res[0])
   }
@@ -33,7 +33,7 @@ export class ClientsAppsheet {
   //ss obtener cliente por rut
   static async getClientByRut(rut) {
     const res = await getData(NAME_TABLE, {
-      Selector: `Filter(${NAME_TABLE}, [rut] = "${rut}")`,
+      Selector: `Filter(${NAME_TABLE}, [rut] = "${rut}")`
     })
     return DataFormatter.buildData(res[0])
   }
@@ -77,7 +77,7 @@ class DataFormatter {
       consumidorFinal: item.finalConsumer,
       facturaNombre: item.invoiceName,
       contacto: item.contact,
-      fechaUpdate: buildFormatDateTime(item.updateDate),
+      fechaUpdate: buildFormatDateTime(item.updateDate)
     }))
 
     // validar si es un solo objeto o un array
@@ -110,7 +110,7 @@ class DataFormatter {
       company: item.company,
       finalConsumer: item.finalConsumer,
       invoiceName: item.invoiceName,
-      contact: item.contact,
+      contact: item.contact
     }))
 
     // validar si es un solo objeto o un array

@@ -8,7 +8,7 @@ export class MessageTemplatesDb {
   //ss Mapeo de proveedores de base de datos
   static dbProviders = {
     // Proveedor AppSheet
-    [DB_HOST.APPSHEET]: MessageTemplatesAppsheet,
+    [DB_HOST.APPSHEET]: MessageTemplatesAppsheet
   }
 
   //ss Método para obtener el proveedor actual

@@ -60,7 +60,7 @@ async function eco(payload) {
   try {
     await axios.post(url, payload, {
       headers,
-      timeout: 5000,
+      timeout: 5000
     })
     console.log('eco: payload reenviado a Chatwoot')
   } catch (err) {
@@ -81,7 +81,7 @@ async function ecoAuth(payload) {
   try {
     await axios.post(url, payload, {
       headers,
-      timeout: 5000,
+      timeout: 5000
     })
     console.log('ecoAuth: verificación reenviada a Chatwoot')
   } catch (err) {
@@ -91,7 +91,7 @@ async function ecoAuth(payload) {
 
 function buildEcoHeaders(token) {
   const headers = {
-    'Content-Type': 'application/json',
+    'Content-Type': 'application/json'
   }
 
   if (token) headers['x-echo-token'] = String(token)

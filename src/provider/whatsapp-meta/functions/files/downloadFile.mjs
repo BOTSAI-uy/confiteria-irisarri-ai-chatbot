@@ -31,8 +31,8 @@ export async function downloadFile(mediaId, extension, localPath = 'whatsapp-met
     // Paso 1: Obtener la URL del archivo multimedia
     const mediaUrlResponse = await axios.get(`https://graph.facebook.com/v17.0/${mediaId}`, {
       headers: {
-        Authorization: `Bearer ${meta.token}`,
-      },
+        Authorization: `Bearer ${meta.token}`
+      }
     })
 
     const fileUrl = mediaUrlResponse.data.url
@@ -49,8 +49,8 @@ export async function downloadFile(mediaId, extension, localPath = 'whatsapp-met
       method: 'GET',
       responseType: 'stream', // Obtener el archivo como flujo de datos
       headers: {
-        Authorization: `Bearer ${meta.token}`,
-      },
+        Authorization: `Bearer ${meta.token}`
+      }
     })
 
     // Piped stream para guardar el archivo en el sistema

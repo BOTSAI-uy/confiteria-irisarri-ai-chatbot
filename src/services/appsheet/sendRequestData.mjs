@@ -13,22 +13,22 @@ export class SendRequestDataAppsheet {
 export const SCHEMA = appsheetClient.createSchema(NAME_TABLE, {
   id: {
     type: 'string',
-    primary: true,
+    primary: true
   },
   datetime: {
     type: 'date',
-    default: () => new Date(),
+    default: () => new Date()
   },
   tag: {
-    type: 'string',
+    type: 'string'
   },
   contact: {
-    type: 'string',
+    type: 'string'
   },
   details: {
-    type: 'string',
+    type: 'string'
   },
   status: {
-    type: 'string',
-  },
+    type: 'string'
+  }
 })

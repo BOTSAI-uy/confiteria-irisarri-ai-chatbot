@@ -8,7 +8,7 @@ export class EmailTemplatesDb {
   //ss Mapeo de proveedores de base de datos
   static dbProviders = {
     // Proveedor AppSheet
-    [DB_HOST.APPSHEET]: EmailTemplatesAppsheet,
+    [DB_HOST.APPSHEET]: EmailTemplatesAppsheet
   }
 
   //ss Método para obtener el proveedor actual

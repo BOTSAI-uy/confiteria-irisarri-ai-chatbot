@@ -17,28 +17,28 @@ export const SCHEMA = appsheetClient.createSchema(NAME_TABLE, {
   id: {
     key: 'ID',
     type: 'string',
-    primary: true,
+    primary: true
   },
   name: {
     key: 'NAME',
-    type: 'string',
+    type: 'string'
   },
   //tools
   toolSendRequest: {
     key: 'TOOL_SENDREQUEST',
-    type: 'boolean',
+    type: 'boolean'
   },
   //prompts
   headPrompt: {
     key: 'HEAD_PROMPT',
-    type: 'string',
+    type: 'string'
   },
   prompt: {
     key: 'PROMPT',
-    type: 'string',
+    type: 'string'
   },
   footerPrompt: {
     key: 'FOOTER_PROMPT',
-    type: 'string',
-  },
+    type: 'string'
+  }
 })

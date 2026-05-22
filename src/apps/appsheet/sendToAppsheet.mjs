@@ -28,7 +28,7 @@ export async function sendToAppsheet(messages) {
         TRANSMITTER: message.transmitter,
         RECEIVER: message.receiver,
         TYPE: message.message.type,
-        TEXT: message.message.text,
+        TEXT: message.message.text
       }
       list.push(textMessage)
     }
@@ -56,7 +56,7 @@ export async function sendToAppsheet(messages) {
           RECEIVER: message.receiver,
           TYPE: message.message.media.fileType,
           TEXT: message.message.media.caption ? message.message.media.caption : '',
-          MEDIA_ULR: fileUrl,
+          MEDIA_ULR: fileUrl
         }
         list.push(textMessage)
       }

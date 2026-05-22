@@ -10,7 +10,7 @@ export async function addSendRequestData(data) {
   if (error) {
     console.warn(
       { error: error.message, stack: error.stack },
-      `Error al agregar los datos de solicitud en la base de datos`,
+      `Error al agregar los datos de solicitud en la base de datos`
     )
     return null
   }

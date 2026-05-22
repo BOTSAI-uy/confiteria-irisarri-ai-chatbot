@@ -12,7 +12,7 @@ export class PromotionsAppsheet {
   //ss obtener promoción por id
   static async getPromotionById(id) {
     const res = await getData(NAME_TABLE, {
-      Selector: `Filter(${NAME_TABLE}, [id] = "${id}")`,
+      Selector: `Filter(${NAME_TABLE}, [id] = "${id}")`
     })
     return DataFormatter.buildData(res[0])
   }
@@ -29,7 +29,7 @@ class DataFormatter {
       name: item.name,
       description: item.description || '',
       status: item.status || false,
-      urlImage: item.urlImage || '',
+      urlImage: item.urlImage || ''
     }))
 
     // validar si es un solo objeto o un array

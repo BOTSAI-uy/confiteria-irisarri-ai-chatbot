@@ -25,7 +25,7 @@ export async function validateArticles(articles, deliveryDate, result) {
     if (!baseArticle) {
       console.error(`validateArticles: Artículo con código ${item.article} no encontrado.`)
       result.errors.push(
-        `Artículo con código ${item.article} no encontrado. por favor revise revisar el código del artículo dentro de los artículos disponibles. (use getArticles() para obtener la lista de artículos disponibles)`,
+        `Artículo con código ${item.article} no encontrado. por favor revise revisar el código del artículo dentro de los artículos disponibles. (use getArticles() para obtener la lista de artículos disponibles)`
       )
       continue
     }
@@ -38,7 +38,7 @@ export async function validateArticles(articles, deliveryDate, result) {
     if (dailyArticle) {
       await validateDailyArticle(item, dailyArticle, deliveryDate, result)
     }
-    
+
     // validar cuando no es un artículo de producción diario
     else {
       await validateBaseArticle(item, baseArticle, result)

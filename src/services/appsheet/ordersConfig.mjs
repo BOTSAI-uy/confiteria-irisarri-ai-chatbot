@@ -16,10 +16,10 @@ export class OrdersConfigAppsheet {
 export const SCHEMA = appsheetClient.createSchema(NAME_TABLE, {
   id: {
     type: 'string',
-    primary: true,
+    primary: true
   },
   deliveryAnticipationTime: {
-    type: 'number',
+    type: 'number'
   },
   deliverySchedule: {
     type: 'object',
@@ -27,39 +27,39 @@ export const SCHEMA = appsheetClient.createSchema(NAME_TABLE, {
       sunday: {
         key: 'delivery_sunday',
         type: 'array',
-        itemType: 'string',
+        itemType: 'string'
       },
       monday: {
         key: 'delivery_monday',
         type: 'array',
-        itemType: 'string',
+        itemType: 'string'
       },
       tuesday: {
         key: 'delivery_tuesday',
         type: 'array',
-        itemType: 'string',
+        itemType: 'string'
       },
       wednesday: {
         key: 'delivery_wednesday',
         type: 'array',
-        itemType: 'string',
+        itemType: 'string'
       },
       thursday: {
         key: 'delivery_thursday',
         type: 'array',
-        itemType: 'string',
+        itemType: 'string'
       },
       friday: {
         key: 'delivery_friday',
         type: 'array',
-        itemType: 'string',
+        itemType: 'string'
       },
       saturday: {
         key: 'delivery_saturday',
         type: 'array',
-        itemType: 'string',
-      },
-    },
+        itemType: 'string'
+      }
+    }
   },
   pickUpSchedule: {
     type: 'object',
@@ -67,38 +67,38 @@ export const SCHEMA = appsheetClient.createSchema(NAME_TABLE, {
       sunday: {
         key: 'pickUp_sunday',
         type: 'array',
-        itemType: 'string',
+        itemType: 'string'
       },
       monday: {
         key: 'pickUp_monday',
         type: 'array',
-        itemType: 'string',
+        itemType: 'string'
       },
       tuesday: {
         key: 'pickUp_tuesday',
         type: 'array',
-        itemType: 'string',
+        itemType: 'string'
       },
       wednesday: {
         key: 'pickUp_wednesday',
         type: 'array',
-        itemType: 'string',
+        itemType: 'string'
       },
       thursday: {
         key: 'pickUp_thursday',
         type: 'array',
-        itemType: 'string',
+        itemType: 'string'
       },
       friday: {
         key: 'pickUp_friday',
         type: 'array',
-        itemType: 'string',
+        itemType: 'string'
       },
       saturday: {
         key: 'pickUp_saturday',
         type: 'array',
-        itemType: 'string',
-      },
-    },
-  },
+        itemType: 'string'
+      }
+    }
+  }
 })

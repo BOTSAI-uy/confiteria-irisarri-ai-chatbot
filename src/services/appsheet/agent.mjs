@@ -7,7 +7,7 @@ export class AgentAppsheet {
   //ss cargar agent
   static async getAgent() {
     const res = await getData(NAME_TABLE, {
-      Selector: `Filter(${NAME_TABLE}, [SERVICE_ID] = "${ENV.SERVICE_ID}")`,
+      Selector: `Filter(${NAME_TABLE}, [SERVICE_ID] = "${ENV.SERVICE_ID}")`
     })
     return DataFormatter.buildData(res[0])
   }
@@ -30,13 +30,13 @@ class DataFormatter {
         processAudio: item.PROCESS_AUDIO || false,
         processImage: item.PROCESS_IMAGE || false,
         processPdf: item.PROCESS_PDF || false,
-        pdfQuality: item.PDF_QUALITY || 'text', //text | ocr
+        pdfQuality: item.PDF_QUALITY || 'text' //text | ocr
       },
       delay: parseInt(item.DELAY, 10) * 1000 || 0,
       awaitResponse: parseInt(item.AWAIT_RESPONSE, 10) * 1000 || 0,
       historyInMemory: parseInt(item.HISTORY_IN_MEMORY, 10) * 60000 || 0,
       defaultBrain: item.DEFAULT_BRAIN,
-      defaultBlacklist: item.DEFAULT_BLACKLIST || false,
+      defaultBlacklist: item.DEFAULT_BLACKLIST || false
     }))
 
     // validar si es un solo objeto o un array

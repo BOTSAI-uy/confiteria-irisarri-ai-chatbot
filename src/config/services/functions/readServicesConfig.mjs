@@ -61,7 +61,6 @@ export async function readServicesConfig() {
 
   //chatwoot
   if (ENV.CHATWOOT_URL && ENV.CHATWOOT_TOKEN && ENV.CHATWOOT_COUNT_ID && ENV.CHATWOOT_AGENT_ID) {
-    
     const chatwoot = {
       platform: 'chatwoot',
       url: ENV.CHATWOOT_URL,

@@ -22,7 +22,7 @@ export class OrdersAppsheet {
   // ss obtener orden por id
   static async getOrderByNumber(orderNumber) {
     const res = await getData(NAME_TABLE, {
-      Selector: `Filter(${NAME_TABLE}, [id] = "${orderNumber}")`,
+      Selector: `Filter(${NAME_TABLE}, [id] = "${orderNumber}")`
     })
     return DataFormatter.buildData(res[0])
   }
@@ -32,7 +32,7 @@ export class OrdersAppsheet {
     const res = await getData(NAME_TABLE, {
       Selector: `Filter(${NAME_TABLE}, AND([client] = "${clientCode}", [createdAt] >= "${revertFormatDateTimeUs(
         startDate
-      )}", [createdAt] <= "${revertFormatDateTimeUs(endDate)}"))`,
+      )}", [createdAt] <= "${revertFormatDateTimeUs(endDate)}"))`
     })
     return DataFormatter.buildData(res)
   }
@@ -58,7 +58,7 @@ class DataFormatter {
         cliente: item.name,
         direccion: item.address,
         formaPago: item.paymentMethod,
-        total: parseFloat(item.totalPrice),
+        total: parseFloat(item.totalPrice)
         // no se agrega "pago" porque no se maneja en AppSheet
         // no se agregan "facturado" porque no se maneja en AppSheet
       }
@@ -89,7 +89,7 @@ class DataFormatter {
         paymentMethod: item.paymentMethod,
         deliveryMode: item.deliveryMode,
         deliveryDate: item.deliveryDate,
-        note: item.note,
+        note: item.note
       }
 
       for (const article of item.articles) {
@@ -98,7 +98,7 @@ class DataFormatter {
           order: _order.id,
           article: article.article,
           quantity: article.quantity,
-          note: article.note || '',
+          note: article.note || ''
         }
         orderItems.push(_item)
       }

@@ -29,7 +29,7 @@ class DataFormatter {
       TAG: item.tag,
       REQUEST: item.request,
       PLATFORM: item.platform,
-      STATUS: item.status,
+      STATUS: item.status
     }))
 
     // validar si es un solo objeto o un array

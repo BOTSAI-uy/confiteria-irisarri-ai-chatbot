@@ -6,18 +6,18 @@ import { ENV } from '#config/config.mjs'
 export const appsheetClient = new AppsheetClient(
   {
     appId: ENV.APPSHEET_ID,
-    apiKey: ENV.APPSHEET_TOKEN,
+    apiKey: ENV.APPSHEET_TOKEN
   },
   {
     config: {
       timezone: ENV.TZ,
       maxRetriesOnRateLimit: 5,
-      retryDelay: 1000,
+      retryDelay: 1000
     },
     client: {
       locale: 'en-GB',
       timezone: ENV.TZ,
-      userSettings: { FROM_API: true },
-    },
+      userSettings: { FROM_API: true }
+    }
   }
 )

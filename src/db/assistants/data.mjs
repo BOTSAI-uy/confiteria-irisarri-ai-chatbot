@@ -8,7 +8,7 @@ export class AssistantsDb {
   //ss Mapeo de proveedores de base de datos
   static dbProviders = {
     // Proveedor AppSheet
-    [DB_HOST.APPSHEET]: AssistantsAppsheet,
+    [DB_HOST.APPSHEET]: AssistantsAppsheet
   }
 
   //ss Método para obtener el proveedor actual

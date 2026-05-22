@@ -27,7 +27,7 @@ export async function eventMessages(data) {
       agentResponse(userId, { type: 'text', text }, 'user', 'instagram', message)
       const formatMessage = formatIncomingMessage('instagram', 'meta', 'user', userId, meta.pageid, {
         type: 'text',
-        text,
+        text
       })
       list.push(formatMessage)
     }
@@ -39,7 +39,7 @@ export async function eventMessages(data) {
           agentResponse(message.sender.id, { type: 'media', media: attachment }, 'user', 'instagram', message)
           const formatMessage = formatIncomingMessage('instagram', 'meta', 'user', message.sender.id, meta.pageid, {
             type: 'media',
-            media: attachment,
+            media: attachment
           })
           list.push(formatMessage)
         }

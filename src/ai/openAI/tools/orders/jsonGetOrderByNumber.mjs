@@ -11,13 +11,13 @@ export async function getJson() {
         // nombre del cliente
         orderNumber: {
           type: 'integer',
-          description: 'Número único del pedido que se desea consultar',
-        },
+          description: 'Número único del pedido que se desea consultar'
+        }
       },
       required: ['orderNumber'],
-      additionalProperties: false,
+      additionalProperties: false
     },
-    strict: true,
+    strict: true
   }
   return jsonData
 }

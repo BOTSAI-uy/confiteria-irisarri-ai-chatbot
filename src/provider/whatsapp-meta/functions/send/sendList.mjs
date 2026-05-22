@@ -16,9 +16,7 @@ export async function sendList(phone, { header, body, footer, buttonText }, list
     }
 
     if (!body && !header && !footer) {
-      throw new Error(
-        'El mensaje está vacío. Debe proporcionar al menos uno de los siguientes: header, body o footer.'
-      )
+      throw new Error('El mensaje está vacío. Debe proporcionar al menos uno de los siguientes: header, body o footer.')
     }
 
     // Obtener credenciales

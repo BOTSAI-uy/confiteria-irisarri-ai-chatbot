@@ -18,7 +18,7 @@ export function formatToAi(dailyArticles) {
         fotoPortada: article.fotoPortada || '',
         libreDeAzucar: article.libreDeAzucar || false,
         aptoParaCeliacos: article.aptoParaCeliacos || false,
-        esVegano: article.esVegano || false,
+        esVegano: article.esVegano || false
       }
       // horas de anticipación
       if (article.horasDeAnticipacion) {

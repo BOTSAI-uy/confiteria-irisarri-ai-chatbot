@@ -8,7 +8,7 @@ import { StatusPlatforms } from '#services/appsheet/statusPlatforms.mjs'
 export class StatusPlatformsDb {
   static dbProviders = {
     // Proveedor AppSheet
-    [DB_HOST.APPSHEET]: StatusPlatforms,
+    [DB_HOST.APPSHEET]: StatusPlatforms
   }
 
   //ss Método para obtener el proveedor actual

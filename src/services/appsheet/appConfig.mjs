@@ -35,7 +35,7 @@ class DataFormatter {
       MULTIPLE_BRAIN: getState('multipleBrain') || false,
       PROCESS_AUDIO: getState('processAudio') || false,
       PROCESS_IMAGE: getState('processImage') || false,
-      PROCESS_PDF: getState('processPdf') || false,
+      PROCESS_PDF: getState('processPdf') || false
     }
 
     //email

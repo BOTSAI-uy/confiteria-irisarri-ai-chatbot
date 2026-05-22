@@ -7,11 +7,11 @@ import { DELIVERY_MODES, PAYMENT_METHODS } from '#enums/tools/orders.mjs'
 
 const HANDLE_DELIVERY_MODES = {
   [DELIVERY_MODES.PICKUP]: 1,
-  [DELIVERY_MODES.HOME_DELIVERY]: 2,
+  [DELIVERY_MODES.HOME_DELIVERY]: 2
 }
 const HANDLE_PAYMENT_METHODS = {
   [PAYMENT_METHODS.CASH]: 1,
-  [PAYMENT_METHODS.CREDIT]: 2,
+  [PAYMENT_METHODS.CREDIT]: 2
 }
 
 export class OrdersFacturapp {
@@ -69,7 +69,7 @@ export class OrdersFacturapp {
         ...data,
         CodigoCliente: clientCode,
         FechaDesde,
-        FechaHasta,
+        FechaHasta
       })
       if (res.status !== 200) {
         throw new Error(`ClientsFacturapp: Error en la petición, código de estado ${res.status}`)
@@ -94,7 +94,7 @@ class DataFormatter {
       const _order = {
         numeroPedido: item.numeroPedido,
         estadoInicial: item.estadoInicial, //TODO: agregar mapeo de estados
-        total: item.total,
+        total: item.total
       }
       orders.push(_order)
     }
@@ -122,7 +122,7 @@ class DataFormatter {
         formaPago: item.FormaPago,
         pago: item.Pago,
         facturado: item.Facturado,
-        total: item.Total,
+        total: item.Total
       }
       orders.push(_order)
     }
@@ -159,8 +159,8 @@ class DataFormatter {
         Codigo: article.article,
         Cantidad: article.quantity,
         PorcDtoLinea: article.discount ? article.discount * 100 : 0, // porcentaje de descuento en la línea
-        Observaciones: article.note || '',
-      })),
+        Observaciones: article.note || ''
+      }))
     }))
 
     // validar si es un solo objeto o un array

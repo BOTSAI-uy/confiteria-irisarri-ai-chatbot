@@ -104,7 +104,7 @@ class DataFormatter {
       facturaNombre: item.facturaNombre,
       contacto: item.contacto,
       fechaUpdate: item.fechaUpdate ? buildFormatDateTime(item.fechaUpdate) : null, // dar formato si es necesario
-      permiteCredito: item.permiteCredito,
+      permiteCredito: item.permiteCredito
     }))
 
     // validar si es un solo objeto o un array
@@ -130,7 +130,7 @@ class DataFormatter {
       codigoPostal: '',
       observaciones: item.observations || '',
       facturaNombre: `${item.name || ''} ${item.lastName || ''}`.trim(),
-      contacto: item.contact || '',
+      contacto: item.contact || ''
     }))
 
     // validar si es un solo objeto o un array

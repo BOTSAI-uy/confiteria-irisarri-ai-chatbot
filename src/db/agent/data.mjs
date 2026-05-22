@@ -8,7 +8,7 @@ export class AgentDb {
   //ss Mapeo de proveedores de base de datos
   static dbProviders = {
     // Proveedor AppSheet
-    [DB_HOST.APPSHEET]: AgentAppsheet,
+    [DB_HOST.APPSHEET]: AgentAppsheet
   }
 
   //ss Método para obtener el proveedor actual

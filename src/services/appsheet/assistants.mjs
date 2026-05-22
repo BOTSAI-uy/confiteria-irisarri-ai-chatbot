@@ -24,34 +24,34 @@ export const SCHEMA = appsheetClient.createSchema(NAME_TABLE, {
   id: {
     key: 'ID',
     type: 'string',
-    primary: true,
+    primary: true
   },
   name: {
     key: 'NAME',
-    type: 'string',
+    type: 'string'
   },
   email: {
     key: 'EMAIL',
-    type: 'string',
+    type: 'string'
   },
   whatsappId: {
     key: 'WHATSAPP_ID',
-    type: 'string',
+    type: 'string'
   },
   phone: {
     key: 'PHONE',
-    type: 'string',
+    type: 'string'
   },
   detectAssistantCondition: {
     key: 'DETECT_ASSISTANT_CONDITION',
-    type: 'string',
+    type: 'string'
   },
   detectAssistantMessage: {
     key: 'DETECT_ASSISTANT_MESSAGE',
-    type: 'string',
+    type: 'string'
   },
   detectAssistantIdle: {
     key: 'DETECT_ASSISTANT_IDLE',
-    type: 'number',
-  },
+    type: 'number'
+  }
 })

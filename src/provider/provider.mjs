@@ -23,7 +23,7 @@ import { getUserName as getUserNameInstagramMeta } from './instagram-meta/functi
 export const provider = {
   whatsapp: { sock: null, provider: '', state: 'open', connection: 'disconnected' },
   messenger: { provider: 'meta' },
-  instagram: { provider: 'meta' },
+  instagram: { provider: 'meta' }
 }
 
 //TT OBTENER HOST DE DEL PROVEEDOR

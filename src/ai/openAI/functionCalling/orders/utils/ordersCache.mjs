@@ -9,7 +9,7 @@ export class OrdersCache {
 
   static add(orderId, orderData) {
     this.cache.set(orderId, {
-      data: orderData,
+      data: orderData
     })
   }
 }

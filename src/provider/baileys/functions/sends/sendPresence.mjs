@@ -14,9 +14,7 @@ export async function sendPresence(presence, phone) {
   try {
     // Validación de los parámetros de entrada
     if (!validPresences.includes(presence)) {
-      throw new Error(
-        `Presencia no válida: "${presence}". Las opciones permitidas son: ${validPresences.join(', ')}.`
-      )
+      throw new Error(`Presencia no válida: "${presence}". Las opciones permitidas son: ${validPresences.join(', ')}.`)
     }
 
     if (!phone || typeof phone !== 'string') {

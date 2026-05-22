@@ -7,7 +7,7 @@ export async function getTemplates() {
   const baseUrl = `https://graph.facebook.com/${ENV.WHATSAPP_META_VERSION}/${ENV.WHATSAPP_META_ACCOUNTID}/message_templates`
   const headers = {
     Authorization: `Bearer ${ENV.WHATSAPP_META_TOKEN}`,
-    'Content-Type': 'application/json',
+    'Content-Type': 'application/json'
   }
 
   const maxPages = 50

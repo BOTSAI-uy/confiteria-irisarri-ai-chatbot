@@ -13,22 +13,22 @@ export class DiscountAppsheet {
 export const SCHEMA = appsheetClient.createSchema(NAME_TABLE, {
   id: {
     type: 'string',
-    primary: true,
+    primary: true
   },
   name: {
-    type: 'string',
+    type: 'string'
   },
   status: {
-    type: 'boolean',
+    type: 'boolean'
   },
   groupId: {
-    type: 'number',
+    type: 'number'
   },
   days: {
     type: 'array',
-    itemType: 'string',
+    itemType: 'string'
   },
   discount: {
-    type: 'number',
-  },
+    type: 'number'
+  }
 })

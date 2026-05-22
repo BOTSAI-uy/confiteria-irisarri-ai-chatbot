@@ -24,7 +24,7 @@ class DataFormatter {
     const result = allData.map((item) => ({
       serviceId: item.SERVICE_ID,
       serviceUrl: item.SERVICE_URL,
-      serviceToken: item.SERVICE_TOKEN,
+      serviceToken: item.SERVICE_TOKEN
     }))
 
     // validar si es un solo objeto o un array
@@ -41,7 +41,7 @@ class DataFormatter {
     const result = {
       SERVICE_ID: ENV.SERVICE_ID,
       SERVICE_URL: ENV.SERVICE_URL,
-      SERVICE_TOKEN: ENV.SERVICE_TOKEN,
+      SERVICE_TOKEN: ENV.SERVICE_TOKEN
     }
     // devolver array de objetos
     return result

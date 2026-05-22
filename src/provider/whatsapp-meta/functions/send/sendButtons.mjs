@@ -35,10 +35,10 @@ export async function sendButtons(phone, { header, body, footer }, buttonList) {
         action: {
           buttons: buttonList.map((button) => ({
             type: 'reply',
-            reply: { id: button.id, title: limitLength(button.title, 20) },
-          })),
-        },
-      },
+            reply: { id: button.id, title: limitLength(button.title, 20) }
+          }))
+        }
+      }
     }
 
     // agregar las secciones y filas a la estructura de datos
@@ -50,8 +50,8 @@ export async function sendButtons(phone, { header, body, footer }, buttonList) {
     const response = await axios.post(url, data, {
       headers: {
         Authorization: `Bearer ${meta.token}`,
-        'Content-Type': 'application/json',
-      },
+        'Content-Type': 'application/json'
+      }
     })
 
     return response.data

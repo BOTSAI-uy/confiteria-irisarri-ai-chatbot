@@ -11,9 +11,7 @@ export async function findContactConversation(contactId, inboxId, status = 'open
     console.error('no se logo encontar conversación en esta bandeja')
     return null
   }
-  const conversation = conversations.data.payload.find(
-    (conv) => String(conv.meta.sender.id) === String(contactId)
-  )
+  const conversation = conversations.data.payload.find((conv) => String(conv.meta.sender.id) === String(contactId))
   if (!conversation) {
     console.log('no se encontro conversación de usuario: ' + contactId)
     return null

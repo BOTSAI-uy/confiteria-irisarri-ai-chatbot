@@ -17,9 +17,9 @@ export class SendRequestAppsheet {
 export const SCHEMA = appsheetClient.createSchema(NAME_TABLE, {
   id: {
     type: 'string',
-    primary: true,
+    primary: true
   },
   template: {
-    type: 'string',
-  },
+    type: 'string'
+  }
 })

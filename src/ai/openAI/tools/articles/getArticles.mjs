@@ -20,22 +20,22 @@ export async function getJson() {
         family: {
           type: ['string', 'null'],
           enum: combinedFamily || [''],
-          description: 'Filtrar artículos por familia',
+          description: 'Filtrar artículos por familia'
         },
         group: {
           type: ['string', 'null'],
           enum: combinedGroup || [''],
-          description: 'Filtrar artículos por grupo',
+          description: 'Filtrar artículos por grupo'
         },
         word: {
           type: ['string', 'null'],
-          description: 'Filtrar artículos por palabra clave',
-        },
+          description: 'Filtrar artículos por palabra clave'
+        }
       },
       required: ['family', 'group', 'word'],
-      additionalProperties: false,
+      additionalProperties: false
     },
-    strict: true,
+    strict: true
   }
   return jsonData
 }

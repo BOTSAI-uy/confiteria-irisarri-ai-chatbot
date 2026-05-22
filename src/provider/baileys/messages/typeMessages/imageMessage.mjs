@@ -9,9 +9,7 @@ export async function imageMessage(message, userId, host, messageOriginType, lis
   if (imageMessage) {
     const extension = String(imageMessage.mimetype).split('/')[1]
 
-    const imageContent = [
-      { message, type: 'image', extension: `.${extension}`, caption: imageMessage.caption }
-    ]
+    const imageContent = [{ message, type: 'image', extension: `.${extension}`, caption: imageMessage.caption }]
     const attachments = await attachmentsMessage(imageContent)
     if (attachments) {
       for (const attachment of attachments) {

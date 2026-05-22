@@ -23,9 +23,7 @@ export async function sendMedia(phone, { fileType, fileUrl, caption } = {}, role
     // Validación del tipo de archivo soportado
     const supportedTypes = ['image', 'video', 'audio', 'document', 'file']
     if (!supportedTypes.includes(fileType)) {
-      throw new Error(
-        `Tipo de media no soportado: ${fileType}. Tipos soportados: ${supportedTypes.join(', ')}`
-      )
+      throw new Error(`Tipo de media no soportado: ${fileType}. Tipos soportados: ${supportedTypes.join(', ')}`)
     }
 
     // Construcción del mensaje según el tipo de archivo

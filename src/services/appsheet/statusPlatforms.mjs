@@ -20,7 +20,7 @@ class DataFormatter {
     const result = allData.map((item) => ({
       platform: item.PLATFORM,
       accountId: item.ACCOUNT_ID,
-      status: item.STATUS,
+      status: item.STATUS
     }))
 
     // validar si es un solo objeto o un array
@@ -37,7 +37,7 @@ class DataFormatter {
     const result = {
       PLATFORM: data.platform,
       ACCOUNT_ID: data.accountId,
-      STATUS: data.status,
+      STATUS: data.status
     }
     // devolver array de objetos
     return result

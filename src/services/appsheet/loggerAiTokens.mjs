@@ -32,7 +32,7 @@ class DataFormatter {
       input: item.INPUT,
       output: item.OUTPUT,
       cachedInput: item.CACHED_INPUT,
-      user: item.USER,
+      user: item.USER
     }))
 
     // validar si es un solo objeto o un array
@@ -58,7 +58,7 @@ class DataFormatter {
       INPUT: item.input,
       OUTPUT: item.output,
       CACHED_INPUT: item.cachedInput,
-      USER: item.id,
+      USER: item.id
     }))
 
     // validar si es un solo objeto o un array

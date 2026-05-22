@@ -8,7 +8,7 @@ export async function patchData(table, properties = {}, rows = []) {
 
   // Configurar los encabezados
   const headers = {
-    'Content-Type': 'application/json',
+    'Content-Type': 'application/json'
   }
 
   // Construir el cuerpo de la solicitud
@@ -18,9 +18,9 @@ export async function patchData(table, properties = {}, rows = []) {
       Locale: 'en-GB',
       Timezone: ENV.TZ,
       UserSettings: { FROM_API: true },
-      ...properties,
+      ...properties
     },
-    Rows: !Array.isArray(rows) ? [rows] : rows,
+    Rows: !Array.isArray(rows) ? [rows] : rows
   }
 
   try {
@@ -40,7 +40,9 @@ export async function patchData(table, properties = {}, rows = []) {
   } catch (error) {
     // si el status code es 429 esperar 1 segundo y reintentar
     if (error.response?.status === 429) {
-      console.warn('appsheet - patchData: Límite de peticiones alcanzado, esperando 1.5 segundos antes de reintentar...')
+      console.warn(
+        'appsheet - patchData: Límite de peticiones alcanzado, esperando 1.5 segundos antes de reintentar...'
+      )
       await new Promise((resolve) => setTimeout(resolve, 1500))
       return patchData(table, properties, rows)
     }

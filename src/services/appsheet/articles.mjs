@@ -14,7 +14,7 @@ export class ArticlesAppsheet {
   //ss obtener artículo por código
   static async getArticleByCode(code) {
     const res = await getData(NAME_TABLE, {
-      Selector: `Filter(${NAME_TABLE}, [code] = "${code}")`,
+      Selector: `Filter(${NAME_TABLE}, [code] = "${code}")`
     })
     return DataFormatter.buildData(res[0])
   }
@@ -23,7 +23,7 @@ export class ArticlesAppsheet {
   static async getUpdatedArticles(sinceDate) {
     const dateValid = revertFormatDateTime(sinceDate)
     const res = await getData(NAME_TABLE, {
-      Selector: `Filter(${NAME_TABLE}, [updateDate] > "${dateValid}")`,
+      Selector: `Filter(${NAME_TABLE}, [updateDate] > "${dateValid}")`
     })
     return DataFormatter.buildData(res)
   }
@@ -48,7 +48,7 @@ class DataFormatter {
       fotoPortada: item.coverPhoto,
       fechaUpdate: item.updateDate,
       // otros campos
-      active: item.active,
+      active: item.active
     }))
 
     // validar si es un solo objeto o un array

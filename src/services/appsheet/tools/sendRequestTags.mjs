@@ -14,7 +14,7 @@ export class SendRequestTagsAppsheet {
   //ss obtener herramienta por id
   static async getSendRequestTagById(id) {
     const res = await getData(NAME_TABLE, {
-      Selector: `Filter(${NAME_TABLE}, [id] = "${id}")`,
+      Selector: `Filter(${NAME_TABLE}, [id] = "${id}")`
     })
     return DataFormatter.buildData(res[0])
   }
@@ -30,7 +30,7 @@ class DataFormatter {
       id: item.ID,
       name: item.NAME,
       description: item.DESCRIPTION,
-      assistants: formatArray(item.ASSISTANTS),
+      assistants: formatArray(item.ASSISTANTS)
     }))
 
     // validar si es un solo objeto o un array

@@ -41,7 +41,7 @@ export async function getShippingAvailability(isDelivery = true, anticipationHou
 
     // obtener disponibilidad desde Facturapp
     const [error, facturappData] = await catchError(
-      ShippingAvailabilityDayFacturapp.getAvailabilityDay(formattedDate, true),
+      ShippingAvailabilityDayFacturapp.getAvailabilityDay(formattedDate, true)
     )
     // manejar error
     if (error) {
@@ -53,7 +53,7 @@ export async function getShippingAvailability(isDelivery = true, anticipationHou
     const data = {
       date: formattedDate,
       day: dayKey,
-      times: [],
+      times: []
     }
 
     const times = schedule[dayKey] || []

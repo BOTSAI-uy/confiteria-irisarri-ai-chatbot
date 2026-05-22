@@ -16,12 +16,12 @@ export class ClientProfilesAppsheet {
 export const SCHEMA = appsheetClient.createSchema(NAME_TABLE, {
   code: {
     type: 'string',
-    primary: true,
+    primary: true
   },
   name: {
-    type: 'string',
+    type: 'string'
   },
   profile: {
-    type: 'string',
-  },
+    type: 'string'
+  }
 })

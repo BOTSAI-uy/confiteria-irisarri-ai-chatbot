@@ -43,18 +43,18 @@ export async function validateDeliveryDate(deliveryDate, deliveryMode, result) {
 
   if (!isAvailable) {
     console.warn(
-      `La fecha de entrega ${deliveryDate} no está disponible. verificar las horas de anticipación de los articulos y los horarios disponibles.`,
+      `La fecha de entrega ${deliveryDate} no está disponible. verificar las horas de anticipación de los articulos y los horarios disponibles.`
     )
     result.errors.push(
-      `La fecha de entrega ${deliveryDate} no está disponible. verificar las horas de anticipación de los articulos y los horarios disponibles.`,
+      `La fecha de entrega ${deliveryDate} no está disponible. verificar las horas de anticipación de los articulos y los horarios disponibles.`
     )
     if (result.anticipationHours) {
       console.warn(
-        `Las horas de anticipación requeridas para esta orden son ${result.anticipationHours}. (horas hábiles)`,
+        `Las horas de anticipación requeridas para esta orden son ${result.anticipationHours}. (horas hábiles)`
       )
 
       result.errors.push(
-        `Las horas de anticipación requeridas para esta orden son ${result.anticipationHours}. (horas hábiles)`,
+        `Las horas de anticipación requeridas para esta orden son ${result.anticipationHours}. (horas hábiles)`
       )
     }
   }

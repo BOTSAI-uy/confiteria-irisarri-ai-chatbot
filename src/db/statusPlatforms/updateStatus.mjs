@@ -4,8 +4,8 @@ import { StatusPlatformsDb } from './data.mjs'
 const HANDLER_TABLE = {
   whatsapp: {
     meta: 'PLATFORM_WA_META',
-    baileys: 'PLATFORM_WA_BAILEYS',
-  },
+    baileys: 'PLATFORM_WA_BAILEYS'
+  }
 }
 
 export async function updateStatus(platform, data) {

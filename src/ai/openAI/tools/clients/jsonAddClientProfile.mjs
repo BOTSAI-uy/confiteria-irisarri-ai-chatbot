@@ -10,29 +10,29 @@ export async function getJson() {
       properties: {
         dni: {
           type: 'string',
-          description: 'Cédula del cliente',
+          description: 'Cédula del cliente'
         },
         name: {
           type: 'string',
-          description: 'Nombre del cliente',
+          description: 'Nombre del cliente'
         },
         lastName: {
           type: 'string',
-          description: 'Apellidos del cliente',
+          description: 'Apellidos del cliente'
         },
         address: {
           type: 'string',
-          description: 'Dirección del cliente',
+          description: 'Dirección del cliente'
         },
         contact: {
           type: ['string', 'null'],
-          description: 'Persona de contacto del cliente, en caso de que sea una empresa',
-        },
+          description: 'Persona de contacto del cliente, en caso de que sea una empresa'
+        }
       },
       required: ['dni', 'name', 'lastName', 'address', 'contact'],
-      additionalProperties: false,
+      additionalProperties: false
     },
-    strict: true,
+    strict: true
   }
   return jsonData
 }

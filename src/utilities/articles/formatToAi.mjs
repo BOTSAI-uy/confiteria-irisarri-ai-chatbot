@@ -25,7 +25,7 @@ export function formatToAi(articles) {
         grupo: article.grupo || '',
         precio: article.precioVenta || 0,
         unidadMedida: article.unidadMedida || '',
-        fotoPortada: article.fotoPortada || '',
+        fotoPortada: article.fotoPortada || ''
       }
       data.push(obj)
     }

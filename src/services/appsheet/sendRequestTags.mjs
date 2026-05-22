@@ -23,19 +23,19 @@ export class SendRequestTagsAppsheet {
 export const SCHEMA = appsheetClient.createSchema(NAME_TABLE, {
   id: {
     type: 'string',
-    primary: true,
+    primary: true
   },
   status: {
-    type: 'boolean',
+    type: 'boolean'
   },
   name: {
-    type: 'string',
+    type: 'string'
   },
   description: {
-    type: 'string',
+    type: 'string'
   },
   assistants: {
     type: 'array',
-    itemType: 'string',
-  },
+    itemType: 'string'
+  }
 })

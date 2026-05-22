@@ -11,13 +11,15 @@ export function revertDateTime(dateTime, gb = true) {
     const minutes = dateTime.getMinutes()
     const seconds = dateTime.getSeconds()
     if (gb) {
-      return `${String(date).padStart(2, '0')}/${String(month).padStart(2, '0')}/${year} ${String(
-        hours
-      ).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
+      return `${String(date).padStart(2, '0')}/${String(month).padStart(2, '0')}/${year} ${String(hours).padStart(
+        2,
+        '0'
+      )}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
     } else {
-      return `${String(month).padStart(2, '0')}/${String(date).padStart(2, '0')}/${year} ${String(
-        hours
-      ).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
+      return `${String(month).padStart(2, '0')}/${String(date).padStart(2, '0')}/${year} ${String(hours).padStart(
+        2,
+        '0'
+      )}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
     }
   } catch (error) {
     console.error('Error al formatear fecha y hora:', error)

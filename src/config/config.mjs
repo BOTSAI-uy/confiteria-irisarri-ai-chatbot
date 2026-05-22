@@ -89,7 +89,7 @@ export const ENV = {
   FACTURAPP_URL: process.env.FACTURAPP_URL,
 
   //CONFIG
-  FACTURAPP_ACTIVE: process.env.FACTURAPP_ACTIVE || '',
+  FACTURAPP_ACTIVE: process.env.FACTURAPP_ACTIVE || ''
 }
 
 //TT ESTADO DE ENTORNO

@@ -44,8 +44,8 @@ export async function sendMessageInteractive(phone, messageContent, role, channe
               receiver: phone,
               message: {
                 type: 'text',
-                text: allText,
-              },
+                text: allText
+              }
             })
           }
         }
@@ -63,7 +63,7 @@ export async function sendMessageInteractive(phone, messageContent, role, channe
             channel,
             transmitter: meta.host,
             receiver: phone,
-            message,
+            message
           })
         }
       } catch (error) {
@@ -80,7 +80,7 @@ export async function sendMessageInteractive(phone, messageContent, role, channe
           channel,
           transmitter: meta.host,
           receiver: phone,
-          message,
+          message
         })
       }
     }

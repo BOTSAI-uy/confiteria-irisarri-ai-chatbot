@@ -8,7 +8,7 @@ export class BrainsDb {
   //ss Mapeo de proveedores de base de datos
   static dbProviders = {
     // Proveedor AppSheet
-    [DB_HOST.APPSHEET]: BrainsAppsheet,
+    [DB_HOST.APPSHEET]: BrainsAppsheet
   }
 
   //ss Método para obtener el proveedor actual

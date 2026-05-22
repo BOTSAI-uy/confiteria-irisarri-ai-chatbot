@@ -8,7 +8,7 @@ export class OrdersConfigDb {
   //ss Mapeo de proveedores de base de datos
   static dbProviders = {
     // Proveedor AppSheet
-    [DB_HOST.APPSHEET]: OrdersConfigAppsheet,
+    [DB_HOST.APPSHEET]: OrdersConfigAppsheet
   }
 
   //ss Método para obtener el proveedor actual

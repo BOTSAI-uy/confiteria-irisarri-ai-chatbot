@@ -25,7 +25,7 @@ export async function sendRequest(args, user) {
   const data = await addSendRequestData({
     contact: user.id,
     details,
-    tag: tagId,
+    tag: tagId
   })
 
   // verificar que se haya creado la solicitud
@@ -93,23 +93,23 @@ async function sendNotification(request, tag, user) {
     {
       key: 'nombre',
       type: 'string',
-      value: user.name || 'desconocido',
+      value: user.name || 'desconocido'
     },
     {
       key: 'telefono',
       type: 'string',
-      value: user.whatsapp?.id || 'desconocido',
+      value: user.whatsapp?.id || 'desconocido'
     },
     {
       key: 'asunto',
       type: 'string',
-      value: tag.name || 'sin asunto',
+      value: tag.name || 'sin asunto'
     },
     {
       key: 'solicitud',
       type: 'string',
-      value: request.details || 'sin detalles',
-    },
+      value: request.details || 'sin detalles'
+    }
   ]
 
   // construir plantilla con valores
@@ -119,7 +119,7 @@ async function sendNotification(request, tag, user) {
   for (const assistant of assistants) {
     if (!assistant.whatsappId) {
       console.warn(
-        `sendRequest: El asistente ${assistant.name} no tiene un ID de WhatsApp configurado, se omitirá la notificación`,
+        `sendRequest: El asistente ${assistant.name} no tiene un ID de WhatsApp configurado, se omitirá la notificación`
       )
       continue
     }

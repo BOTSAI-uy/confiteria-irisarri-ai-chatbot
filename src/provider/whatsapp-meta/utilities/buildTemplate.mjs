@@ -2,9 +2,9 @@ export function buildTemplate(template, templateValues) {
   const data = {
     name: template.name,
     language: {
-      code: template.language,
+      code: template.language
     },
-    components: [],
+    components: []
   }
 
   // recorrer los valores de la plantilla
@@ -54,7 +54,7 @@ function createTemplateComponent(componentType, namedParams, templateValue) {
   if (parameters.length > 0) {
     return {
       type: componentType,
-      parameters,
+      parameters
     }
   }
 
@@ -72,7 +72,7 @@ function processComponentParameters(namedParams, placeholder, templateValue) {
           type: 'text',
           //TODO: limitar caracteres por parámetro según la documentación de WhatsApp Meta
           text: templateValue?.value || '',
-          parameter_name: param.param_name,
+          parameter_name: param.param_name
         })
       }
     }

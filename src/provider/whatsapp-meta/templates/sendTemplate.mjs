@@ -10,25 +10,25 @@ export async function sendTemplate(phone, template) {
     recipient_type: 'individual',
     to: phone,
     type: 'template',
-    template,
+    template
   }
   const headers = {
     Authorization: `Bearer ${ENV.WHATSAPP_META_TOKEN}`,
-    'Content-Type': 'application/json',
+    'Content-Type': 'application/json'
   }
 
   // Enviar la solicitud a la API utilizando Axios
   const [error, response] = await catchError(
     axios.post(url, body, {
-      headers,
-    }),
+      headers
+    })
   )
 
   // manejar error
   if (error) {
     console.error(
       'sendTemplate: Error al enviar la plantilla de WhatsApp Meta',
-      JSON.stringify(error.response?.data, null, 2),
+      JSON.stringify(error.response?.data, null, 2)
     )
     return null
   }
@@ -38,10 +38,10 @@ export async function sendTemplate(phone, template) {
     contents: [
       {
         internalId: response?.data?.messages?.[0]?.id || 'unknown-id',
-        text: '',
-      },
+        text: ''
+      }
     ],
-    status: 'sent',
+    status: 'sent'
   }
 
   return content

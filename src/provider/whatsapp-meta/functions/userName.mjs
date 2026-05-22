@@ -6,4 +6,3 @@ export function getUserName(userId) {
 export function setUserName(userId, name) {
   usersName.set(userId, name)
 }
-

@@ -90,7 +90,7 @@ export async function agentResponse(userId, message, origin, platform, originalM
                 block.message.media.caption,
                 agentConfig.ai.provider,
                 'user',
-                user,
+                user
               )
             }
             break

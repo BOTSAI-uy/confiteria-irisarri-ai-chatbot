@@ -6,8 +6,8 @@ export async function gpt5(openai, { aiModel, history, aiMaxTokens, tools }) {
     parallel_tool_calls: false,
     tools,
     reasoning: {
-      effort: 'low',
-    },
+      effort: 'low'
+    }
   }
   const response = await openai.responses.create(data)
 

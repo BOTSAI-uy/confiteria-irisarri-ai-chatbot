@@ -34,7 +34,7 @@ export async function addClientProfile(args, user, userIdKey) {
     name,
     lastName,
     address,
-    phone,
+    phone
   }
 
   // Añadir nuevo cliente

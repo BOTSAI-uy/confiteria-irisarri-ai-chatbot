@@ -17,12 +17,12 @@ export async function getShippingAvailability(args) {
     console.error('No se pudo obtener la disponibilidad para: ', args.deliveryMode)
     return {
       success: false,
-      message: 'No se pudo obtener la disponibilidad de envío.',
+      message: 'No se pudo obtener la disponibilidad de envío.'
     }
   }
   console.info('🧩 Respuesta de función <getShippingAvailability>: \n', JSON.stringify(availability, null, 2))
   return {
     success: true,
-    availability,
+    availability
   }
 }

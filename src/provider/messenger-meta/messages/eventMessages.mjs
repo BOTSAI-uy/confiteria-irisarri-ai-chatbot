@@ -34,17 +34,10 @@ export async function eventMessages(data) {
       if (attachments) {
         for (const attachment of attachments) {
           agentResponse(message.sender.id, { type: 'media', media: attachment }, 'user', 'messenger', message)
-          const formatMessage = formatIncomingMessage(
-            'messenger',
-            'meta',
-            'user',
-            message.sender.id,
-            meta.pageid,
-            {
-              type: 'media',
-              media: attachment
-            }
-          )
+          const formatMessage = formatIncomingMessage('messenger', 'meta', 'user', message.sender.id, meta.pageid, {
+            type: 'media',
+            media: attachment
+          })
           list.push(formatMessage)
         }
       }

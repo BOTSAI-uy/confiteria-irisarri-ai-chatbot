@@ -7,7 +7,7 @@ export class SendRequestAppsheet {
   //ss obtener herramienta por id
   static async getSendRequestById(id) {
     const res = await getData(NAME_TABLE, {
-      Selector: `Filter(${NAME_TABLE}, [id] = "${id}")`,
+      Selector: `Filter(${NAME_TABLE}, [id] = "${id}")`
     })
     return DataFormatter.buildData(res[0])
   }
@@ -28,7 +28,7 @@ class DataFormatter {
       messageTemplate: item.MESSAGE_TEMPLATE,
       templateId: item.TEMPLATE_ID,
       emailTemplate: item.EMAIL_TEMPLATE,
-      tags: formatArray(item.TAGS),
+      tags: formatArray(item.TAGS)
     }))
 
     // validar si es un solo objeto o un array

@@ -23,9 +23,7 @@ export async function sendMessage(message, conversación) {
     if (!message.message.media.path) {
       const localFile = await downloadFile(message.message.media.fileUrl, createId())
       if (!localFile) {
-        console.error(
-          'chatwoot / sendMessage: Error al descargar el archivo: ' + message.message.media.fileUrl
-        )
+        console.error('chatwoot / sendMessage: Error al descargar el archivo: ' + message.message.media.fileUrl)
         return null
       }
       attachments = localFile

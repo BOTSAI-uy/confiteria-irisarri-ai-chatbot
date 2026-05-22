@@ -14,12 +14,12 @@ export async function sendToWhisper(audioPath) {
     }
     const agentConfig = await getCredentialsOpenAI()
     const openai = new OpenAI({
-      apiKey: agentConfig.ai.token,
+      apiKey: agentConfig.ai.token
     })
     const transcription = await openai.audio.transcriptions.create({
       file: fs.createReadStream(validAudio),
       model: 'whisper-1',
-      response_format: 'verbose_json',
+      response_format: 'verbose_json'
     })
     console.log('Transcription:', transcription.text)
     return { type: 'text', text: transcription.text }

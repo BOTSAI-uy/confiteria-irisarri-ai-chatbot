@@ -25,7 +25,7 @@ export async function eventMessages(data) {
         agentResponse(userId, { type: 'text', text }, 'user', 'whatsapp', message)
         const formatMessage = formatIncomingMessage('whatsapp', 'meta', 'user', userId, meta.phoneid, {
           type: 'text',
-          text,
+          text
         })
         list.push(formatMessage)
         break
@@ -41,7 +41,7 @@ export async function eventMessages(data) {
             agentResponse(userId, { type: 'media', media: attachment }, 'user', 'whatsapp', message)
             const formatMessage = formatIncomingMessage('whatsapp', 'meta', 'user', userId, meta.phoneid, {
               type: 'media',
-              media: attachment,
+              media: attachment
             })
             list.push(formatMessage)
           }
@@ -59,7 +59,7 @@ export async function eventMessages(data) {
             agentResponse(userId, { type: 'media', media: attachment }, 'user', 'whatsapp', message)
             const formatMessage = formatIncomingMessage('whatsapp', 'meta', 'user', userId, meta.phoneid, {
               type: 'media',
-              media: attachment,
+              media: attachment
             })
             list.push(formatMessage)
           }
@@ -77,7 +77,7 @@ export async function eventMessages(data) {
             agentResponse(userId, { type: 'media', media: attachment }, 'user', 'whatsapp', message)
             const formatMessage = formatIncomingMessage('whatsapp', 'meta', 'user', userId, meta.phoneid, {
               type: 'media',
-              media: attachment,
+              media: attachment
             })
             list.push(formatMessage)
           }
@@ -95,7 +95,7 @@ export async function eventMessages(data) {
             agentResponse(userId, { type: 'media', media: attachment }, 'user', 'whatsapp', message)
             const formatMessage = formatIncomingMessage('whatsapp', 'meta', 'user', userId, meta.phoneid, {
               type: 'media',
-              media: attachment,
+              media: attachment
             })
             list.push(formatMessage)
           }
@@ -114,7 +114,7 @@ export async function eventMessages(data) {
           agentResponse(userId, { type: 'text', text }, 'user', 'whatsapp', message)
           const formatMessage = formatIncomingMessage('whatsapp', 'meta', 'user', userId, meta.phoneid, {
             type: 'text',
-            text,
+            text
           })
           list.push(formatMessage)
         }
@@ -125,7 +125,7 @@ export async function eventMessages(data) {
           agentResponse(userId, { type: 'text', text }, 'user', 'whatsapp', message)
           const formatMessage = formatIncomingMessage('whatsapp', 'meta', 'user', userId, meta.phoneid, {
             type: 'text',
-            text,
+            text
           })
           list.push(formatMessage)
         } else {
@@ -140,7 +140,7 @@ export async function eventMessages(data) {
         agentResponse(userId, { type: 'text', text }, 'user', 'whatsapp', message)
         const formatMessage = formatIncomingMessage('whatsapp', 'meta', 'user', userId, meta.phoneid, {
           type: 'text',
-          text,
+          text
         })
         list.push(formatMessage)
         break

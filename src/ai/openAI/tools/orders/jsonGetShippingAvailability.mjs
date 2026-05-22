@@ -13,12 +13,12 @@ export async function getJson() {
         deliveryMode: {
           type: 'string',
           enum: Object.values(DELIVERY_MODES),
-          description: 'Modo de entrega del pedido, ya sea a domicilio o para recogida en tienda',
-        },
+          description: 'Modo de entrega del pedido, ya sea a domicilio o para recogida en tienda'
+        }
       },
       required: ['deliveryMode'],
-      additionalProperties: false,
-    },
+      additionalProperties: false
+    }
   }
   return jsonData
 }

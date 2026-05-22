@@ -8,7 +8,7 @@ import { ServiceAppsheet } from '#services/appsheet/service.mjs'
 export class ServiceDb {
   static dbProviders = {
     // Proveedor AppSheet
-    [DB_HOST.APPSHEET]: ServiceAppsheet,
+    [DB_HOST.APPSHEET]: ServiceAppsheet
   }
 
   //ss Método para obtener el proveedor actual

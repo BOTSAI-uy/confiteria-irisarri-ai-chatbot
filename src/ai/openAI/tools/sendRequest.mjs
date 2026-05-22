@@ -11,17 +11,17 @@ export async function getJson() {
       properties: {
         tagId: {
           type: 'string',
-          description: 'ID de la etiqueta de solicitud',
+          description: 'ID de la etiqueta de solicitud'
         },
         details: {
           type: 'string',
-          description: 'Detalles de la solicitud',
-        },
+          description: 'Detalles de la solicitud'
+        }
       },
       required: ['tagId', 'details'],
-      additionalProperties: false,
+      additionalProperties: false
     },
-    strict: true,
+    strict: true
   }
   return jsonData
 }

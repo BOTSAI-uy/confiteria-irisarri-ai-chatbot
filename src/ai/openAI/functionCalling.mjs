@@ -23,7 +23,7 @@ export async function functionCalling(aiFunction, user, userIdKey, responseOutpu
   const functionArgs = JSON.parse(aiFunction.arguments)
   console.info(
     `🔹 Se llamo a una function para ${user.name} desde IA: <${functionName}>`,
-    JSON.stringify(functionArgs, null, 2),
+    JSON.stringify(functionArgs, null, 2)
   )
 
   const handlers = {
@@ -33,7 +33,7 @@ export async function functionCalling(aiFunction, user, userIdKey, responseOutpu
     [addOrderName]: addOrder,
     [getArticlesName]: getArticles,
     [getShippingAvailabilityName]: getShippingAvailability,
-    [getOrderByNumberName]: getOrderByNumber,
+    [getOrderByNumberName]: getOrderByNumber
   }
 
   let result
@@ -41,7 +41,7 @@ export async function functionCalling(aiFunction, user, userIdKey, responseOutpu
     try {
       const res = await handlers[functionName](functionArgs, user, userIdKey, {
         callId: aiFunction.call_id,
-        responseOutput,
+        responseOutput
       })
       if (res === FUNCTION_STATUS.IN_PROGRESS) {
         console.log('La función está en progreso, no se devuelve respuesta aún.')

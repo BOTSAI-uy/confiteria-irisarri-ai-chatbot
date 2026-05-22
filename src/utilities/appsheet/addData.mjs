@@ -8,7 +8,7 @@ export async function addData(table, properties = {}, rows = []) {
 
   // Configurar los encabezados
   const headers = {
-    'Content-Type': 'application/json',
+    'Content-Type': 'application/json'
   }
 
   // Construir el cuerpo de la solicitud
@@ -18,9 +18,9 @@ export async function addData(table, properties = {}, rows = []) {
       Locale: 'en-GB',
       Timezone: ENV.TZ,
       UserSettings: { FROM_API: true },
-      ...properties,
+      ...properties
     },
-    Rows: !Array.isArray(rows) ? [rows] : rows,
+    Rows: !Array.isArray(rows) ? [rows] : rows
   }
 
   try {

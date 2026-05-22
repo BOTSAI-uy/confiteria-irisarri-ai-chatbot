@@ -10,7 +10,7 @@ export async function getAllSendRequestTags() {
   if (error) {
     console.warn(
       { error: error.message, stack: error.stack },
-      `Error al obtener las etiquetas de solicitud desde la base de datos`,
+      `Error al obtener las etiquetas de solicitud desde la base de datos`
     )
     return []
   }

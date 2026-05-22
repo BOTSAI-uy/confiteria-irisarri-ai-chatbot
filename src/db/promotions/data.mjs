@@ -8,7 +8,7 @@ export class PromotionsDb {
   //ss Mapeo de proveedores de base de datos
   static dbProviders = {
     // Proveedor AppSheet
-    [DB_HOST.APPSHEET]: PromotionsAppsheet,
+    [DB_HOST.APPSHEET]: PromotionsAppsheet
   }
 
   //ss Método para obtener el proveedor actual

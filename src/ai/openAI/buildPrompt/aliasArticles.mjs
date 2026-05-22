@@ -7,8 +7,9 @@ export async function buildAliasArticles() {
     return ''
   }
 
-  // filtrar los primeros 30 que tengan alias y esten activos
-  const articles = dailyArticles.filter((a) => a.alias && a.active).slice(0, 50)
+  // filtrar los que tengan alias, activos y que se agreguen al prompt
+  const articles = dailyArticles.filter((a) => a.alias && a.active && a.addPrompt)
+  console.log('cantidad de articulos con alias:', articles.length)
 
   let text = '## Articulos frecuentemente pedidos por los clientes:\n\n'
 

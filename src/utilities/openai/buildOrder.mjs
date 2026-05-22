@@ -8,13 +8,13 @@ export function buildOrder(clientCode, orderData) {
     deliveryMode: orderData.deliveryMode,
     deliveryDate: orderData.deliveryDate,
     note: orderData.note || '',
-    articles: [],
+    articles: []
   }
   for (const item of orderData.articles) {
     const orderItem = {
       article: item.code,
       quantity: parseFloat(item.quantity),
-      note: item.note || '',
+      note: item.note || ''
     }
     order.articles.push(orderItem)
   }

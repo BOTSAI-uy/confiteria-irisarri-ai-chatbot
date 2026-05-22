@@ -8,7 +8,7 @@ export async function validateOrder({ paymentMethod, address, deliveryMode, deli
   const result = {
     errors: [],
     anticipationHours: 0,
-    toHuman: false,
+    toHuman: false
   }
 
   // Validar modo de entrega

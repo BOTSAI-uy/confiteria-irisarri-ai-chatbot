@@ -18,7 +18,7 @@ export async function getArticlesFilters() {
       branch: new Set(),
       family: new Set(),
       group: new Set(),
-      unit: new Set(),
+      unit: new Set()
     }
 
     for (const article of cacheArticles) {

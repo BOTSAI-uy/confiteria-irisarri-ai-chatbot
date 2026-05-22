@@ -8,7 +8,7 @@ import { Clients } from '#ai/agentProcess/clientAction.mjs'
 const ACTION = {
   dni: getClientByDni,
   phone: getClientByPhone,
-  rut: getClientByDni,
+  rut: getClientByDni
 }
 
 export async function loadClientProfile(args, user, userIdKey) {

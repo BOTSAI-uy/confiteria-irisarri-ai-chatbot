@@ -1,13 +1,7 @@
 import axios from 'axios'
 import { getCredentials } from '../getCredentials.mjs'
 
-export async function postContact(
-  inboxId,
-  name = 'new contact',
-  email = '',
-  phone = '',
-  customAttributes = {}
-) {
+export async function postContact(inboxId, name = 'new contact', email = '', phone = '', customAttributes = {}) {
   if (!inboxId) {
     console.error('postConversation: Faltan parameters: ' + inboxId)
     return null

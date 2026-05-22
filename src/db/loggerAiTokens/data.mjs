@@ -8,7 +8,7 @@ import { LogsAiTokensAppsheet } from '#services/appsheet/loggerAiTokens.mjs'
 export class LoggerAiTokensDb {
   static dbProviders = {
     // Proveedor AppSheet
-    [DB_HOST.APPSHEET]: LogsAiTokensAppsheet,
+    [DB_HOST.APPSHEET]: LogsAiTokensAppsheet
   }
 
   //ss Método para obtener el proveedor actual

@@ -38,7 +38,7 @@ export class CacheData {
   static set(key, value) {
     this.cache.set(key, {
       value,
-      timestamp: Date.now(),
+      timestamp: Date.now()
     })
   }
 
