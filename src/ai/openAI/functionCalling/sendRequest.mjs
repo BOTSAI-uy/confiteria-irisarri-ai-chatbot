@@ -44,20 +44,6 @@ export async function sendRequest(args, user, userIdKey) {
 
 //ss enviar notificación a asistentes de la etiqueta
 async function sendNotification(request, tag, user, userIdKey) {
-  // bloquear usuario temporalmente
-  const hourMs = 60 * 60 * 1000
-
-  // ver por consola la fecha y hora en la que desbloqueará el usuario
-  const unblockDate = new Date(Date.now() + hourMs)
-  const blockText = `Usuario bloqueado temporalmente hasta ${unblockDate.toLocaleString()}`
-  console.info(`🧩 ${blockText}`)
-
-  const details = `${request.details}  <${blockText}>`
-
-  // bloquear usuario temporalmente
-  TemporalBlock.addContact(userIdKey, hourMs)
-
-  console.info('solicitud completa para enviar: ', details)
   if (!isProductionEnv()) {
     console.info('sendNotification: No se enviarán notificaciones porque no estamos en un entorno de producción')
     return
@@ -102,6 +88,21 @@ async function sendNotification(request, tag, user, userIdKey) {
     console.warn('sendRequest: Ninguno de los asistentes asignados a la etiqueta de solicitud fue encontrado')
     return
   }
+
+  // bloquear usuario temporalmente
+  const hourMs = 60 * 60 * 1000
+
+  // ver por consola la fecha y hora en la que desbloqueará el usuario
+  const unblockDate = new Date(Date.now() + hourMs)
+  const blockText = `Usuario bloqueado temporalmente hasta ${unblockDate.toLocaleString()}`
+  console.info(`🧩 ${blockText}`)
+
+  const details = `${request.details}  <${blockText}>`
+
+  // bloquear usuario temporalmente
+  TemporalBlock.addContact(userIdKey, hourMs)
+
+  console.info('solicitud completa para enviar: ', details)
 
   // crear valores de plantilla
   const templateValues = [
