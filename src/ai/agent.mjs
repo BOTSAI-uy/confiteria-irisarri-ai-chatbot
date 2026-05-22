@@ -13,6 +13,7 @@ import { sentToAi } from './agentProcess/sentToAi.mjs'
 import { Clients } from './agentProcess/clientAction.mjs'
 import { FunctionProcess } from '#ai/agentProcess/functionProcess.mjs'
 import { FUNCTION_STATUS } from '#enums/agent.mjs'
+import { TemporalBlock } from '#tools/temporalBlock.mjs'
 
 export async function agentResponse(userId, message, origin, platform, originalMessage = null) {
   try {
@@ -33,6 +34,16 @@ export async function agentResponse(userId, message, origin, platform, originalM
       console.error('Agente: Error al validar usuario')
       return null
     }
+
+    // Crear userIdKey
+    const userIdKey = `${user[platform].id}-*-${platform}`
+
+    // validar bloque
+    if (TemporalBlock.isContactBlocked(userIdKey)) {
+      console.info(`Usuario con userIdKey: ${userIdKey} temporalmente bloqueado`)
+      return null
+    }
+
     if (!checkTemporalState(user)) {
       console.log('asistente en linea')
       return null
@@ -49,9 +60,6 @@ export async function agentResponse(userId, message, origin, platform, originalM
       console.error('Agente: Usuario bloqueado')
       return null
     }
-
-    // Crear userIdKey
-    const userIdKey = `${user[platform].id}-*-${platform}`
 
     // validar si hay una función en proceso
     const functionInProgress = FunctionProcess.isProcessing(userIdKey)

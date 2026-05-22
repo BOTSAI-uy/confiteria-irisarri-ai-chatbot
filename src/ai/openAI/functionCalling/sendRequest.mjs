@@ -6,8 +6,9 @@ import { getTemplateById } from '#provider/whatsapp-meta/templates/getTemplateBy
 import { buildTemplate } from '#provider/whatsapp-meta/utilities/buildTemplate.mjs'
 import { sendTemplate } from '#provider/whatsapp-meta/templates/sendTemplate.mjs'
 import { isProductionEnv } from '#config/config.mjs'
+import { TemporalBlock } from '#tools/temporalBlock.mjs'
 
-export async function sendRequest(args, user) {
+export async function sendRequest(args, user, userIdKey) {
   const { tagId, details } = args
   if (!tagId || !details) {
     console.error('sendRequest: tagId y details son requeridos')
@@ -35,14 +36,14 @@ export async function sendRequest(args, user) {
   }
 
   // enviar notificación
-  sendNotification(data, tag, user)
+  sendNotification(data, tag, user, userIdKey)
 
   console.info('🧩 Respuesta de función <sendRequest>:\n', JSON.stringify(data, null, 2))
   return { status: 'success', data }
 }
 
 //ss enviar notificación a asistentes de la etiqueta
-async function sendNotification(request, tag, user) {
+async function sendNotification(request, tag, user, userIdKey) {
   if (!isProductionEnv()) {
     console.info('sendNotification: No se enviarán notificaciones porque no estamos en un entorno de producción')
     return
@@ -88,6 +89,18 @@ async function sendNotification(request, tag, user) {
     return
   }
 
+  // bloquear usuario temporalmente
+  const hourMs = 60 * 60 * 1000
+
+  // ver por consola la fecha y hora en la que desbloqueará el usuario
+  const unblockDate = new Date(Date.now() + hourMs)
+  const blockText = `Usuario bloqueado temporalmente hasta ${unblockDate.toLocaleString()}`
+  console.info(`🧩 ${blockText}`)
+
+  const details = `${request.details}  <${blockText}>`
+
+  console.info('solicitud completa para enviar: ', details)
+
   // crear valores de plantilla
   const templateValues = [
     {
@@ -108,12 +121,15 @@ async function sendNotification(request, tag, user) {
     {
       key: 'solicitud',
       type: 'string',
-      value: request.details || 'sin detalles'
+      value: details
     }
   ]
 
   // construir plantilla con valores
   const builtTemplate = buildTemplate(template, templateValues)
+
+  // bloquear usuario temporalmente
+  TemporalBlock.addContact(userIdKey, hourMs)
 
   // enviar plantilla a cada asistente
   for (const assistant of assistants) {
