@@ -54,6 +54,9 @@ async function sendNotification(request, tag, user, userIdKey) {
 
   const details = `${request.details}  <${blockText}>`
 
+  // bloquear usuario temporalmente
+  TemporalBlock.addContact(userIdKey, hourMs)
+
   console.info('solicitud completa para enviar: ', details)
   if (!isProductionEnv()) {
     console.info('sendNotification: No se enviarán notificaciones porque no estamos en un entorno de producción')
@@ -126,9 +129,6 @@ async function sendNotification(request, tag, user, userIdKey) {
 
   // construir plantilla con valores
   const builtTemplate = buildTemplate(template, templateValues)
-
-  // bloquear usuario temporalmente
-  TemporalBlock.addContact(userIdKey, hourMs)
 
   // enviar plantilla a cada asistente
   for (const assistant of assistants) {
