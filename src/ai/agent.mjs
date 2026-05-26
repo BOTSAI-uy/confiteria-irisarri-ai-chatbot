@@ -10,7 +10,6 @@ import { groupMessages } from './agentProcess/groupMessages.mjs'
 import { sendResponse } from './agentProcess/sendResponse.mjs'
 import { mediaProcessing } from './agentProcess/mediaProcessing.mjs'
 import { sentToAi } from './agentProcess/sentToAi.mjs'
-import { Clients } from './agentProcess/clientAction.mjs'
 import { FunctionProcess } from '#ai/agentProcess/functionProcess.mjs'
 import { FUNCTION_STATUS } from '#enums/agent.mjs'
 import { TemporalBlock } from '#tools/temporalBlock.mjs'
@@ -110,11 +109,6 @@ export async function agentResponse(userId, message, origin, platform, originalM
         }
       }
 
-      // Validar si es un cliente de compañía
-      const isCompany = await isClientCompany(userId, chunks, agentConfig, user, userIdKey, platform)
-      if (isCompany) {
-        return
-      }
       // Enviar petición a OpenAI
       const resAi = await sentToAi(agentConfig.ai.provider, userIdKey, user, agentConfig)
 
@@ -129,12 +123,6 @@ export async function agentResponse(userId, message, origin, platform, originalM
       if (!resAi) {
         console.error('Error al obtener respuesta de la IA')
         return null
-      }
-
-      // Validar si es un cliente de compañía
-      const isClientCompanyHandled = await isClientCompany(userId, chunks, agentConfig, user, userIdKey, platform)
-      if (isClientCompanyHandled) {
-        return
       }
 
       // Enviar respuesta al usuario
@@ -155,23 +143,5 @@ export async function agentResponse(userId, message, origin, platform, originalM
   } catch (error) {
     console.error('Error en agentResponse:', error)
     return null
-  }
-}
-
-async function isClientCompany(userId, chunks, agentConfig, user, userIdKey, platform) {
-  // Validar si es un cliente de compañía
-  const client = Clients.getClient(userId)
-  if (client?.empresa) {
-    console.log('Cliente de compañía detectado:', client)
-    const message = { type: 'text', text: 'Hola, en un momento un representante se pondrá en contacto contigo.' }
-    let originalMessages = []
-    if (chunks.length > 0) {
-      originalMessages = chunks.map((obj) => obj.originalMessage)
-    }
-    const res = await sendResponse(agentConfig, message, userId, userIdKey, platform, originalMessages, user)
-    if (res) {
-      sendToChannels(res)
-    }
-    return true
   }
 }
