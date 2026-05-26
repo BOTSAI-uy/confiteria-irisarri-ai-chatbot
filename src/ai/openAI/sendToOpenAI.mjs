@@ -43,6 +43,12 @@ export async function sendToOpenAI(userIdKey, user, aiModel, aiMaxTokens, aiTemp
       //ejecutar function
       const resFunction = await functionCalling(functionCall, user, userIdKey, response.output)
 
+      // validar si la respuesta es nula
+      if (!resFunction) {
+        console.info('No se procesara la llamada a función')
+        return null
+      }
+
       // si la función está en progreso, no continuar
       if (resFunction === FUNCTION_STATUS.IN_PROGRESS) {
         return resFunction

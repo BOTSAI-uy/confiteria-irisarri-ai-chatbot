@@ -116,8 +116,10 @@ export async function agentResponse(userId, message, origin, platform, originalM
         return
       }
       // Enviar petición a OpenAI
-
       const resAi = await sentToAi(agentConfig.ai.provider, userIdKey, user, agentConfig)
+
+      // validar si la respuesta es nula
+      if (!resAi) return null
 
       // Si la IA solicita iniciar un flujo estático
       if (resAi === FUNCTION_STATUS.IN_PROGRESS) {

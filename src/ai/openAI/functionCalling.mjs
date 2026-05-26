@@ -28,7 +28,6 @@ export async function functionCalling(aiFunction, user, userIdKey, responseOutpu
 
   const handlers = {
     [sendRequestName]: sendRequest,
-
     [loadClientProfileName]: loadClientProfile,
     [addOrderName]: addOrder,
     [getArticlesName]: getArticles,
@@ -43,6 +42,11 @@ export async function functionCalling(aiFunction, user, userIdKey, responseOutpu
         callId: aiFunction.call_id,
         responseOutput
       })
+
+      // validar si la respuesta es null
+      if (!res) return null
+
+      // validar si la función está en progreso
       if (res === FUNCTION_STATUS.IN_PROGRESS) {
         console.log('La función está en progreso, no se devuelve respuesta aún.')
         return res

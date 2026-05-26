@@ -17,7 +17,7 @@ import { deletePhoneExtension } from '#utilities/facturapp/formatPhone.mjs'
 import { getCurrentShippingAvailability } from '#tools/orders/getCurrentShippingAvailability.mjs'
 import { DELIVERY_MODES, PAYMENT_METHODS } from '#enums/tools/orders.mjs'
 import { notifyPendingOrder } from './utils/sendAlertPendingOrder.mjs'
-import { OrdersCache } from './utils/ordersCache.mjs'
+import { OrdersCache, OrdersInProgress } from './utils/ordersCache.mjs'
 
 const ORDER_ACTIONS = {
   CONFIRM: 'Confirmar Pedido',
@@ -48,6 +48,10 @@ function validateReplyAction(response) {
 
 export async function addOrder(args, user, userIdKey, { callId, responseOutput }) {
   const platform = userIdKey.split('-*-')[1]
+
+  // agregar orden en progreso
+  const timestamp = Date.now()
+  OrdersInProgress.setInProgressOrder(userIdKey, timestamp)
 
   // cargar cliente desde la sesión
   const client = Clients.getClient(user[platform]?.id)
@@ -85,6 +89,9 @@ export async function addOrder(args, user, userIdKey, { callId, responseOutput }
     deliveryDate = `${args.deliveryDate.date} ${args.deliveryDate.time}`
   }
 
+  // validar si no se ha agregado un pedido mas reciente
+  if (!OrdersInProgress.validate(userIdKey, timestamp)) return null
+
   // cargar datos del pedido desde los argumentos
   const order = {
     name: args.name,
@@ -113,6 +120,9 @@ export async function addOrder(args, user, userIdKey, { callId, responseOutput }
   // construir pedido para la base de datos
   let builtOrder = buildOrder(client.codigoCliente, order)
 
+  // validar si no se ha agregado un pedido mas reciente
+  if (!OrdersInProgress.validate(userIdKey, timestamp)) return null
+
   // validar datos del pedido
   const validation = await validateOrder(builtOrder)
   if (validation.errors && validation.errors.length > 0) {
@@ -127,13 +137,22 @@ export async function addOrder(args, user, userIdKey, { callId, responseOutput }
   const discounts = await getAllDiscounts()
   const activeDiscounts = discounts.filter((d) => d.status)
 
+  // validar si no se ha agregado un pedido mas reciente
+  if (!OrdersInProgress.validate(userIdKey, timestamp)) return null
+
   // aplicar descuentos al pedido
   builtOrder = await applyDiscounts(builtOrder, activeDiscounts)
+
+  // validar si no se ha agregado un pedido mas reciente
+  if (!OrdersInProgress.validate(userIdKey, timestamp)) return null
 
   // crear resumen de pedido para confirmación
   const header = 'Resumen de tu pedido'
   const body = await createOrderSummary(builtOrder)
   const footer = 'Por favor confirma si deseas proceder con este pedido.'
+
+  // validar si no se ha agregado un pedido mas reciente
+  if (!OrdersInProgress.validate(userIdKey, timestamp)) return null
 
   console.info('🧩 Solicitud de confirmación de pedido enviada:\n', body)
 
@@ -164,6 +183,12 @@ export async function addOrder(args, user, userIdKey, { callId, responseOutput }
   const timer = setInterval(async () => {
     // si han pasado 5 minutos sin confirmación, enviar recordatorio al cliente
     if (timerStatus === ORDER_TIMER.WAITING_CONFIRMATION) {
+      // validar si no se ha agregado un pedido mas reciente
+      if (!OrdersInProgress.validate(userIdKey, timestamp)) {
+        console.warn('🔹 Ya hay una orden mas reciente, cancelando envío de recordatorio')
+        return null
+      }
+
       console.info('⏰ Han pasado 5 minutos sin confirmación de pedido, Enviado recordatorio al cliente.')
 
       // enviar mensaje de recordatorio al cliente
@@ -180,6 +205,12 @@ export async function addOrder(args, user, userIdKey, { callId, responseOutput }
 
     // si han pasado 10 minutos sin confirmación, notificar a encargado
     else if (timerStatus === ORDER_TIMER.WAITING_MODIFICATION) {
+      // validar si no se ha agregado un pedido mas reciente
+      if (!OrdersInProgress.validate(userIdKey, timestamp)) {
+        console.warn('🔹 Ya hay una orden mas reciente, cancelando notificación a encargado')
+        return null
+      }
+
       console.info('🔔 Han pasado 10 minutos sin confirmación de pedido')
 
       // asignar estado de pedido a expirado

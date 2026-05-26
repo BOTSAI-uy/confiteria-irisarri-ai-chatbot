@@ -53,7 +53,7 @@ export async function articlesSummary() {
       enAppsheet: !!article,
       enFacturapp: !!facturappArticle,
       enAppsheetDaily: !!dailyArticle,
-      stockFacturapp: facturappArticle?.stockActual,
+      stockFacturapp: facturappArticle?.stockActual
     }
   })
 
