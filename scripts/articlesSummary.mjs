@@ -60,8 +60,10 @@ export async function articlesSummary() {
   // Convertir a CSV
   const csv = unparse(summary)
 
+  const now = new Date()
+
   // Guardar el archivo CSV
-  const outputPath = './temp/articles-summary.csv'
+  const outputPath = `./temp/articles-summary-${now.toISOString().split('T')[0]}.csv`
   fs.writeFileSync(outputPath, csv, 'utf-8')
 
   console.log(`\nResumen generado exitosamente en: ${outputPath}`)

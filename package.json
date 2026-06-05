@@ -7,6 +7,7 @@
   "scripts": {
     "prod": "node --env-file=.env src/index.js",
     "playground": "node --env-file=.env playground/playground.mjs",
+    "playground:prod": "node --env-file=.env.prod playground/playground.mjs",
     "playground:script": "node --env-file=.env playground/script.mjs",
     "dev": "node --watch-path=src --env-file=.env src/index.js",
     "start": "node src/index.js",

@@ -20,7 +20,7 @@ export async function refreshTemplates() {
         language: template.language,
         category: template.category,
         subCategory: template.sub_category,
-        format: template.parameter_format,
+        format: template.parameter_format
       }
       newTemplates.push(data)
     }
