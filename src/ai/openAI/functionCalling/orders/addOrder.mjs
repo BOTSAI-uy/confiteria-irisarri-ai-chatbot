@@ -241,7 +241,7 @@ export async function addOrder(args, user, userIdKey, { callId, responseOutput }
     // si la acción es cancelar pedido
     if (action === ORDER_ACTIONS.CONFIRM) {
       // generar id de caché para el pedido basado en el usuario y los artículos del pedido
-      const cacheOrderId = `${userIdKey}:${args.articles.map((a) => a.code).join('-')}`
+      const cacheOrderId = `${userIdKey}:${args.articles.map((a) => `${a.code}=${a.quantity}`).join('_')}`
 
       // validar si el pedido ya existe en la caché para evitar crear pedidos duplicados si el cliente confirma varias veces
       const cachedOrder = OrdersCache.get(cacheOrderId)
