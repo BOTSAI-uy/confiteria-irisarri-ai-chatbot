@@ -15,7 +15,7 @@ export async function buildAliasArticles() {
 
   for (const article of articles) {
     text += `### ${article.descripcion} (codigo: ${article.codigo})\n\n`
-
+    text += `**descripcion:** ${article.advancedDescription}\n`
     text += `**familia:** ${article.familia}\n`
     text += `**grupo:** ${article.grupo}\n`
     text += `**unidad:** ${article.unidadMedida}\n`
