@@ -48,12 +48,11 @@ export async function articlesSummary() {
 
     return {
       codigo,
-      descripcion: facturappArticle?.descripcion || article?.descripcion || dailyArticle?.descripcion || '',
-      descripcionAvanzada: facturappArticle?.descripcionAvanzada || article?.descripcionAvanzada || '',
-      enAppsheet: !!article,
-      enFacturapp: !!facturappArticle,
-      enAppsheetDaily: !!dailyArticle,
-      stockFacturapp: facturappArticle?.stockActual
+      "Descripción": facturappArticle?.descripcion || article?.descripcion || dailyArticle?.descripcion || '',
+      "Descripción avanzada": facturappArticle?.descripcionAvanzada || article?.descripcionAvanzada || '',
+      "En Facturapp": !!facturappArticle,
+      "Stock en Facturapp": facturappArticle?.stockActual,
+      "En producción diaria - Appsheet": !!dailyArticle
     }
   })
 
