@@ -1,7 +1,7 @@
 import { agentResponse } from '#ai/agent.mjs'
-import { attachmentsMessage } from './attachmentsMessage.mjs'
 import { sendToChannels } from '#channels/channels.mjs'
 import { formatIncomingMessage } from '#utilities/formatIncomingMessage.mjs'
+import { attachmentsMessage } from './attachmentsMessage.mjs'
 import { getCredentials } from '../functions/getCredentials.mjs'
 
 export async function eventMessages(data) {

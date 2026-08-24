@@ -2,13 +2,7 @@ import axios from 'axios'
 import { getCredentials } from '../getCredentials.mjs'
 import { convertMarkdownToInstagram } from '#utilities/formatText/instagram.mjs'
 
-/**
- * Envía un mensaje de texto a un usuario a través de la API de Facebook Messenger.
- *
- * @param {string} userId - ID del usuario destinatario.
- * @param {string} message - Mensaje de texto a enviar.
- * @returns {Promise<Object|null>} Respuesta de la API de Facebook o `null` en caso de error.
- */
+
 export async function sendText(userId, message) {
   try {
     // Validación de parámetros de entrada
