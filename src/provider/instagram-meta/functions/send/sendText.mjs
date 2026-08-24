@@ -2,7 +2,6 @@ import axios from 'axios'
 import { getCredentials } from '../getCredentials.mjs'
 import { convertMarkdownToInstagram } from '#utilities/formatText/instagram.mjs'
 
-
 export async function sendText(userId, message) {
   try {
     // Validación de parámetros de entrada
