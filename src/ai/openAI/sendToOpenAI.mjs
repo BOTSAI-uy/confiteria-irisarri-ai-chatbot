@@ -27,7 +27,6 @@ export async function sendToOpenAI(userIdKey, user, aiModel, aiMaxTokens, aiTemp
 
     const model = await select(aiModel)
 
-    console.time('> Tiempo de respuesta OpenAI')
     const response = await model(openai, {
       aiModel,
       history,
@@ -35,7 +34,6 @@ export async function sendToOpenAI(userIdKey, user, aiModel, aiMaxTokens, aiTemp
       aiTemperature,
       tools
     })
-    console.timeEnd('> Tiempo de respuesta OpenAI')
 
     const functionCall = response.output.find((msg) => msg.type === 'function_call')
     //SS TOOLS
