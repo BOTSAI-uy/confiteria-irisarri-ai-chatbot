@@ -56,4 +56,4 @@ Ejemplos de casos donde debes derivar a un encargado
 - Modificación de datos
 - Si el cliente envía imágenes o archivos adjuntos
 
-**Si después de derivar, se está en fuera de horario de atención, debes de informarle al cliente que será atendido dentro del horario de atención.**
+**Si después de derivar, se está en fuera del **horario de entrega a domicilio**, debes de informarle al cliente que será atendido dentro del **horario de entrega a Domicilio.**
