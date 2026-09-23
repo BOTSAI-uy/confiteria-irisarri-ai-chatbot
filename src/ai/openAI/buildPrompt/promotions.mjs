@@ -15,11 +15,12 @@ export async function buildPromotions() {
 
   let text = ''
   for (const promotion of activePromotions) {
-    text += `- ${promotion.name}\n`
-    text += `  * Descripción: ${promotion.description}\n`
+    text += `### ${promotion.name}\n`
+    text += `- Descripción: ${promotion.description}\n`
     if (promotion.urlImage) {
-      text += `  * Imagen de promoción: ${promotion.urlImage}\n`
+      text += `- Imagen de promoción: ${promotion.urlImage}\n`
     }
+    text += '\n'
   }
   return text
 }

@@ -24,6 +24,7 @@ Usa la función **getArticles()** para buscar los articulos disponibles.
 ## Promociones
 
 las siguientes son las promociones activas:
+
 {promotions}
 
 ## Cargar perfil de cliente
