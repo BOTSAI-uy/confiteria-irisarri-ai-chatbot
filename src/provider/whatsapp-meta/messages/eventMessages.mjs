@@ -4,7 +4,7 @@ import { formatIncomingMessage } from '#utilities/formatIncomingMessage.mjs'
 import { getCredentials } from '../functions/getCredentials.mjs'
 import { sendToChannels } from '#channels/channels.mjs'
 
-export async function eventMessages(data) {
+export async function eventMessages(data, contacts) {
   if (!Array.isArray(data)) {
     return console.error('Error: data no es un array')
   }
@@ -14,14 +14,20 @@ export async function eventMessages(data) {
     return null
   }
   const list = []
+  const contact = contacts?.[0]
   for (const message of data) {
     //console.log(message)
+    const userId = contact?.wa_id || message.from || null
+    if (!userId) {
+      console.error('Error: No se pudo obtener el userId', { data })
+      return null
+    }
 
     switch (message.type) {
       //SS TEXTO
       case 'text': {
         const text = message.text.body
-        const userId = message.from
+        
         agentResponse(userId, { type: 'text', text }, 'user', 'whatsapp', message)
         const formatMessage = formatIncomingMessage('whatsapp', 'meta', 'user', userId, meta.phoneid, {
           type: 'text',
@@ -33,7 +39,6 @@ export async function eventMessages(data) {
       //SS AUDIO
       case 'audio': {
         console.log('Audio recibido')
-        const userId = message.from
         const audioContent = [{ message: message.audio, type: 'audio' }]
         const attachments = await attachmentsMessage(audioContent)
         if (attachments) {
@@ -51,7 +56,6 @@ export async function eventMessages(data) {
       //SS IMAGEN
       case 'image': {
         console.log('Imagen recibida')
-        const userId = message.from
         const imageContent = [{ message: message.image, type: 'image' }]
         const attachments = await attachmentsMessage(imageContent)
         if (attachments) {
@@ -69,7 +73,6 @@ export async function eventMessages(data) {
       //SS VIDEO
       case 'video': {
         console.log('Video recibido')
-        const userId = message.from
         const videoContent = [{ message: message.video, type: 'video' }]
         const attachments = await attachmentsMessage(videoContent)
         if (attachments) {
@@ -87,7 +90,6 @@ export async function eventMessages(data) {
       //SS DOCUMENTO
       case 'document': {
         console.log('Documento recibido')
-        const userId = message.from
         const documentContent = [{ message: message.document, type: 'document' }]
         const attachments = await attachmentsMessage(documentContent)
         if (attachments) {
@@ -110,7 +112,6 @@ export async function eventMessages(data) {
           if (message.interactive?.list_reply?.description) {
             text = text + '\n' + message.interactive?.list_reply?.description
           }
-          const userId = message.from
           agentResponse(userId, { type: 'text', text }, 'user', 'whatsapp', message)
           const formatMessage = formatIncomingMessage('whatsapp', 'meta', 'user', userId, meta.phoneid, {
             type: 'text',
@@ -121,7 +122,6 @@ export async function eventMessages(data) {
         // BOTÓN respuesta rápida
         else if (message.interactive.type === 'button_reply') {
           const text = message.interactive?.button_reply?.title || 'hola'
-          const userId = message.from
           agentResponse(userId, { type: 'text', text }, 'user', 'whatsapp', message)
           const formatMessage = formatIncomingMessage('whatsapp', 'meta', 'user', userId, meta.phoneid, {
             type: 'text',
@@ -136,7 +136,6 @@ export async function eventMessages(data) {
       //SS BOTÓN SIMPLE
       case 'button': {
         const text = message.button?.text || message.button?.payload || 'hola'
-        const userId = message.from
         agentResponse(userId, { type: 'text', text }, 'user', 'whatsapp', message)
         const formatMessage = formatIncomingMessage('whatsapp', 'meta', 'user', userId, meta.phoneid, {
           type: 'text',

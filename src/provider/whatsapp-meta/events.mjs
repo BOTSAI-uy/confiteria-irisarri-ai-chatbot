@@ -13,7 +13,8 @@ export function events(data) {
               eventContacts(change.value.contacts)
             }
             if (change.value.messages) {
-              eventMessages(change.value.messages)
+              const contacts = change.value.contacts || []
+              eventMessages(change.value.messages, contacts)
             } else if (change.value.statuses && Array.isArray(change.value.statuses)) {
               for (const status of change.value.statuses) {
                 if (status.status === 'failed') {
