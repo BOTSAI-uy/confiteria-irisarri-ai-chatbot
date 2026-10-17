@@ -27,7 +27,7 @@ export async function eventMessages(data, contacts) {
       //SS TEXTO
       case 'text': {
         const text = message.text.body
-        
+
         agentResponse(userId, { type: 'text', text }, 'user', 'whatsapp', message)
         const formatMessage = formatIncomingMessage('whatsapp', 'meta', 'user', userId, meta.phoneid, {
           type: 'text',
